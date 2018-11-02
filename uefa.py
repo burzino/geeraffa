@@ -1,8 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
+import datetime
+
+#ricavo anno corrente
+current_year = datetime.datetime.now().year
 
 # pagina da cui prelevo i dati
-page = requests.get('https://it.uefa.com/uefachampionsleague/season=2019/standings/')
+page = requests.get('https://it.uefa.com/uefachampionsleague/season=' + str(current_year + 1) + '/standings/')
 
 #oggetto utilizzato per leggere i dati dalla pagina
 soup = BeautifulSoup(page.text, "html.parser")
