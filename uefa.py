@@ -27,7 +27,7 @@ def removeSpace(a):
     for k in range(0, len(a) - 1):
         if a[k] == ' ' and a[k + 1] == ' ':
             a[k] = ''
-        elif a[k] == '\n' or a[k] == '\r':
+        elif a[k] == '\n' or a[k] == '\r' or a[k] == '\x9e' or a[k] == '\x88':
             a[k] = ''
     return ''.join(a)
 
@@ -102,11 +102,11 @@ def statistiche(link):
             str_number = '\n    '
 
         if index < (len(lst_namePlayer) - 1):
-            str_name = ' name: ' + lst_namePlayer[index].get_text() + ' ' + lst_surnamePlayer[index].get_text()
+            str_name = lst_namePlayer[index].get_text() + ' ' + lst_surnamePlayer[index].get_text()
         else:
-            str_name = ' name: ' + lst_namePlayer[index].get_text()
+            str_name = lst_namePlayer[index].get_text()
         str_name = removeSpace(list(str_name))
-        for j in range(len(str_name), 40):
+        for j in range(len(str_name), 30):
             str_name = str_name + ' '
 
         str_role = ' role: ' + lst_rolePlayer[index].get_text()
@@ -116,6 +116,7 @@ def statistiche(link):
             str_role = str_role + ' '
 
         print(str_number + str_name + str_role + str_match)
+    print('\n* Giocatore lista B')
     print('\n')
     print('Partite giocate e da giocare')
     index = 0
