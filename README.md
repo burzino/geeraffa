@@ -1,2 +1,0 @@
-# prjIum
-progetto di IUM
