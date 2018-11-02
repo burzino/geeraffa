@@ -18,8 +18,6 @@ lst_aganist = soup.findAll('td', {'class', 'table_team-against js-goalsAgainst'}
 lst_difference = soup.findAll('td', {'class', 'table_team-goal-diff js-goalDifference'})
 lst_teamLink = []
 
-print("CULONE")
-
 #leggo tutti i link delle pagine di dettagli di tutte le squadre
 for item in soup.findAll('a', {'class', 'table_team-name_block'}):
     lst_teamLink.append('https://it.uefa.com' + item['href'])
