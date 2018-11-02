@@ -84,12 +84,14 @@ def statistiche(link):
     lst_teamMatch = new_soup.findAll('span', {'class', 'fitty-fit'})
     lst_homeScore = new_soup.findAll('span', {'class', 'js-team--home-score'})
     lst_awayScore = new_soup.findAll('span', {'class', 'js-team--away-score'})
+    lst_label = new_soup.findAll('span', {'class', 'statistics--list--label'})
+    lst_data = new_soup.findAll('span', {'class', 'statistics--list--data'})
 
     str_number = ''
     str_name = ''
     str_role = ''
     str_match = ''
-
+    print('Rosa: ')
     for index in range(0, len(lst_rolePlayer)):
         if index < (len(lst_numberPlayer)):
             str_number = lst_numberPlayer[index].get_text()
@@ -115,20 +117,25 @@ def statistiche(link):
 
         print(str_number + str_name + str_role + str_match)
     print('\n')
+    print('Partite giocate e da giocare')
     index = 0
     for i in range(0, len(lst_homeScore)):
         str_out = removeSpace(list(lst_teamMatch[index].get_text())) + ' '
         for k in range(len(str_out), 20):
             str_out = str_out + ' '
         if lst_homeScore[i].get_text() != '':
-            str_out += removeSpace(list(lst_homeScore[i].get_text())) + '-' + removeSpace(list(lst_awayScore[i].get_text())) + ' ' + removeSpace(list(lst_teamMatch[index + 1].get_text()))
+            str_out += removeSpace(list(lst_homeScore[i].get_text())) + '-' + removeSpace(list(lst_awayScore[i].get_text())) + '    ' + removeSpace(list(lst_teamMatch[index + 1].get_text()))
         else:
-            str_out += ' -  ' + removeSpace(list(lst_teamMatch[index + 1].get_text()))
-
+            str_out += ' -     ' + removeSpace(list(lst_teamMatch[index + 1].get_text()))
 
         print(str_out)
         index += 2
     print('\n')
+    print('statistiche dettagliate')
+    for i in range(0, len(lst_label)):
+        str_out = lst_label[i].get_text() + ': ' + lst_data[i].get_text()
+        str_out = removeSpace(list(str_out))
+        print(str_out)
 
 def stampaSquadre():
     str_out = ''
