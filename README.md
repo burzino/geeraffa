@@ -1,1 +1,4 @@
-progetto IUM python anno accademico 2018/19
+progetto IUM - Anno Accademico 2018/2019
+  - PYTHON
+  - ANDROID
+  - HTML
