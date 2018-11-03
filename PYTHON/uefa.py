@@ -1,6 +1,97 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
+import mysql.connector
+
+#richiedo il login per permettere l'accesso ai dati
+def login():
+    print('nome utente: ')
+    user = input()
+    print('password: ')
+    pwd = input()
+
+    #creo il collegamento con il database
+    mydb = mysql.connector.connect(
+        host="localhost",       # your host, usually localhost
+        user="root",            # your username
+        passwd="",              # your password
+        db="uefa")              # name of the data base
+
+    cursor = mydb.cursor()
+
+    sql = "SELECT * FROM utente WHERE Nome = '" + user + "' AND password = '" + pwd + "'"
+
+    try:
+        # Execute the SQL command
+        cursor.execute(sql)
+        # Fetch all the rows in a list of lists.
+        results = cursor.fetchall()
+        mydb.close()
+        if len(results) > 0:
+            return 0
+        else:
+            print('errore inserimento dati\n ritenta sarai più fortunato\n')
+            return -1
+    except:
+        print("Error: unable to fecth data")
+        mydb.close()
+        return  -1
+
+def registrazione():
+    print('inserire i dati necessari per completare la registrazione')
+    print('nome utente: ')
+    usr = input()
+    print('password: ')
+    pwd = input()
+    print('email: ')
+    email = input()
+
+    # creo il collegamento con il database
+    mydb = mysql.connector.connect(
+        host="localhost",   # your host, usually localhost
+        user="root",        # your username
+        passwd="",          # your password
+        db="uefa")          # name of the data base
+
+
+    cursor = mydb.cursor()
+
+    sql = "INSERT INTO `utente`(`nome`, `password`, `email`) VALUES ('%s','%s','%s')"
+
+    val = (str(usr),str(pwd),str(email))
+    try:
+        # Execute the SQL command
+        cursor.execute(sql, val)
+
+        cursor.commit()
+        res = 0
+        #res = cursor.fetchall()
+        #res = cursor.rowcount
+        #print(res)
+        mydb.close()
+        if res > 0:
+            return 0
+        else:
+            return -1
+    except:
+        print("Error: unable to insert user")
+        mydb.close()
+        return -1
+
+print('1- login\n2- registrati')
+scelta = input()
+if scelta == '1':
+    print('Inserire nome utente e password per poter accedere ai dati')
+    result = -1
+    while result < 0:
+        result = login()
+elif scelta == '2':
+    registrazione()
+    print('Inserire nome utente e password per poter accedere ai dati')
+    result = -1
+    while result < 0:
+        result = login()
+
 
 #ricavo anno corrente
 current_year = datetime.datetime.now().year
