@@ -48,32 +48,31 @@ def registrazione():
 
     # creo il collegamento con il database
     mydb = mysql.connector.connect(
-        host="localhost",   # your host, usually localhost
-        user="root",        # your username
-        passwd="",          # your password
-        db="uefa")          # name of the data base
-
+        host="localhost",  # your host, usually localhost
+        user="root",  # your username
+        passwd="",  # your password
+        db="uefa")  # name of the data base
 
     cursor = mydb.cursor()
 
-    sql = "INSERT INTO `utente`(`nome`, `password`, `email`) VALUES ('%s','%s','%s')"
+    sql = ("INSERT INTO `utente`(`nome`, `password`, `email`) VALUES (%s,%s,%s)")
 
     val = (str(usr),str(pwd),str(email))
     try:
         # Execute the SQL command
-        cursor.execute(sql, val)
+        cursor.execute(sql,val)
 
-        cursor.commit()
-        res = 0
-        #res = cursor.fetchall()
-        #res = cursor.rowcount
-        #print(res)
+        mydb.commit()
+        # res=0
+        # row= cursor.fetchall()
+        # res= len(row)
+        cursor.close()
         mydb.close()
-        if res > 0:
-            return 0
-        else:
-            return -1
-    except:
+        # if res > 0:
+        return 0
+        # else:
+        #     return -1
+    except :
         print("Error: unable to insert user")
         mydb.close()
         return -1
