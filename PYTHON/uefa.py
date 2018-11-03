@@ -4,9 +4,14 @@ import datetime
 
 #ricavo anno corrente
 current_year = datetime.datetime.now().year
+#ricavo il mese corrente
+current_month = datetime.datetime.now().month
 
 # pagina da cui prelevo i dati
-page = requests.get('https://it.uefa.com/uefachampionsleague/season=' + str(current_year + 1) + '/standings/')
+if current_month > 6:
+    page = requests.get('https://it.uefa.com/uefachampionsleague/season=' + str(current_year + 1) + '/standings/')
+else:
+    page = requests.get('https://it.uefa.com/uefachampionsleague/season=' + str(current_year) + '/standings/')
 
 #oggetto utilizzato per leggere i dati dalla pagina
 soup = BeautifulSoup(page.text, "html.parser")
