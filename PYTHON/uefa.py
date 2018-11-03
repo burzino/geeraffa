@@ -61,7 +61,7 @@ def registrazione():
     try:
         # Execute the SQL command
         cursor.execute(sql,val)
-	    mydb.commit()
+        mydb.commit()
         cursor.close()
         mydb.close()
         return 0
