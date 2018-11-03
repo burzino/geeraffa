@@ -61,17 +61,11 @@ def registrazione():
     try:
         # Execute the SQL command
         cursor.execute(sql,val)
-
-        mydb.commit()
-        # res=0
-        # row= cursor.fetchall()
-        # res= len(row)
+	mydb.commit()
         cursor.close()
         mydb.close()
-        # if res > 0:
         return 0
-        # else:
-        #     return -1
+       
     except :
         print("Error: unable to insert user")
         mydb.close()
