@@ -1,90 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
-import mysql.connector
-
-#richiedo il login per permettere l'accesso ai dati
-def login():
-    print('nome utente: ')
-    user = input()
-    print('password: ')
-    pwd = input()
-
-    #creo il collegamento con il database
-    mydb = mysql.connector.connect(
-        host="localhost",       # your host, usually localhost
-        user="root",            # your username
-        passwd="",              # your password
-        db="uefa")              # name of the data base
-
-    cursor = mydb.cursor()
-
-    sql = "SELECT * FROM utente WHERE Nome = '" + user + "' AND password = '" + pwd + "'"
-
-    try:
-        # Execute the SQL command
-        cursor.execute(sql)
-        # Fetch all the rows in a list of lists.
-        results = cursor.fetchall()
-        mydb.close()
-        if len(results) > 0:
-            return 0
-        else:
-            print('errore inserimento dati\n ritenta sarai più fortunato\n')
-            return -1
-    except:
-        print("Error: unable to fecth data")
-        mydb.close()
-        return  -1
-
-def registrazione():
-    print('inserire i dati necessari per completare la registrazione')
-    print('nome utente: ')
-    usr = input()
-    print('password: ')
-    pwd = input()
-    print('email: ')
-    email = input()
-
-    # creo il collegamento con il database
-    mydb = mysql.connector.connect(
-        host="localhost",  # your host, usually localhost
-        user="root",  # your username
-        passwd="",  # your password
-        db="uefa")  # name of the data base
-
-    cursor = mydb.cursor()
-
-    sql = ("INSERT INTO `utente`(`nome`, `password`, `email`) VALUES (%s,%s,%s)")
-
-    val = (str(usr),str(pwd),str(email))
-    try:
-        # Execute the SQL command
-        cursor.execute(sql,val)
-        mydb.commit()
-        cursor.close()
-        mydb.close()
-        return 0
-       
-    except :
-        print("Error: unable to insert user")
-        mydb.close()
-        return -1
-
-print('1- login\n2- registrati')
-scelta = input()
-if scelta == '1':
-    print('Inserire nome utente e password per poter accedere ai dati')
-    result = -1
-    while result < 0:
-        result = login()
-elif scelta == '2':
-    registrazione()
-    print('Inserire nome utente e password per poter accedere ai dati')
-    result = -1
-    while result < 0:
-        result = login()
-
+import stdfunc
 
 #ricavo anno corrente
 current_year = datetime.datetime.now().year
@@ -115,21 +32,6 @@ lst_teamLink = []
 for item in soup.findAll('a', {'class', 'table_team-name_block'}):
     lst_teamLink.append('https://it.uefa.com' + item['href'])
 
-#rimuvo spazi inutili all'interno della stringa
-def removeSpace(a):
-    for k in range(0, len(a) - 1):
-        if a[k] == ' ' and a[k + 1] == ' ':
-            a[k] = ''
-        elif a[k] == '\n' or a[k] == '\r' or a[k] == '\x9e' or a[k] == '\x88':
-            a[k] = ''
-    return ''.join(a)
-
-def cercaMax(a):
-    leng = 0
-    for i in range(0, len(a)):
-        if len(a[i].get_text())>leng:
-            leng = len(a[i].get_text())
-    return  leng
 #stampo la classifica dettagliata utiizzando gli array caricati in precedenza
 def stampaClassifica():
     str_fileOut = ''
@@ -152,9 +54,13 @@ def stampaClassifica():
             str_fileOut = str_fileOut + '\n'
             i += 1
 
-    print(str_fileOut)
+
+    str_fileOut = str_fileOut.replace('Å','n')
+    str_fileOut = str_fileOut.replace('An','AS')
     str_fileOut = str_fileOut.replace('\x9e', '')
     str_fileOut = str_fileOut.replace('\x88', '')
+
+    print(str_fileOut)
 
     out_file = open('test.txt', 'w')
     out_file.write(str_fileOut)
@@ -184,11 +90,12 @@ def statistiche(link):
     str_name = ''
     str_role = ''
     str_match = ''
+
     print('Rosa: ')
     for index in range(0, len(lst_rolePlayer)):
         if index < (len(lst_numberPlayer)):
             str_number = lst_numberPlayer[index].get_text()
-            str_number = removeSpace(list(str_number))
+            str_number = stdfunc.removeSpace(list(str_number))
             if int(lst_numberPlayer[index].get_text()) < 10:
                 str_number = ' ' + str_number
         else:
@@ -198,12 +105,12 @@ def statistiche(link):
             str_name = lst_namePlayer[index].get_text() + ' ' + lst_surnamePlayer[index].get_text()
         else:
             str_name = lst_namePlayer[index].get_text()
-        str_name = removeSpace(list(str_name))
+        str_name = stdfunc.removeSpace(list(str_name))
         for j in range(len(str_name), 30):
             str_name = str_name + ' '
 
         str_role = ' role: ' + lst_rolePlayer[index].get_text()
-        str_role = removeSpace(list(str_role))
+        str_role = stdfunc.removeSpace(list(str_role))
 
         for k in range(len(str_role), 25):
             str_role = str_role + ' '
@@ -214,13 +121,13 @@ def statistiche(link):
     print('Partite giocate e da giocare')
     index = 0
     for i in range(0, len(lst_homeScore)):
-        str_out = removeSpace(list(lst_teamMatch[index].get_text())) + ' '
+        str_out = stdfunc.removeSpace(list(lst_teamMatch[index].get_text())) + ' '
         for k in range(len(str_out), 20):
             str_out = str_out + ' '
         if lst_homeScore[i].get_text() != '':
-            str_out += removeSpace(list(lst_homeScore[i].get_text())) + '-' + removeSpace(list(lst_awayScore[i].get_text())) + '    ' + removeSpace(list(lst_teamMatch[index + 1].get_text()))
+            str_out += stdfunc.removeSpace(list(lst_homeScore[i].get_text())) + '-' + stdfunc.removeSpace(list(lst_awayScore[i].get_text())) + '    ' + stdfunc.removeSpace(list(lst_teamMatch[index + 1].get_text()))
         else:
-            str_out += ' -     ' + removeSpace(list(lst_teamMatch[index + 1].get_text()))
+            str_out += ' -     ' + stdfunc.removeSpace(list(lst_teamMatch[index + 1].get_text()))
 
         print(str_out)
         index += 2
@@ -228,8 +135,9 @@ def statistiche(link):
     print('statistiche dettagliate')
     for i in range(0, len(lst_label)):
         str_out = lst_label[i].get_text() + ': ' + lst_data[i].get_text()
-        str_out = removeSpace(list(str_out))
+        str_out = stdfunc.removeSpace(list(str_out))
         print(str_out)
+
 
 def stampaSquadre():
     str_out = ''
@@ -238,9 +146,9 @@ def stampaSquadre():
     for i in range(0,8):
         for j in range(0,4):
             if (index + 1) < 10:
-                aus = ' ' + str(index + 1) + ': ' + removeSpace(list(lst_team[index].get_text()))
+                aus = ' ' + str(index + 1) + ': ' + stdfunc.removeSpace(list(lst_team[index].get_text()))
             else:
-                aus = str(index + 1) + ': ' + removeSpace(list(lst_team[index].get_text()))
+                aus = str(index + 1) + ': ' + stdfunc.removeSpace(list(lst_team[index].get_text()))
 
             for j in range(len(aus), 35):
                 aus = aus + ' '
@@ -249,14 +157,14 @@ def stampaSquadre():
         print(str_out)
         str_out = ''
 
-    print('\ninserire codice squadra per maggiori dettagli altrimenti exit')
+    print('\ninserire codice squadra per maggiori dettagli altrimenti 0 per uscire')
 
     scelta = input()
     try:
-        if scelta == 'exit':
+        if scelta == '0':
             stampaMenu()
-        if int(scelta) >= 0 & int(scelta) < 32:
-            print('\t\t' + removeSpace(list(lst_team[int(scelta) - 1].get_text())) + '\n')
+        if int(scelta) > 0 & int(scelta) < 32:
+            print('\t\t' + stdfunc.removeSpace(list(lst_team[int(scelta) - 1].get_text())) + '\n')
             statistiche(lst_teamLink[int(scelta) - 1])
             stampaMenu()
     except:
@@ -280,5 +188,3 @@ def stampaMenu():
             stampaMenu()
     except:
         print('ERROR')
-
-stampaMenu()
