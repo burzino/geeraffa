@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: django-beautifulsoup-test
+Version: 1.1.3
+Summary: TestCase class for using BeautifulSoup with Django tests
+Home-page: https://github.com/jscott1989/django-beautifulsoup-test
+Author: Jonathan Scott
+Author-email: jonathan@jscott.me
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN

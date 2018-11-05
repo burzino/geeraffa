@@ -1,0 +1,10 @@
+README.rst
+setup.cfg
+setup.py
+beautifulsoup4_slurp.egg-info/PKG-INFO
+beautifulsoup4_slurp.egg-info/SOURCES.txt
+beautifulsoup4_slurp.egg-info/dependency_links.txt
+beautifulsoup4_slurp.egg-info/requires.txt
+beautifulsoup4_slurp.egg-info/top_level.txt
+bin/slurp
+slurp/__init__.py
