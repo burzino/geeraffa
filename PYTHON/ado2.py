@@ -5,10 +5,10 @@ def connection(db):
     host="localhost",  # your host, usually localhost
     user="root",  # your username
     passwd="",  # your password
-    db="uefa")  # name of the data base
+    db=db) # name of the data base
     return mydb
 
-def select(sql,db):
+def eseguiQuery(sql,db):
     cursor = db.cursor()
     try:
         # Execute the SQL command
@@ -27,7 +27,7 @@ def select(sql,db):
         db.close()
         return -1
 
-def insert(sql,db):
+def eseguiNonQuery(sql,db):
     cursor = db.cursor()
     try:
         # Execute the SQL command
@@ -41,4 +41,3 @@ def insert(sql,db):
         print("Error: unable to insert user")
         db.close()
         return -1
-
