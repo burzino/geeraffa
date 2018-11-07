@@ -1,4 +1,5 @@
-Faccio nu cazz di commit e push
+﻿Faccio nu cazz di commit e push
 confermo che è arrivato in groppa ad una gazzella in calore
 Bella storia, ora provo a modificare da github e aggiornare sulla mia cartella in locale: il comando per aggiornare dovrebbe essere git pull se non sbaglio
 Perfetto, ha funzionato!
+nome aggiornato e funzionante
