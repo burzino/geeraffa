@@ -1,10 +1,22 @@
+<%-- 
+    Document   : index
+    Created on : Nov 15, 2018, 6:20:54 PM
+    Author     : Geeraffa
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GEERAFFA - Ripetizioni</title>
+  <title>GEERAFFA -
+    <%--<% if(request.getAttribute("logged") == "Y") {%>
+        <%= request.getAttribute("name")%>
+    <% } else {%> --%>
+        ripetizioni
+    <%--<%}%>--%>
+  </title>
   <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
   <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
 
@@ -32,7 +44,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-                <a class="navbar-brand" href="index.html">GEE<span class="logo-dec">RAFFA</span></a>
+                <a class="navbar-brand" href="index.jsp">GEE<span class="logo-dec">RAFFA</span></a>
+                 
                 <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
               <div class="collapse navbar-collapse" id="myNavbar">
@@ -57,7 +70,7 @@
                 <h2 class="bnr-sub-title"></h2>
                 <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il <a href="login.html">login</a></p>
                 <div class="brn-btn">
-                  <a href="login.html" class="btn btn-download">LOG IN!</a>
+                  <a href="login.jsp" class="btn btn-download">LOG IN!</a>
                   <a href="#" class="btn btn-more">Registrati</a>
                 </div>
                 <div class="overlay-detail">
@@ -434,3 +447,4 @@
 
 </body>
 </html>
+

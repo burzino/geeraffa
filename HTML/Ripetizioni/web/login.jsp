@@ -1,3 +1,10 @@
+<%-- 
+    Document   : login
+    Created on : Nov 15, 2018, 6:29:31 PM
+    Author     : luca
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,13 +37,13 @@
                     <img src="img/img-01.png" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form">
+                <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post">
                     <span class="login100-form-title">
                         LOGIN - GEE<span class="logo-dec">RAFFA</span>
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
-                        <input class="input100" type="text"  placeholder="Username">
+                        <input class="input100" type="text" autofocus name="username" placeholder="Username">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -44,7 +51,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                        <input class="input100" type="password" name="pass" placeholder="Password">
+                        <input class="input100" type="password" name="pwd" placeholder="Password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -52,9 +59,7 @@
                     </div>
 
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">
-                            Login
-                        </button>
+                        <input type="submit" class="login100-form-btn" value="Login"/>
                     </div>
                 </form>
             </div>
