@@ -38,7 +38,8 @@
                 </div>
 
                 <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post">
-                    <span class="login100-form-title">
+                    <span class="login100-form-title" <% if(request.getAttribute("logged") == "N"){ %>style="color:red"<%}%>>
+                        
                         LOGIN - GEE<span class="logo-dec">RAFFA</span>
                     </span>
 
