@@ -58,7 +58,7 @@ public class Controller extends HttpServlet {
             {
                 request.setAttribute("logged", "Y");
                 request.setAttribute("username", username);
-                request.setAttribute("name", rs.getString("Nome"));
+                request.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
                 request.setAttribute("id", rs.getString("ID_Utente"));
             }
             else
