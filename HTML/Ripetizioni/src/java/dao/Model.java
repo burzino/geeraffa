@@ -68,4 +68,41 @@ public class Model {
         
         return rs;
     }
+    
+    public static int getLastID_Utente()
+    {
+        int id = 0;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT MAX(ID) FROM Utente");
+            ResultSet rs = st.getResultSet();
+            if(rs.next()) {
+                id = rs.getInt(1);
+            }
+            rs.close();
+            st.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        };
+        return id;
+    }
+    
+    public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
+        String sql = "";
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            sql = "INSERT INTO Utente(ID_Utente, Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
+                    + getLastID_Utente() + ",'" + username + "', '" + pwd + "','" + nome 
+                    + "', '" + cognome + "', '" + email + "', 'Admin')";
+            int res = st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
