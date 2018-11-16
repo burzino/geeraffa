@@ -280,7 +280,7 @@
                 </li>
                 <li>
                   <blockquote>
-                    <img src="img/thumb.png" class="img-responsive">
+                    <img src="img/gerbaudo.png" class="img-responsive">
                     <p>Il genere umano sarebbe rimasto nel suo stato originario se non fossero esistite altro che le donne. Ogni progresso è opera dell'uomo.</p>
                   </blockquote>
                   <small>Gerbaudo Luca, COO and Founder</small>
