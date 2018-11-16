@@ -4,7 +4,9 @@
     Author     : Geeraffa
 --%>
 
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="dao.*"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -44,7 +46,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-                <a class="navbar-brand" href="index.jsp">GEE<span class="logo-dec">RAFFA</span></a>
+                <a class="navbar-brand" href="index.jsp">GEE<span class="logo-dec">RAFFA</span>
+                    <% if(request.getAttribute("logged") == "Y"){ %>
+                    - BENTORNATO <%= request.getAttribute("name")%> <%}%>
+                </a>
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
@@ -62,6 +67,7 @@
             </div>
           </nav>
         </header>
+        <% if(request.getAttribute("logged") != "Y"){ %>
         <div class="wrapper">
           <div class="container">
             <div class="row">
@@ -82,6 +88,7 @@
         </div>
       </div>
     </div>
+    <% } %>
     <!--/ HEADER-->
     <!---->
     <!--<section id="feature" class="section-padding wow fadeIn delay-05s">
@@ -172,22 +179,31 @@
     <!---->
     <!---->
     <section id="corsi" class="section-padding wow fadeInUp delay-05s">
-      <div class="container">
+    <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
-            <h2 class="service-title pad-bt15">Corsi</h2>
-            <p class="sub-title pad-bt15">Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
+            <h2 class="service-title pad-bt15" <% if(request.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
+            <p class="sub-title pad-bt15"<% if(request.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
             <hr class="bottom-line">
           </div>
+    <%
+        Model.registerDriver();
+        ResultSet rs = Model.getCorsi();
+        while(rs.next())
+        {
+    %>
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
-              <img src="img/port01.jpg" class="img-responsive">
+                <img src="img/<%= rs.getString("Titolo")%>.jpg" class="img-responsive">
               <figcaption>
-                <h2>Uefa.py</h2>
-                <p>Che cazzo fa uefa.py.</p>
+                <h2><%= rs.getString("Titolo")%></h2>
+                <p><%= rs.getString("Descrizione")%></p>                
               </figcaption>
+              
             </figure>
           </div>
+        <%}%>
+        <!--
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
               <img src="img/port02.jpg" class="img-responsive">
@@ -259,7 +275,7 @@
                 <p>Carino il gestore che si credeva dio onnipotente.</p>
               </figcaption>
             </figure>
-          </div>
+          </div>-->
         </div>
       </div>
     </section>

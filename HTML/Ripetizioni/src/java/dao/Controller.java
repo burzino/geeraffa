@@ -36,30 +36,43 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         
-        ServletContext ctx = getServletContext();
-        String username = request.getParameter("username");
-        String pwd = request.getParameter("pwd");
-                
+        //Request PAGE
+        String page_request = request.getParameter("url").split("/")[4];        
         
-        Model.registerDriver();
-        ResultSet rs = Model.login(username, pwd);
-        
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
-        
-        if(rs.next())   //Username e password validi!
+        //From login.jsp
+        if(page_request.equals("login.jsp"))
         {
-            request.setAttribute("logged", "Y");
-            request.setAttribute("username", username);
-            request.setAttribute("name", rs.getString("Nome"));
-            request.setAttribute("id", rs.getString("ID_Utente"));
+            String username = request.getParameter("username");
+            String pwd = request.getParameter("pwd");
+
+            //From index.jsp
+
+            ServletContext ctx = getServletContext();
+
+            Model.registerDriver();
+            ResultSet rs = Model.login(username, pwd);
+
+            RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+
+            if(rs.next())   //Username e password validi!
+            {
+                request.setAttribute("logged", "Y");
+                request.setAttribute("username", username);
+                request.setAttribute("name", rs.getString("Nome"));
+                request.setAttribute("id", rs.getString("ID_Utente"));
+            }
+            else
+            {
+                rd = ctx.getRequestDispatcher("/login.jsp");
+                request.setAttribute("logged", "N");
+            }
+
+            rd.forward(request, response);
         }
-        else
+        else if(page_request.equals("index.jsp"))
         {
-            rd = ctx.getRequestDispatcher("/login.jsp");
-            request.setAttribute("logged", "N");
+            System.out.println("ARRIVO DALL'INDEX!!!");
         }
-        
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

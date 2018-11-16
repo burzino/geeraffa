@@ -38,9 +38,9 @@
                 </div>
 
                 <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post">
-                    <span class="login100-form-title" <% if(request.getAttribute("logged") == "N"){ %>style="color:red"<%}%>>
-                        
-                        LOGIN - GEE<span class="logo-dec">RAFFA</span>
+                    <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
+                    <span class="login100-form-title" <% if(request.getAttribute("logged") == "N"){ %>style="color:red"<%}%>>                        
+                        LOGIN - GEE<span class="logo-dec">RAFFA</span> 
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
