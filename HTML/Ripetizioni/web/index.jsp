@@ -28,6 +28,7 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/animate.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
 </head> 
 
 <body>
@@ -197,12 +198,20 @@
                 <img src="img/<%= rs.getString("Titolo")%>.jpg" class="img-responsive">
               <figcaption>
                 <h2><%= rs.getString("Titolo")%></h2>
-                <p><%= rs.getString("Descrizione")%></p>                
-              </figcaption>
-              
+                <p><%= rs.getString("Descrizione")%></p>
+                
+                <form action="<%=request.getContextPath()%>/Controller" method="post">
+                    <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
+                    <br/>
+                    <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
+                </form>
+              </figcaption>              
             </figure>
           </div>
         <%}%>
+        </div>
+      </div>
+    </section>
         <!--
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
@@ -275,10 +284,10 @@
                 <p>Carino il gestore che si credeva dio onnipotente.</p>
               </figcaption>
             </figure>
-          </div>-->
+          </div>
         </div>
       </div>
-    </section>
+    </section>-->
     <!---->
     <!---->
     <section id="testimonial" class="wow fadeInUp delay-05s">
