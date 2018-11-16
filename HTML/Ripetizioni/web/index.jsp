@@ -47,7 +47,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-                <a class="navbar-brand" href="index.jsp">GEE<span class="logo-dec">RAFFA</span>
+                <a class="navbar-brand" href="#main-header">GEE<span class="logo-dec">RAFFA</span>
                     <% if(request.getAttribute("logged") == "Y"){ %>
                     - BENTORNATO <%= request.getAttribute("name")%> <%}%>
                 </a>
@@ -56,13 +56,16 @@
               </div>
               <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="active"><a href="#main-header">Home</a></li>
-                  <!--<li class=""><a href="#feature">Prenota</a></li>-->
+                  <li class="active"><a href="#main-header">Home</a></li>                  
                   <!----<li class=""><a href="#service">Services</a></li>-->
                   <li class=""><a href="#corsi">Corsi</a></li>
                   <li class=""><a href="#testimonial">Testimonial</a></li>
                   <!---<li class=""><a href="#blog">Blog</a></li>-->
                   <li class=""><a href="#contact">Contact Us</a></li>
+                  <% if(request.getAttribute("logged") == "Y") { %>
+                  
+                    <li class=""><a href="<%= request.getContextPath()%>/index.jsp">Logout</a></li>
+                  <% } %>
                 </ul>
               </div>
             </div>
@@ -77,8 +80,8 @@
                 <h2 class="bnr-sub-title"></h2>
                 <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il <a href="login.html">login</a></p>
                 <div class="brn-btn">
-                  <a href="login.jsp" class="btn btn-download">LOG IN!</a>
-                  <a href="#" class="btn btn-more">Registrati</a>
+                  <a href="<%= request.getContextPath()%>/login.jsp" class="btn btn-download">LOG IN!</a>
+                  <a href="<%= request.getContextPath()%>/registration.jsp" class="btn btn-more">Registrati</a>
                 </div>
                 <div class="overlay-detail">
                   <a href="#corsi"><i class="fa fa-angle-down"></i></a>

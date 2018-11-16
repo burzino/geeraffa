@@ -37,7 +37,12 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException, SQLException {
         
         //Request PAGE
-        String page_request = request.getParameter("url").split("/")[4];        
+        String page_request = request.getParameter("url").split("/")[4];
+        
+        //Context
+        ServletContext ctx = getServletContext();
+        //Where to move
+        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
         
         //From login.jsp
         if(page_request.equals("login.jsp"))
@@ -45,14 +50,8 @@ public class Controller extends HttpServlet {
             String username = request.getParameter("username");
             String pwd = request.getParameter("pwd");
 
-            //From index.jsp
-
-            ServletContext ctx = getServletContext();
-
             Model.registerDriver();
-            ResultSet rs = Model.login(username, pwd);
-
-            RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+            ResultSet rs = Model.login(username, pwd);            
 
             if(rs.next())   //Username e password validi!
             {
@@ -67,12 +66,29 @@ public class Controller extends HttpServlet {
                 request.setAttribute("logged", "N");
             }
 
-            rd.forward(request, response);
         }
         else if(page_request.equals("index.jsp"))
         {
             System.out.println("ARRIVO DALL'INDEX!!!");
+            
         }
+        else if(page_request.equals("registration.jsp"))
+        {
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String pwd = request.getParameter("password");
+            
+            Model.registerDriver();
+            Model.insUtente(name, pwd, name, name + "cognome", email, "Admin");
+            System.out.println("Utente INSERITO!");
+            
+            request.setAttribute("logged", "Y");
+            request.setAttribute("name", name);
+            request.setAttribute("id", Model.getLastID_Utente()-1);
+            System.err.println(Model.getLastID_Utente()-1);
+        }
+        
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
