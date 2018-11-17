@@ -37,14 +37,14 @@
                     <img src="img/img-01.png" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post">
+                <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 320px">
                     <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
                     <span class="login100-form-title" <% if(request.getAttribute("logged") == "N"){ %>style="color:red"<%}%>>                        
                         LOGIN - GEE<span class="logo-dec">RAFFA</span> 
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
-                        <input class="input100" type="text" autofocus name="username" placeholder="Username">
+                        <input class="input100" type="text" name="username" placeholder="Username or Email">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>

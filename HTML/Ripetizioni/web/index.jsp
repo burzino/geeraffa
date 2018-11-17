@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GEERAFFA -
     <% if(request.getAttribute("logged") == "Y") {%>
-        <%= request.getAttribute("name")%> 
+        <%= request.getAttribute("name")%>
     <% } else {%>
         ripetizioni
     <%}%>

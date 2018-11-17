@@ -274,6 +274,8 @@ body {
     background-color: #444F64;
     cursor: pointer;
 }
+
+
   /*background-image: -moz-linear-gradient(to left, #74ebd5, #9face6);
   background-image: -ms-linear-gradient(to left, #74ebd5, #9face6);
   background-image: -o-linear-gradient(to left, #74ebd5, #9face6);
@@ -363,5 +365,4 @@ input[type=checkbox]:not(old):checked + label > span:before {
 @media screen and (max-width: 480px) {
   .signup-content {
     padding: 50px 25px; } }
-
 /*# sourceMappingURL=style.css.map */

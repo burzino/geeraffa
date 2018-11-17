@@ -34,14 +34,15 @@ public class Model {
         }
     }
     
+    //Select QUERY
     public static ResultSet login(String user, String pwd)
     {
         ResultSet rs = null;
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Utente where username='"
-                    + user + "' and Pwd='" + pwd + "'");
+            st.executeQuery("SELECT * FROM Utente where ((username='"
+                    + user + "' or Email='" + user + "')  and Pwd='" + pwd + "')");
             
             rs = st.getResultSet();
         }
@@ -69,6 +70,23 @@ public class Model {
         return rs;
     }
     
+    public static ResultSet getRuoli_NoAdmin()
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Ruolo where not(Nome = 'Admin')");
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getRuoli ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
+    
     public static int getLastID_Utente()
     {
         int id = 0;
@@ -89,6 +107,7 @@ public class Model {
         return id;
     }
     
+    //Update QUERY
     public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
         String sql = "";
         try {
@@ -96,7 +115,7 @@ public class Model {
             Statement st = conn.createStatement();
             sql = "INSERT INTO Utente(ID_Utente, Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
                     + getLastID_Utente() + ",'" + username + "', '" + pwd + "','" + nome 
-                    + "', '" + cognome + "', '" + email + "', 'Admin')";
+                    + "', '" + cognome + "', '" + email + "','" + ruolo + "')";
             int res = st.executeUpdate(sql);
             st.close();
             conn.close();

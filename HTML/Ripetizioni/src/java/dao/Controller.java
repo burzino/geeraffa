@@ -74,12 +74,15 @@ public class Controller extends HttpServlet {
         }
         else if(page_request.equals("registration.jsp"))
         {
+            String username = request.getParameter("username");
             String name = request.getParameter("name");
+            String cognome = request.getParameter("cognome");
             String email = request.getParameter("email");
             String pwd = request.getParameter("password");
+            String ruolo = request.getParameter("ruolo");
             
             Model.registerDriver();
-            Model.insUtente(name, pwd, name, name + "cognome", email, "Admin");
+            Model.insUtente(username, pwd, name, cognome, email, ruolo);
             System.out.println("Utente INSERITO!");
             
             request.setAttribute("logged", "Y");
