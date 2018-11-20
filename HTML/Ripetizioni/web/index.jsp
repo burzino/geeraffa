@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Nov 15, 2018, 6:20:54 PM
-    Author     : Geeraffa
+    Author     : GEERAFFA
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -315,7 +315,7 @@
                 </li>
                 <li>
                   <blockquote>
-                    <img src="img/thumb.png" class="img-responsive">
+                    <img src="img/racca.png" class="img-responsive">
                     <p>Progresso significa che per tutto occorre sempre meno tempo e sempre più denaro.</p>
                   </blockquote>
                   <small>Racca Andrea Rocco, CTO and Founder</small>
