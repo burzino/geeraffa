@@ -1,1 +1,8 @@
 test.txt
+bin/
+build/
+nbproject/
+src\conf/
+venv/
+__pycache__/
+.idea/
