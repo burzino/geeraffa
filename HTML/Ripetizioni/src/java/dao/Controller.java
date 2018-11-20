@@ -43,8 +43,54 @@ public class Controller extends HttpServlet {
         ServletContext ctx = getServletContext();
         //Where to move
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
-        
+        String username;
+        String pwd;
+        switch(page_request){
+            case "login.jsp":
+                username = request.getParameter("username");
+                pwd = request.getParameter("pwd");
+
+                Model.registerDriver();
+                ResultSet rs = Model.login(username, pwd);            
+
+                if(rs.next())   //Username e password validi!
+                {
+                    request.setAttribute("logged", "Y");
+                    request.setAttribute("username", username);
+                    request.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
+                    request.setAttribute("id", rs.getString("ID_Utente"));
+                }
+                else
+                {
+                    rd = ctx.getRequestDispatcher("/login.jsp");
+                    request.setAttribute("logged", "N");
+                }
+            
+                break;
+            case "index.jsp":
+                System.out.println("ARRIVO DALL'INDEX!!!");
+                break;
+            case "registration.jsp":
+                username = request.getParameter("username");
+                String name = request.getParameter("name");
+                String cognome = request.getParameter("cognome");
+                String email = request.getParameter("email");
+                pwd = request.getParameter("password");
+                String ruolo = request.getParameter("ruolo");
+
+                Model.registerDriver();
+                Model.insUtente(username, pwd, name, cognome, email, ruolo);
+                System.out.println("Utente INSERITO!");
+
+                request.setAttribute("logged", "Y");
+                request.setAttribute("name", name);
+                request.setAttribute("id", Model.getLastID_Utente()-1);
+                System.err.println(Model.getLastID_Utente()-1);
+                break;
+
+        }
         //From login.jsp
+        /*
         if(page_request.equals("login.jsp"))
         {
             String username = request.getParameter("username");
@@ -90,7 +136,7 @@ public class Controller extends HttpServlet {
             request.setAttribute("id", Model.getLastID_Utente()-1);
             System.err.println(Model.getLastID_Utente()-1);
         }
-        
+        */
         rd.forward(request, response);
     }
 
