@@ -4,17 +4,27 @@
     Author     : GEERAFFA
 --%>
 
+<%@page import="java.util.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="geeraffa.*"%>
+<%@ page import="dao.*"%>
 <!DOCTYPE html>
 <html lang="it">
+    <%
+    HttpSession ses = request.getSession();
+    Model.registerDriver();
+    List<Studente> lstStud = Model.getUtenti();
+    for (int i = 0; i < lstStud.size(); i++) {
+            //System.out.println(lstStud.get(i).getUsername());
+        }
+    %>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GEERAFFA -
-    <% if(request.getAttribute("logged") == "Y") {%>
-        <%= request.getAttribute("name")%>
+    <% if(ses.getAttribute("logged") == "Y") {%>
+        <%= ses.getAttribute("name")%>
     <% } else {%>
         ripetizioni
     <%}%>
@@ -48,37 +58,50 @@
                 <span class="icon-bar"></span>
               </button>
                 <a class="navbar-brand" href="#main-header">GEE<span class="logo-dec">RAFFA</span>
-                    <% if(request.getAttribute("logged") == "Y"){ %>
-                    - BUONA NAVIGAZIONE, <%= request.getAttribute("name")%>! <%}%>
+                    <% if(ses.getAttribute("logged") == "Y"){ %>
+                    - BUONA NAVIGAZIONE, <%=ses.getAttribute("name")%>! <%}%>
                 </a>
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
               <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                  <li class="active"><a href="#main-header">Home</a></li>                  
+                <ul class="nav navbar-nav navbar-right">                    
+                    <li class="active"><a href="#main-header">Home</a></li>
+                    
                   <!----<li class=""><a href="#service">Services</a></li>-->
                   <li class=""><a href="#corsi">Corsi</a></li>
-                  <li class=""><a href="#testimonial">Testimonial</a></li>
-                  <!---<li class=""><a href="#blog">Blog</a></li>-->
+                  <!--<li class=""><a href="#testimonial">Testimonial</a></li>-->
                   <li class=""><a href="#contact">Contact Us</a></li>
-                  <% if(request.getAttribute("logged") == "Y") { %>
-                  
-                    <li class=""><a href="<%= request.getContextPath()%>/index.jsp">Logout</a></li>
+                  <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
+                  <li class=""><a href="<%= request.getContextPath()%>/admin.jsp">
+                          AMMINISTRA</a></li>
                   <% } %>
+                  
+                  <% if(ses.getAttribute("logged") == "Y") {%>                  
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>
+                  <!--<form action="<%= request.getContextPath()%>/Controller" id="frmout" method="post">
+                  <li class="">
+                    
+                        <input type="hidden" name="toDo" value="logout"/>
+                      <!--<li>a href="#" onclick="document.getElementById('frmout').submit();">LOGOUT</a><!--</li>-->
+                    
+                  <!--</li>-->
+                  </form>-->
+                  <% } %>                                      
+                    
                 </ul>
               </div>
             </div>
           </nav>
         </header>
-        <% if(request.getAttribute("logged") != "Y"){ %>
+        <% if(ses.getAttribute("logged") != "Y"){ %>
         <div class="wrapper">
           <div class="container">
             <div class="row">
               <div class="banner-info text-center wow fadeIn delay-05s">
                   <h1 class="bnr-title">Semplifica la gestione delle tue prenotazioni con <span class="logo-dec">GE</span>E<span class="logo-dec">RA</span>F<span class="logo-dec">FA</span></h1>
                 <h2 class="bnr-sub-title"></h2>
-                <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il login</p>
+                <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il login    </p>
                 <div class="brn-btn">
                   <a href="<%= request.getContextPath()%>/login.jsp" class="btn btn-download">LOG IN!</a>
                   <a href="<%= request.getContextPath()%>/registration.jsp" class="btn btn-more">Registrati</a>
@@ -186,8 +209,8 @@
     <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
-            <h2 class="service-title pad-bt15" <% if(request.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
-            <p class="sub-title pad-bt15"<% if(request.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
+            <h2 class="service-title pad-bt15" <% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
+            <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
             <hr class="bottom-line">
           </div>
     <%
@@ -475,4 +498,3 @@
 
 </body>
 </html>
-

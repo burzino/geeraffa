@@ -28,7 +28,7 @@
             <!--<img src="img/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller" class="signup-form">
+                    <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller?toDo=Registration" class="signup-form">
                         <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
                         <h2 class="form-title">Crea il tuo account</h2>
                         <div class="form-group">
