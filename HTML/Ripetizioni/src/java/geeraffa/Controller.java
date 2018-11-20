@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package geeraffa;
 
+import dao.Studente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -43,6 +46,10 @@ public class Controller extends HttpServlet {
         ServletContext ctx = getServletContext();
         //Where to move
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+        
+        //Lista studenti
+        List<Studente> lstStudenti = new ArrayList<Studente>();
+        
         String username;
         String pwd;
         switch(page_request){
@@ -76,10 +83,11 @@ public class Controller extends HttpServlet {
                 String cognome = request.getParameter("cognome");
                 String email = request.getParameter("email");
                 pwd = request.getParameter("password");
-                String ruolo = request.getParameter("ruolo");
+                String ruolo = "Studente"; //request.getParameter("ruolo");
 
+                //Inserimento nel DB e nella lista
                 Model.registerDriver();
-                Model.insUtente(username, pwd, name, cognome, email, ruolo);
+                lstStudenti.add(Model.insUtente(username, pwd, name, cognome, email, ruolo));
                 System.out.println("Utente INSERITO!");
 
                 request.setAttribute("logged", "Y");

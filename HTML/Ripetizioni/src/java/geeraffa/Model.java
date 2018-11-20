@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package geeraffa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+import dao.*;
 
 /**
  *
@@ -102,13 +104,14 @@ public class Model {
             st.close();
             conn.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("getLastID_Utente: " + e.getMessage());
         };
         return id;
     }
     
     //Update QUERY
-    public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
+    public static Studente insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
+        Studente stud = new Studente(getLastID_Utente(), username, pwd, nome, cognome, email, ruolo);
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -121,7 +124,9 @@ public class Model {
             conn.close();
         } 
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("insUtente ERROR: " + e.getMessage());
         }
+        
+        return stud;
     }
 }
