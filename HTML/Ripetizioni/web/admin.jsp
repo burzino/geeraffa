@@ -77,9 +77,9 @@
                     </li>
                     <li class="menu-title">Tabelle</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">                       
-                            <li><a href="#">Corsi</a></li>
-                            <li><a href="#">Docenti</a></li>
-                            <li><a href="#">Prenotazioni</a></li>
+                    <li><a href="admin.jsp" target="iframe_admin">Corsi</a></li>
+                    <li><a href="admin.jsp" target="iframe_admin">Docenti</a></li>
+                    <li><a href="admin.jsp" target="iframe_admin">Prenotazioni</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -111,18 +111,7 @@
     <div class="content">  
         <div class="animated fadeIn">
             <div class="row">
-                <table class="table">
-                    <th> col1</th>
-                    <th> col2</th>
-                    <th> col3</th>
-                    <% int i = 0; while (i<5) { %>
-                        <tr>
-                            <td><%= i%></td>
-                            <td><%= i%></td>
-                            <td><buttun type="button" class="btn btn-primary"">modifica</buttun></td>
-                        </tr>
-                    <%i++; }  %>
-                </table>
+                <iframe src="admin.jsp" name="iframe_admin" style="width: 100%; height: 500px;"></iframe>
             </div>
         </div>
     </div>

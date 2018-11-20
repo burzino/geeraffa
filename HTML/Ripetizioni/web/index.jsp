@@ -50,7 +50,7 @@
       <div class="bg-color">
         <header id="main-header">
           <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
+              <div class="container" >
               <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
@@ -64,7 +64,7 @@
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
-              <div class="collapse navbar-collapse" id="myNavbar">
+                <div class="collapse navbar-collapse menutendasmart" id="myNavbar" >
                 <ul class="nav navbar-nav navbar-right">                    
                     <li class="active"><a href="#main-header">Home</a></li>
                     
@@ -97,7 +97,7 @@
         <% if(ses.getAttribute("logged") != "Y"){ %>
         <div class="wrapper">
           <div class="container">
-            <div class="row">
+            <div class="row" >
               <div class="banner-info text-center wow fadeIn delay-05s">
                   <h1 class="bnr-title">Semplifica la gestione delle tue prenotazioni con <span class="logo-dec">GE</span>E<span class="logo-dec">RA</span>F<span class="logo-dec">FA</span></h1>
                 <h2 class="bnr-sub-title"></h2>
@@ -207,7 +207,7 @@
     <!---->
     <section id="corsi" class="section-padding wow fadeInUp delay-05s">
     <div class="container">
-        <div class="row">
+        <div class="row" style="padding-top: 100px">
           <div class="col-md-12 text-center">
             <h2 class="service-title pad-bt15" <% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
             <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>

@@ -889,3 +889,9 @@ Responsive media queries
     text-align: center;
   }
 }
+
+@media(max-width:768px){
+    .menutendasmart{
+        background-color: #002F2F;
+    }
+}
