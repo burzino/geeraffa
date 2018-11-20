@@ -19,7 +19,7 @@ import dao.*;
  * @author GEERAFFA
  */
 public class Model {
-    private static final String URL = "jdbc:mysql://localhost:3306/ripetizione"; // url del DB
+    private static final String URL = "jdbc:mysql://localhost:3308/ripetizione"; // url del DB
     private static final String USER = "root"; // login utente da usare per connettersi
     private static final String PWD = ""; // password utente
 
