@@ -227,7 +227,7 @@
                 <p><%= rs.getString("Descrizione")%></p>
                 
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
-                    <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
+                    <input type="hidden" name="toDo" value="prenota"/>
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
                 </form>

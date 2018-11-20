@@ -28,8 +28,8 @@
             <!--<img src="img/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller?toDo=Registration" class="signup-form">
-                        <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
+                    <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller" class="signup-form">
+                        <input type="hidden" name="toDo" value="registration"/>
                         <h2 class="form-title">Crea il tuo account</h2>
                         <div class="form-group">
                             <input required type="text" class="form-input" name="name" id="name" placeholder="Nome"/>
