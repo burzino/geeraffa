@@ -77,49 +77,56 @@
                     </li>
                     <li class="menu-title">Tabelle</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">                       
-                            <li><a href="ui-buttons.html">Corsi</a></li>
-                            <li><a href="ui-badges.html">Docenti</a></li>
-                            <li><a href="ui-tabs.html">Prenotazioni</a></li>
+                            <li><a href="#">Corsi</a></li>
+                            <li><a href="#">Docenti</a></li>
+                            <li><a href="#">Prenotazioni</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside>
     <!-- /#left-panel -->
+
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                    <a class="navbar-brand" href="./"><img src="images/Logo_Giraffa.jpg" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="./"><img src="images/Logo_Giraffa.jpg" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
-            <div class="top-right">
-
-                    <div class="user-area dropdown float-right">
-                        <img class="user-avatar rounded-circle" src="images/admin.png" alt="User Avatar" style="margin-top:10px">
-                        
-
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
-
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
-                        </div>
-                    </div>
-
+            <div class="top-right prova">
+                <div class="user-area dropdown float-right prova" style="margin-top:10px;">
+                    <img class="user-avatar rounded-circle prova" src="images/admin.png" alt="User Avatar">
                 </div>
             </div>
+            
+            
         </header>
+        
         <!-- /#header -->
-        <!-- Content -->
-       
-        <!-- /.content -->
+    <!-- Content -->
+    <div class="content">  
+        <div class="animated fadeIn">
+            <div class="row">
+                <table class="table">
+                    <th> col1</th>
+                    <th> col2</th>
+                    <th> col3</th>
+                    <% int i = 0; while (i<5) { %>
+                        <tr>
+                            <td><%= i%></td>
+                            <td><%= i%></td>
+                            <td><buttun type="button" class="btn btn-primary"">modifica</buttun></td>
+                        </tr>
+                    <%i++; }  %>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /#content-->
         <div class="clearfix"></div>
         <!-- Footer -->
         <footer class="site-footer">
@@ -129,7 +136,7 @@
                         Copyright &copy; 2018 Geeraffa
                     </div>
                     <div class="col-sm-6 text-right">
-                        Designed by geeraffa
+                        Designed by Geeraffa
                     </div>
                 </div>
             </div>
@@ -137,7 +144,7 @@
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
-
+   
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
