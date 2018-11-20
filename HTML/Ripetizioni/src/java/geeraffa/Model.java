@@ -37,6 +37,32 @@ public class Model {
     }
     
     //Select QUERY
+    public static List<Studente> getUtenti()
+    {
+        List<Studente> lst = new ArrayList<Studente>();
+        
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Utente");
+            rs = st.getResultSet();
+            
+            while(rs.next())
+            {
+                Studente stud = new Studente(rs.getInt("ID_Utente"), rs.getString("Username"),
+                        rs.getString("Pwd"), rs.getString("Nome"), rs.getString("Cognome"),
+                        rs.getString("Email"), rs.getString("Ruolo"));
+                lst.add(stud);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("Login ERROR: " + e.getMessage());
+        };
+        
+        return lst;
+    }
+    
     public static ResultSet login(String user, String pwd)
     {
         ResultSet rs = null;
@@ -110,7 +136,7 @@ public class Model {
     }
     
     //Update QUERY
-    public static Studente insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
+    public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
         Studente stud = new Studente(getLastID_Utente(), username, pwd, nome, cognome, email, ruolo);
         String sql = "";
         try {
@@ -119,7 +145,8 @@ public class Model {
             sql = "INSERT INTO Utente(ID_Utente, Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
                     + getLastID_Utente() + ",'" + username + "', '" + pwd + "','" + nome 
                     + "', '" + cognome + "', '" + email + "','" + ruolo + "')";
-            int res = st.executeUpdate(sql);
+            
+            st.executeUpdate(sql);
             st.close();
             conn.close();
         } 
@@ -127,6 +154,5 @@ public class Model {
             System.out.println("insUtente ERROR: " + e.getMessage());
         }
         
-        return stud;
     }
 }

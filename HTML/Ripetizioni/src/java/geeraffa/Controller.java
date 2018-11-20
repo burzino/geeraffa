@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,23 +38,25 @@ public class Controller extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException {        
+        System.out.println("AAAAAAAANNNNNNN " + request.getParameter("toDo"));
         
+        String action = request.getParameter("toDo");
         //Request PAGE
-        String page_request = request.getParameter("url").split("/")[4];
+        //String page_request = request.getParameter("url").split("/")[4];
         
         //Context
         ServletContext ctx = getServletContext();
         //Where to move
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
         
-        //Lista studenti
-        List<Studente> lstStudenti = new ArrayList<Studente>();
-        
         String username;
         String pwd;
-        switch(page_request){
-            case "login.jsp":
+        
+        HttpSession ses = request.getSession();
+        
+        switch(action){
+            case "login":
                 username = request.getParameter("username");
                 pwd = request.getParameter("pwd");
 
@@ -62,10 +65,13 @@ public class Controller extends HttpServlet {
 
                 if(rs.next())   //Username e password validi!
                 {
-                    request.setAttribute("logged", "Y");
-                    request.setAttribute("username", username);
-                    request.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
-                    request.setAttribute("id", rs.getString("ID_Utente"));
+                    ses.setAttribute("logged", "Y");
+                    ses.setAttribute("username", username);
+                    ses.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
+                    ses.setAttribute("id", rs.getString("ID_Utente"));
+                    ses.setAttribute("ruolo", rs.getString("Ruolo"));
+                    
+                    ses.setAttribute("logged", "Y");
                 }
                 else
                 {
@@ -74,10 +80,10 @@ public class Controller extends HttpServlet {
                 }
             
                 break;
-            case "index.jsp":
+            case "index":
                 System.out.println("ARRIVO DALL'INDEX!!!");
                 break;
-            case "registration.jsp":
+            case "registration":
                 username = request.getParameter("username");
                 String name = request.getParameter("name");
                 String cognome = request.getParameter("cognome");
@@ -85,18 +91,24 @@ public class Controller extends HttpServlet {
                 pwd = request.getParameter("password");
                 String ruolo = "Studente"; //request.getParameter("ruolo");
 
-                //Inserimento nel DB e nella lista
+                //Inserimento nel DB
                 Model.registerDriver();
-                lstStudenti.add(Model.insUtente(username, pwd, name, cognome, email, ruolo));
+                Model.insUtente(username, pwd, name, cognome, email, ruolo);
                 System.out.println("Utente INSERITO!");
 
-                request.setAttribute("logged", "Y");
-                request.setAttribute("name", name);
-                request.setAttribute("id", Model.getLastID_Utente()-1);
+                ses.setAttribute("logged", "Y");
+                ses.setAttribute("name", name);
+                ses.setAttribute("id", Model.getLastID_Utente()-1);
+                ses.setAttribute("ruolo", ruolo);
                 System.err.println(Model.getLastID_Utente()-1);
+                break;
+            case "logout":
+                ses.invalidate();
                 break;
 
         }
+        
+        rd.forward(request, response);
         //From login.jsp
         /*
         if(page_request.equals("login.jsp"))
@@ -144,8 +156,7 @@ public class Controller extends HttpServlet {
             request.setAttribute("id", Model.getLastID_Utente()-1);
             System.err.println(Model.getLastID_Utente()-1);
         }
-        */
-        rd.forward(request, response);
+        */        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
