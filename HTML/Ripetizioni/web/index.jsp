@@ -49,7 +49,7 @@
               </button>
                 <a class="navbar-brand" href="#main-header">GEE<span class="logo-dec">RAFFA</span>
                     <% if(request.getAttribute("logged") == "Y"){ %>
-                    - BENTORNATO <%= request.getAttribute("name")%> <%}%>
+                    - BUONA NAVIGAZIONE, <%= request.getAttribute("name")%>! <%}%>
                 </a>
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->

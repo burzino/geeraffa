@@ -91,7 +91,7 @@ public class Controller extends HttpServlet {
                 System.out.println("Utente INSERITO!");
 
                 request.setAttribute("logged", "Y");
-                request.setAttribute("name", name);
+                request.setAttribute("name", name + " " + cognome);
                 request.setAttribute("id", Model.getLastID_Utente()-1);
                 System.err.println(Model.getLastID_Utente()-1);
                 break;
