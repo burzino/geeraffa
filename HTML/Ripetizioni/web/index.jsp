@@ -207,7 +207,7 @@
     <!---->
     <section id="corsi" class="section-padding wow fadeInUp delay-05s">
     <div class="container">
-        <div class="row" style="padding-top: 100px">
+        <div class="row" style="padding-top: 50px">
           <div class="col-md-12 text-center">
             <h2 class="service-title pad-bt15" <% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
             <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
