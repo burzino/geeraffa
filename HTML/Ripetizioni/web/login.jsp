@@ -38,10 +38,9 @@
                     <img src="img/img-01.png" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" 
-                      method="post" style="width: 320px">
+                <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 320px">
                     <input type="hidden" name="toDo" value="login"/>
-                    <span class="login100-form-title" <% if(request.getAttribute("logged") == "N"){ %>style="color:red"<%}%>>                        
+                    <span class="login100-form-title">
                         LOGIN - GEE<span class="logo-dec">RAFFA</span> 
                     </span>
 
@@ -64,6 +63,10 @@
                     <div class="container-login100-form-btn">
                         <input type="submit" class="login100-form-btn" value="Login"/>
                     </div>
+                    
+                    <% if(request.getAttribute("logged") == "N"){ %>
+                        <br/><h5 align="center" style="color:red">Username o password errati.</h5>
+                    <% } %>
                 </form>
             </div>
         </div>
