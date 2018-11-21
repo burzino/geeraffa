@@ -106,6 +106,14 @@ public class Controller extends HttpServlet {
                 System.out.println("ARRIVO DALL'ADMIN!!!");
                 rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
                 break;
+            case "tab_corsi":
+                System.out.println("ARRIVO DALL'ADMIN!!!");
+                rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
+                break;
+            case "tab_prenotazioni":
+                System.out.println("ARRIVO DALL'ADMIN!!!");
+                rd = ctx.getRequestDispatcher("/tab_prenotazioni.jsp");
+                break;
             case "logout":
                 ses.invalidate();
                 break;

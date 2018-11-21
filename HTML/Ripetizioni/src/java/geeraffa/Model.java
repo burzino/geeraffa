@@ -171,4 +171,20 @@ public class Model {
         
         return rs;
     }
+    public static ResultSet getPrenotazioni()
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM prenotazioni");
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getCorsi ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
 }
