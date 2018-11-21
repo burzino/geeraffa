@@ -22,7 +22,7 @@ public class JSonLogin extends AsyncTask<String, String, String> {
     private String getLoginDataFromJson(String forecastJsonStr)
             throws JSONException {
 
-        // These are the names of the JSON objects that need to be extracted.
+        // These is a name of the JSON objects that need to be extracted.
         final String OWM_LOGGED = "logged";
         JSONObject forecastJson = new JSONObject(forecastJsonStr);
         return forecastJson.getString(OWM_LOGGED);
@@ -40,21 +40,20 @@ public class JSonLogin extends AsyncTask<String, String, String> {
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-
         // Will contain the raw JSON response as a string.
         String forecastJsonStr = null;
-
         String format = "json";
         String units = "metric";
         try{
+
             final String FORECAST_BASE_URL =
-                    "http://192.168.1.xx:8080/Controller";
-        Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                    "http://192.168.1.xx:8080/Ripetizioni/Controller?toDo=Login&mobile=y";
+            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                 .appendQueryParameter("username", strings[0])
                 .appendQueryParameter("pwd", strings[1])
                 .build();
 
-        URL url = new URL(builtUri.toString());
+            URL url = new URL(builtUri.toString());
             Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
             // Create the request to OpenWeatherMap, and open the connection
@@ -103,6 +102,13 @@ public class JSonLogin extends AsyncTask<String, String, String> {
                     Log.e(LOG_TAG, "Error closing stream", e);
                 }
             }
+        }
+
+        try {
+            return getLoginDataFromJson(forecastJsonStr);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
         }
         // This will only happen if there was an error getting or parsing the forecast.
         return null;
