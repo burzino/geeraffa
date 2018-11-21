@@ -56,7 +56,7 @@
                                     <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
-                                    <td><input type="button" class="btn-primary" value="modifica" id="<%=rs.getInt("ID_Utente")%>"  ></td>
+                                    <td><input type="button" class="btn btn-secondary" value="modifica" id="<%=rs.getInt("ID_Utente")%>"  ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>

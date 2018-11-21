@@ -31,7 +31,7 @@
         <title>docenti</title>
     </head>
     <body>
-        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
+        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
                 Model.registerDriver();
@@ -56,7 +56,7 @@
                                     <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
-                                    <td><input type="button" class="btn-primary" value="modifica" id="<%=rs.getInt("ID_Utente")%>"  ></td>
+                                    <td><input type="button" class="btn btn-secondary" value="modifica" id="<%=rs.getInt("ID_Utente")%>"  ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
