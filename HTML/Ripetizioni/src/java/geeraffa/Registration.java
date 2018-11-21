@@ -47,20 +47,20 @@ public class Registration extends HttpServlet {
         HttpSession ses = request.getSession();
 
         String username = request.getParameter("username");
-        String name = request.getParameter("name");
+        String nome = request.getParameter("name");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String pwd = request.getParameter("password");
-        String ruolo = "Studente"; //request.getParameter("ruolo");
+        String ruolo = "Studente";
 
         //Inserimento nel DB
         Model.registerDriver();
-        Model.insUtente(username, pwd, name, cognome, email, ruolo);
+        Model.insUtente(username, pwd, nome, cognome, email, ruolo);
         System.out.println("Utente INSERITO!");
 
         ses.setAttribute("logged", "Y");
-        ses.setAttribute("name", name);
-        ses.setAttribute("id", Model.getLastID_Utente()-1);
+        ses.setAttribute("name", nome + " " + cognome);
+        ses.setAttribute("id", Model.getLastID_Utente());
         ses.setAttribute("ruolo", ruolo);
         
         rd = ctx.getRequestDispatcher("/index.jsp");

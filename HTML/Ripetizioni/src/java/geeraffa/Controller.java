@@ -40,22 +40,14 @@ public class Controller extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {        
-        
-        System.out.println("AAAAAAAANNNNNNN " + request.getParameter("toDo"));
+            throws ServletException, IOException, SQLException {
         
         String action = request.getParameter("toDo");
-        
-        //Request PAGE
-        //String page_request = request.getParameter("url").split("/")[4];
         
         //Context
         ServletContext ctx = getServletContext();
         //Where to move
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
-        
-        String username;
-        String pwd;
         
         HttpSession ses = request.getSession();
         
@@ -70,7 +62,7 @@ public class Controller extends HttpServlet {
                 ses.invalidate();
                 break;
             case "prenota":
-                System.out.println("ARRIVO DALLE IMG DELL'INDEX");
+                rd = ctx.getRequestDispatcher("/Prenota");
                 break;
             case "registration":
                 rd = ctx.getRequestDispatcher("/Registration");

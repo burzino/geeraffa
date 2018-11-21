@@ -121,7 +121,7 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT MAX(ID) FROM Utente");
+            st.executeQuery("SELECT MAX(ID_Utente) FROM Utente");
             ResultSet rs = st.getResultSet();
             if(rs.next()) {
                 id = rs.getInt(1);

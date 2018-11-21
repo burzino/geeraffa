@@ -8,8 +8,6 @@ package geeraffa;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -28,8 +26,8 @@ import org.json.JSONObject;
  *
  * @author GEERAFFA
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "Prenota", urlPatterns = {"/Prenota"})
+public class Prenota extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,8 +39,7 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, JSONException {
-        
+            throws ServletException, IOException, JSONException {
         //Context
         ServletContext ctx = getServletContext();
         
@@ -50,57 +47,21 @@ public class Login extends HttpServlet {
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
         
         HttpSession ses = request.getSession();
-                
-        String mobile = request.getParameter("mobile");
-        String username = request.getParameter("username");
-        String pwd = request.getParameter("pwd");
         
-        Model.registerDriver();
-        ResultSet rs = Model.login(username, pwd);
-            
-        //Login da pagina web
-        if(mobile == null)
-        {            
-            if(rs.next())   //Username e password validi!
-            {
-                ses.setAttribute("logged", "Y");
-                ses.setAttribute("username", username);
-                ses.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
-                ses.setAttribute("id", rs.getString("ID_Utente"));
-                ses.setAttribute("ruolo", rs.getString("Ruolo"));
+        //ses.setAttribute("logged", "N");
+        JSONObject obj = new JSONObject();
+        obj.put("Name", "crunchify.com");
+        obj.put("Author", "App Shah");
 
-                ses.setAttribute("logged", "Y");
-            }
-            else
-            {
-                rd = ctx.getRequestDispatcher("/login.jsp");
-                request.setAttribute("logged", "N");
-            }
+        JSONArray company = new JSONArray();
+        company.put("Compnay: eBay");
+        company.put("Compnay: Paypal");
+        company.put("Compnay: Google");
+        obj.put("Company List", company);
 
-            rd.forward(request, response);
-        }
-        //Login dall'APP
-        else
-        {
-            JSONObject obj = new JSONObject();            
-
-            /*JSONArray company = new JSONArray();
-            company.put("Compnay: eBay");
-            company.put("Compnay: Paypal");
-            company.put("Compnay: Google");
-            obj.put("Company List", company);*/
-            
-            if(rs.next())   //Username e password validi!
-                obj.put("logged", "Y");                
-            else
-                obj.put("logged", "N");
-            
-            try (PrintWriter out = response.getWriter()) {
-                out.println(obj.toString());
-            }
-
-            //System.out.println("ARRIVO DALL'APP!!!!");
-        }
+        System.out.println("JSON " + obj.toString());
+        
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -117,10 +78,8 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -137,10 +96,8 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
