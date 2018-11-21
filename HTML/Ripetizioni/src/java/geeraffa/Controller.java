@@ -83,6 +83,12 @@ public class Controller extends HttpServlet {
             case "index":
                 System.out.println("ARRIVO DALL'INDEX!!!");
                 break;
+            case "logout":
+                ses.invalidate();
+                break;
+            case "prenota":
+                System.out.println("ARRIVO DALLE IMG DELL'INDEX");
+                break;
             case "registration":
                 username = request.getParameter("username");
                 String name = request.getParameter("name");
@@ -113,10 +119,7 @@ public class Controller extends HttpServlet {
             case "tab_prenotazioni":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
                 rd = ctx.getRequestDispatcher("/tab_prenotazioni.jsp");
-                break;
-            case "logout":
-                ses.invalidate();
-                break;
+                break;            
 
         }
         
