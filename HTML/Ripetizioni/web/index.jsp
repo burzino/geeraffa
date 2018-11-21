@@ -225,12 +225,13 @@
               <figcaption>
                 <h2><%= rs.getString("Titolo")%></h2>
                 <p><%= rs.getString("Descrizione")%></p>
-                
+                <% if(ses.getAttribute("logged") == "Y") { %>
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
                     <input type="hidden" name="toDo" value="prenota"/>
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
                 </form>
+                <% } %>
               </figcaption>              
             </figure>
           </div>
@@ -238,83 +239,6 @@
         </div>
       </div>
     </section>
-        <!--
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port02.jpg" class="img-responsive">
-              <figcaption>
-                <h2>ProgIII</h2>
-                <p>Quel che forse faremo di prog III.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port03.jpg" class="img-responsive">
-              <figcaption>
-                <h2>Prenotazione android</h2>
-                <p>Stessa cosa ma su android.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port04.jpg" class="img-responsive">
-              <figcaption>
-                <h2>Database per prj db</h2>
-                <p>Non mi ricordo cosa faceva.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port05.jpg" class="img-responsive">
-              <figcaption>
-                <h2>Algoritmi</h2>
-                <p>Stra TRIGGERED.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Carino il gestore che si credeva dio onnipotente.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Wei campione.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Carino il gestore che si credeva dio onnipotente.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Carino il gestore che si credeva dio onnipotente.</p>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-    </section>-->
-    <!---->
     <!---->
     <section id="testimonial" class="wow fadeInUp delay-05s">
       <div class="bg-testicolor">
