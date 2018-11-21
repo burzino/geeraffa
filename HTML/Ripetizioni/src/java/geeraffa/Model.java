@@ -19,7 +19,7 @@ import dao.*;
  * @author GEERAFFA
  */
 public class Model {
-    private static final String URL = "jdbc:mysql://localhost:3308/ripetizione"; // url del DB
+    private static final String URL = "jdbc:mysql://localhost:3306/ripetizione"; // url del DB
     private static final String USER = "root"; // login utente da usare per connettersi
     private static final String PWD = ""; // password utente
 
@@ -154,5 +154,21 @@ public class Model {
             System.out.println("insUtente ERROR: " + e.getMessage());
         }
         
+    }
+    public static ResultSet getDocenti()
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Utente WHERE ruolo = 'Docente'");
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getCorsi ERROR: " + e.getMessage());
+        };
+        
+        return rs;
     }
 }

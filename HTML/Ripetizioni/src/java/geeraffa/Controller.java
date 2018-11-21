@@ -102,6 +102,10 @@ public class Controller extends HttpServlet {
                 ses.setAttribute("ruolo", ruolo);
                 System.err.println(Model.getLastID_Utente()-1);
                 break;
+            case "tab_docenti":
+                System.out.println("ARRIVO DALL'ADMIN!!!");
+                rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
+                break;
             case "logout":
                 ses.invalidate();
                 break;

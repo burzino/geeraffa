@@ -1,8 +1,18 @@
+<%-- 
+    Document   : index
+    Created on : Nov 15, 2018, 6:20:54 PM
+    Author     : GEERAFFA
+--%>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="geeraffa.*"%>
+<%@ page import="dao.*"%>
+
+
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
+<html class="no-js" lang=""> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -76,10 +86,11 @@
                         <a href="index.jsp"><i class="menu-icon fa fa-laptop"></i>Home </a>
                     </li>
                     <li class="menu-title">Tabelle</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">                       
-                    <li><a href="admin.jsp" target="iframe_admin">Corsi</a></li>
-                    <li><a href="admin.jsp" target="iframe_admin">Docenti</a></li>
-                    <li><a href="admin.jsp" target="iframe_admin">Prenotazioni</a></li>
+                    <li class="menu-item-has-children dropdown">                 
+                    <li><a href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="iframe_admin">Docenti</a></li>
+                    <li><a href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="iframe_admin">Corsi</a></li>
+                    <li><a href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="iframe_admin">Prenotazioni</a></li>
+
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
