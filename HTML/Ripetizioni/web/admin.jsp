@@ -122,7 +122,7 @@
     <div class="content">  
         <div class="animated fadeIn">
             <div class="row">
-                <iframe src="admin.jsp" name="iframe_admin" style="width: 100%; height: 500px;"></iframe>
+                <iframe src="img/logo1.png" name="iframe_admin" style="width: 100%; height: 500px; background-color: #FFF; "></iframe>
             </div>
         </div>
     </div>
