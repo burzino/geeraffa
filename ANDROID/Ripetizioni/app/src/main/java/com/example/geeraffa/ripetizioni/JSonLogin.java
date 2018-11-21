@@ -1,4 +1,5 @@
 package com.example.geeraffa.ripetizioni;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -12,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class JSonLogin {
     private final String LOG_TAG = JSonLogin.class.getSimpleName();
@@ -117,12 +119,15 @@ public class JSonLogin {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
+
             // This will only happen if there was an error getting or parsing the forecast.
             return null;
         }
     }
-    public  void doit(String s1,String s2){
+    public  String doit(String s1,String s2) throws ExecutionException, InterruptedException {
         LoginTask loginTask = new LoginTask();
-        loginTask.execute(s1,s2);
+        String logged = loginTask.execute(s1,s2).get().toString();
+        Log.d(LOG_TAG, "Torno il LOGIN: " + logged);
+        return logged;
     }
 }

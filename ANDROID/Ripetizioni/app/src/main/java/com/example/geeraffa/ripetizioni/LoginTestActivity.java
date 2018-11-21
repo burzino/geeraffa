@@ -1,11 +1,14 @@
 package com.example.geeraffa.ripetizioni;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.concurrent.ExecutionException;
 
 public class LoginTestActivity extends AppCompatActivity {
 
@@ -20,7 +23,19 @@ public class LoginTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 JSonLogin JLogin = new JSonLogin();
-                JLogin.doit(txtUser.getText().toString(),txtPwd.getText().toString());
+                try {
+                    String logged = JLogin.doit(txtUser.getText().toString(),txtPwd.getText().toString());
+                    if(logged.equals("Y"))
+                    {
+                        Intent myIntent = new Intent(LoginTestActivity.this, Main2Activity.class);
+                        myIntent.putExtra("logged", logged); //Optional parameters
+                        LoginTestActivity.this.startActivity(myIntent);
+                    }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
