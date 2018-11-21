@@ -75,7 +75,7 @@ public class Main2Activity extends AppCompatActivity
         }
         else if(id == R.id.action_signin)
         {
-            Intent myIntent = new Intent(Main2Activity.this, LoginActivity.class);
+            Intent myIntent = new Intent(Main2Activity.this, LoginTestActivity.class);
             myIntent.putExtra("extra", "extraparam from main2activity"); //Optional parameters
             Main2Activity.this.startActivity(myIntent);
         }
