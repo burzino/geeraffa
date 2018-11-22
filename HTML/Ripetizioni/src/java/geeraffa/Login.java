@@ -82,13 +82,7 @@ public class Login extends HttpServlet {
         //Login dall'APP
         else
         {
-            JSONObject obj = new JSONObject();            
-
-            /*JSONArray company = new JSONArray();
-            company.put("Compnay: eBay");
-            company.put("Compnay: Paypal");
-            company.put("Compnay: Google");
-            obj.put("Company List", company);*/
+            JSONObject obj = new JSONObject();
             
             if(rs.next())   //Username e password validi!
             {
@@ -100,11 +94,10 @@ public class Login extends HttpServlet {
             else
                 obj.put("logged", "N");
             
+            //Invio oggetto JSON all'app
             try (PrintWriter out = response.getWriter()) {
                 out.println(obj.toString());
             }
-
-            //System.out.println("ARRIVO DALL'APP!!!!");
         }
     }
 
