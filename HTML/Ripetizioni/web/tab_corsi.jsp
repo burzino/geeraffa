@@ -31,6 +31,7 @@
         <title>corsi</title>
     </head>
     <body>
+        <% String prova;%>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
             <input type="hidden" name="toDo" value="tab_corsi"/>
                 <%
@@ -51,13 +52,48 @@
                                 <tr>
                                     <td><%= rs.getString("Titolo")%></td>
                                     <td><%= rs.getString("Descrizione")%></td>
-                                    <td><input type="button" class="btn btn-secondary" value="modifica" id="<%=rs.getString("Titolo")%>"  ></td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modificaCorsi" id="<%=rs.getString("Titolo")%>" onClick="getId(this,'<%=rs.getString("Descrizione")%>')">Gestisci</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Elimina Corso</button>
+                                    </td>
                                 </tr>
-                                <%}%>
+                                <% } %>
+                                
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                </div>
+                                
+                <!-- Modal -->
+                <div class="modal fade" id="modificaCorsi" tabindex="-1" role="dialog" aria-labelledby="modificaCorsiLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="modificaCorsiTitle">Modifica Corsi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <table>
+                                <tr>
+                                    <td>Titolo: </td>
+                                    <td><input type="text" id="titolo"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Descriozione: </td>
+                                    <td><input type="text" id="descrizione"/></td>
+                                </tr>
+                          </table>
+                          
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-success">Salva Le Modifiche</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
         </form>
@@ -85,6 +121,14 @@
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
       } );
+      
+      function getId(btn, desc){
+          //alert(btn.id);
+          var titolo = document.getElementById("titolo");
+          titolo.value = btn.id;
+          var descrizione = document.getElementById("descrizione");
+          descrizione.value = desc;
+      }
   </script>
     </body>
 </html>
