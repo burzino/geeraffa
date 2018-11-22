@@ -24,11 +24,17 @@ public class LoginTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 JSonLogin JLogin = new JSonLogin();
                 try {
-                    String logged = JLogin.doit(txtUser.getText().toString(),txtPwd.getText().toString());
-                    if(logged.equals("Y"))
+                    String[] logged = JLogin.doit(txtUser.getText().toString(),txtPwd.getText().toString());
+                    if(logged[0].equals("Y"))
                     {
+
                         Intent myIntent = new Intent(LoginTestActivity.this, Main2Activity.class);
-                        myIntent.putExtra("logged", logged); //Optional parameters
+                        //Optional parameters
+                        myIntent.putExtra("logged", logged[0]);
+                        myIntent.putExtra("nome", logged[1]);
+                        myIntent.putExtra("cognome", logged[2]);
+                        myIntent.putExtra("email", logged[3]);
+
                         LoginTestActivity.this.startActivity(myIntent);
                     }
                 } catch (ExecutionException e) {

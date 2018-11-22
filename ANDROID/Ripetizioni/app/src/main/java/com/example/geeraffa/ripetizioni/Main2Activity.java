@@ -26,16 +26,16 @@ public class Main2Activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        //Get EXTRA
+
+        //Get EXTRA DA LoginTestActivity
+
         Intent myintent = getIntent();
         String logged = myintent.getStringExtra("logged");
-        TextView txtLogged = (TextView) findViewById(R.id.prova);
-        if(logged != null)
-        {
-            txtLogged.setText(logged);
-        }
+        String nome = myintent.getStringExtra("nome");
+        String cognome = myintent.getStringExtra("cognome");
+        String email = myintent.getStringExtra("email");
 
-
+        //BOTTONE IN BASSO A SINISTRA
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,13 +49,30 @@ public class Main2Activity extends AppCompatActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView txtNomeCognome = (TextView) headerView.findViewById(R.id.nomeCognomeDrawer);
+        TextView txtEmail = (TextView) headerView.findViewById(R.id.emailDrawer);
+
+        if (logged!=null) {
+            txtNomeCognome.setText(nome + " " + cognome);
+            txtEmail.setText(email);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.action_signin).setVisible(false);
+
+        }
     }
 
     @Override
@@ -87,12 +104,6 @@ public class Main2Activity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "apri impostazioni", Toast.LENGTH_LONG).show();
             return true;
         }
-        else if(id == R.id.action_signin)
-        {
-            Intent myIntent = new Intent(Main2Activity.this, LoginTestActivity.class);
-            myIntent.putExtra("extra", "extraparam from main2activity"); //Optional parameters
-            Main2Activity.this.startActivity(myIntent);
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -115,6 +126,11 @@ public class Main2Activity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id== R.id.action_signin)
+        {
+            Intent myIntent = new Intent(Main2Activity.this, LoginTestActivity.class);
+            myIntent.putExtra("extra", "extraparam from main2activity"); //Optional parameters
+            Main2Activity.this.startActivity(myIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

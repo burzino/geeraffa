@@ -26,15 +26,18 @@ public class JSonLogin {
 
             // These is a name of the JSON objects that need to be extracted.
             final String OWM_LOGGED = "logged";
+            final String OWM_NOME = "nome";
+            final String OWM_COGNOME = "cognome";
+            final String OWM_EMAIL = "email";
+
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            return forecastJson.getString(OWM_LOGGED);
+            return forecastJson.getString(OWM_LOGGED)+ "-" +forecastJson.getString(OWM_NOME)+ "-"+forecastJson.getString(OWM_COGNOME)+ "-"+forecastJson.getString(OWM_EMAIL);
 
 
         }
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.v(LOG_TAG, "LOGGATO???????????? " + s.toString());
         }
         @Override
         protected String doInBackground(String... strings) {
@@ -124,10 +127,9 @@ public class JSonLogin {
             return null;
         }
     }
-    public  String doit(String s1,String s2) throws ExecutionException, InterruptedException {
+    public  String[] doit(String s1,String s2) throws ExecutionException, InterruptedException {
         LoginTask loginTask = new LoginTask();
-        String logged = loginTask.execute(s1,s2).get().toString();
-        Log.d(LOG_TAG, "Torno il LOGIN: " + logged);
+        String[] logged = loginTask.execute(s1,s2).get().split("-");
         return logged;
     }
 }
