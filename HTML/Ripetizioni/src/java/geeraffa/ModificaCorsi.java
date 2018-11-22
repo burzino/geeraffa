@@ -7,6 +7,7 @@ package geeraffa;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,15 +19,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONException;
+import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
 /**
  *
- * @author GEERAFFA
+ * @author Andrea
  */
-@WebServlet(name = "Registration", urlPatterns = {"/Registration"})
-public class Registration extends HttpServlet {
+@WebServlet(name = "ModificaCorsi", urlPatterns = {"/ModificaCorsi"})
+public class ModificaCorsi extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,57 +39,46 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, JSONException {
-            
+            throws ServletException, IOException, SQLException {
         //Context
         ServletContext ctx = getServletContext();
         
         //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+        RequestDispatcher rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
         
         HttpSession ses = request.getSession();
-        
-        String mobile = request.getParameter("mobile");
-        
-        String username = request.getParameter("username");
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
-        String email = request.getParameter("email");
-        String pwd = request.getParameter("password");
-        String ruolo = "Studente";
-        
-        //Registrazione da pagina web
-        if(mobile == null)
-        {
-            //Inserimento nel DB
-            Model.registerDriver();
-            Model.insUtente(username, pwd, nome, cognome, email, ruolo);
-            System.out.println("Utente INSERITO!");
+                
+        String titolo = request.getParameter("titolo");
+        String descrizione = request.getParameter("descrizione");
+        String elimina = request.getParameter("elimina");
+        String salva = request.getParameter("salva");
+        String aggiungi = request.getParameter("aggiungi");
 
-            ses.setAttribute("logged", "Y");
-            ses.setAttribute("name", nome + " " + cognome);
-            ses.setAttribute("id", Model.getLastID_Utente());
-            ses.setAttribute("ruolo", ruolo);
-
-            rd = ctx.getRequestDispatcher("/index.jsp");
-
-            rd.forward(request, response);
-        }
-        //Registrazione da APP
-        else
-        {
-            JSONObject obj = new JSONObject();
-            
-            obj.put("logged", "Y");
-            obj.put("nome", nome);
-            obj.put("cognome", cognome);
-            obj.put("email", email);
-            
-            //Invio oggetto JSON all'app
-            try (PrintWriter out = response.getWriter()) {
-                out.println(obj.toString());
+        
+        Model.registerDriver();
+        
+        System.out.println("Funziona:" + titolo +" - " + descrizione);
+        
+        if (elimina != null) {
+            System.out.println("STO ELIMINANDO IL CORSO");
+            ResultSet rs = Model.getDocentiCorso(titolo);
+            if(rs.next()){
+                System.out.println("IMPOSSIBILE ELIMINARE IL CORSO IN QUANTO CI SONO DOCENTI COLLEGATI AD ESSO");
             }
+            else
+                Model.deleteCorso(titolo);
         }
+        else if(salva != null){ 
+            System.out.println("STO AGGIORNANDO IL CORSO");
+            Model.updateCorso(titolo, descrizione);
+        }
+        else if(aggiungi != null){
+            System.out.println("STO AGGIUNGENDO UN NUOVO CORSO");
+            Model.addCorso(titolo,descrizione);
+        }
+        else
+            System.out.println("ERROR");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -106,9 +96,7 @@ public class Registration extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificaCorsi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -126,9 +114,7 @@ public class Registration extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificaCorsi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

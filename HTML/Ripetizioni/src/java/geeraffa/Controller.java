@@ -78,7 +78,11 @@ public class Controller extends HttpServlet {
             case "tab_prenotazioni":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
                 rd = ctx.getRequestDispatcher("/tab_prenotazioni.jsp");
-                break;            
+                break;
+            case "modificaCorsi":
+                System.out.println("ARRIVO DA TAB CORSI!!!");
+                rd = ctx.getRequestDispatcher("/ModificaCorsi");
+                break; 
 
         }
         

@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="css/newcss.css">
+
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
@@ -95,6 +97,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside>
+                    
     <!-- /#left-panel -->
 
     <!-- Right Panel -->
@@ -122,7 +125,7 @@
     <div class="content">  
         <div class="animated fadeIn">
             <div class="row">
-                <iframe src="img/logo1.png" name="iframe_admin" style="width: 100%; height: 500px; background-color: #FFF; "></iframe>
+                <iframe src="img/logo1.png" name="iframe_admin" class="iframe_admin" ></iframe>
             </div>
         </div>
     </div>

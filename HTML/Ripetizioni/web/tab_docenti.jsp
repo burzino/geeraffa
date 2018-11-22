@@ -31,6 +31,10 @@
         <title>docenti</title>
     </head>
     <body>
+        <form>
+                <input type="hidden" name="toDo" value="modificaocenti"/>
+                <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaCorsi" onclick="btnVisible(this)" style="margin-top:3%; margin-left: 40%;"/>
+        </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
@@ -42,21 +46,21 @@
                         <div class="col-md-12">
                             <table id="bootstrap-data-table" class="table table-striped table-bordered" style="text-align:center;">
                                 <thead>
-                                    <th>Username</th>
                                     <th>Nome</th>
                                     <th>Cognome</th>
-                                    <th>Email</th>  
+                                    <th>Email</th>
+                                    <th>Data di nascita</th>
                                     <th>Gestione</th>
 
                                 </thead>
                                 <tbody>
                                 <%while(rs.next()){ %>
                                 <tr>
-                                    <td><%= rs.getString("Username")%></td>
                                     <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
-                                    <td><input type="button" class="btn btn-secondary" value="modifica" id="<%=rs.getInt("ID_Utente")%>"  ></td>
+                                    <td><%= rs.getString("DataNascita")%></td>
+                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaCorsi" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=rs.getString("dataNascita")%>')" ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -66,6 +70,60 @@
                 </div>
                 
         </form>
+        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
+                                    <!-- Modal -->
+                <input type="hidden" name="toDo" value="modificaCorsi"/>
+                <div class="modal fade" id="modificaCorsi" tabindex="-1" role="dialog" aria-labelledby="modificaCorsiLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="modificaDocentiTitle">Modifica Docenti</h5>
+                        <h5 class="modal-title" id="aggiungiDocentiTitle">Aggiungi Nuovo Docente</h5>
+
+                        
+                      </div>
+                      <div class="modal-body">
+                          <table style="width: 98%;">
+                              <tr id="hiddenID" style="display: none;">
+                                    <td>ID docente </td>
+                                    <td><input type="text" id="idDocente" name="idDocente"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Nome: </td>
+                                    <td><input type="text" id="nome" name="nome"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Cognome: </td>
+                                    <td><input type="text" id="cognome" name="cognome"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Email: </td>
+                                    <td><input type="text" id="email" name="email"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Data di nascita: </td>
+                                    <td><input type="text" id="dataNascita" name="dataNascita"/></td>
+                                </tr>
+                          </table>
+                          
+                      </div>
+                      <div class="modal-footer">
+                          <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Annulla" id="annulla"/>
+                          <input type="submit" class="btn btn-danger" value="Elimina" name="elimina" id="elimina"/>
+                          <input type="submit" class="btn btn-success" value="Salva" name="salva" id="salva"/>
+                          <input type="submit" class="btn btn-success" value="Aggiungi" name="aggiungi" id="aggiungi"/>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+            </form>
+                                
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
@@ -90,6 +148,39 @@
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
       } );
+       
+      function getId(btn, idDocente, nome, cognome, email, dataNascita){
+          //alert(btn.id);
+          document.getElementById("idDocente").value = idDocente;
+          document.getElementById("nome").value = nome;
+          document.getElementById("cognome").value = cognome;
+          document.getElementById("email").value = email;
+          document.getElementById("dataNascita").value = dataNascita;
+          
+          document.getElementById("aggiungi").style.display = "none";
+          document.getElementById("aggiungiDocentiTitle").style.display = "none";
+          document.getElementById("elimina").style.display = "block";
+          document.getElementById("salva").style.display = "block";
+          document.getElementById("modificaDocentiTitle").style.display = "block";
+          document.getElementById("titolo").disabled = true;
+
+
+      }
+      function btnVisible(btn){
+          document.getElementById("elimina").style.display = "none";
+          document.getElementById("salva").style.display = "none";
+          document.getElementById("modificaDocentiTitle").style.display = "none";
+          document.getElementById("aggiungi").style.display = "block";
+          document.getElementById("aggiungiDocentiTitle").style.display = "block";
+          document.getElementById("titolo").disabled = false;
+          
+          document.getElementById("idDocente").value = "";
+          document.getElementById("nome").value = "";
+          document.getElementById("cognome").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("dataNascita").value = "";
+
+      }
   </script>
     </body>
 </html>
