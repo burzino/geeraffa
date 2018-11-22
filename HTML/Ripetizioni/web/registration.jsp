@@ -32,7 +32,7 @@
                         <input type="hidden" name="toDo" value="registration"/>
                         <h2 class="form-title">Crea il tuo account</h2>
                         <div class="form-group">
-                            <input required type="text" class="form-input" name="name" id="name" placeholder="Nome"/>
+                            <input required type="text" class="form-input" name="nome" id="nome" placeholder="Nome"/>
                         </div>
                         <div class="form-group">
                             <input required type="text" class="form-input" name="cognome" id="cognome" placeholder="Cognome"/>

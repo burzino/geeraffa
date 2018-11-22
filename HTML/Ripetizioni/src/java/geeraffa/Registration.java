@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -36,7 +38,7 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, JSONException {
             
         //Context
         ServletContext ctx = getServletContext();
@@ -45,27 +47,48 @@ public class Registration extends HttpServlet {
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
         
         HttpSession ses = request.getSession();
-
+        
+        String mobile = request.getParameter("mobile");
+        
         String username = request.getParameter("username");
-        String nome = request.getParameter("name");
+        String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String pwd = request.getParameter("password");
         String ruolo = "Studente";
-
-        //Inserimento nel DB
-        Model.registerDriver();
-        Model.insUtente(username, pwd, nome, cognome, email, ruolo);
-        System.out.println("Utente INSERITO!");
-
-        ses.setAttribute("logged", "Y");
-        ses.setAttribute("name", nome + " " + cognome);
-        ses.setAttribute("id", Model.getLastID_Utente());
-        ses.setAttribute("ruolo", ruolo);
         
-        rd = ctx.getRequestDispatcher("/index.jsp");
-        
-        rd.forward(request, response);
+        //Registrazione da pagina web
+        if(mobile == null)
+        {
+            //Inserimento nel DB
+            Model.registerDriver();
+            Model.insUtente(username, pwd, nome, cognome, email, ruolo);
+            System.out.println("Utente INSERITO!");
+
+            ses.setAttribute("logged", "Y");
+            ses.setAttribute("name", nome + " " + cognome);
+            ses.setAttribute("id", Model.getLastID_Utente());
+            ses.setAttribute("ruolo", ruolo);
+
+            rd = ctx.getRequestDispatcher("/index.jsp");
+
+            rd.forward(request, response);
+        }
+        //Registrazione da APP
+        else
+        {
+            JSONObject obj = new JSONObject();
+            
+            obj.put("logged", "Y");
+            obj.put("nome", nome);
+            obj.put("cognome", cognome);
+            obj.put("email", email);
+            
+            //Invio oggetto JSON all'app
+            try (PrintWriter out = response.getWriter()) {
+                out.println(obj.toString());
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,6 +107,8 @@ public class Registration extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -101,6 +126,8 @@ public class Registration extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
