@@ -27,11 +27,16 @@
         <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
         <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="css/newcss.css">
 
         <title>corsi</title>
     </head>
     <body>
-        <% String prova;%>
+        
+            <form>
+                <input type="hidden" name="toDo" value="modificaCorsi"/>
+                <input type="button" class="btn btn-primary" value="Aggiungi nuovo corso" data-toggle="modal" data-target="#modificaCorsi" onclick="btnVisible(this)" style="margin-top:3%; margin-left: 40%;"/>
+            </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
             <input type="hidden" name="toDo" value="tab_corsi"/>
                 <%
@@ -53,8 +58,7 @@
                                     <td><%= rs.getString("Titolo")%></td>
                                     <td><%= rs.getString("Descrizione")%></td>
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modificaCorsi" id="<%=rs.getString("Titolo")%>" onClick="getId(this,'<%=rs.getString("Descrizione")%>')">Gestisci</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Elimina Corso</button>
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#modificaCorsi" id="<%=rs.getString("Titolo")%>" onClick="getId(this,'<%=rs.getString("Descrizione")%>')" value="Gestisci"/>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -65,38 +69,49 @@
                     </div>
                 </div>
                                 
-                <!-- Modal -->
+                
+        </form>
+        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
+                                    <!-- Modal -->
+                <input type="hidden" name="toDo" value="modificaCorsi"/>
                 <div class="modal fade" id="modificaCorsi" tabindex="-1" role="dialog" aria-labelledby="modificaCorsiLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="modificaCorsiTitle">Modifica Corsi</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
+                        <h5 class="modal-title" id="modificaCorsiTitle">Modifica Corsi</h5>
+                        <h5 class="modal-title" id="aggiungiCorsiTitle">Aggiungi Nuovo Corso</h5>
+
+                        
                       </div>
                       <div class="modal-body">
-                          <table>
+                          <table style="width: 98%;">
                                 <tr>
                                     <td>Titolo: </td>
-                                    <td><input type="text" id="titolo"/></td>
+                                    <td><input type="text" id="titolo" name="titolo"/></td>
                                 </tr>
                                 <tr>
                                     <td>Descriozione: </td>
-                                    <td><input type="text" id="descrizione"/></td>
+                                    <td><input type="text" id="descrizione" name="descrizione"/></td>
                                 </tr>
                           </table>
                           
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-                        <button type="button" class="btn btn-success">Salva Le Modifiche</button>
+                          <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Annulla" id="annulla"/>
+                          <input type="submit" class="btn btn-danger" value="Elimina" name="elimina" id="elimina"/>
+                          <input type="submit" class="btn btn-success" value="Salva" name="salva" id="salva"/>
+                          <input type="submit" class="btn btn-success" value="Aggiungi" name="aggiungi" id="aggiungi"/>
+
+
                       </div>
                     </div>
                   </div>
                 </div>
                 
-        </form>
+            </form>
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
@@ -128,6 +143,29 @@
           titolo.value = btn.id;
           var descrizione = document.getElementById("descrizione");
           descrizione.value = desc;
+          
+          document.getElementById("aggiungi").style.display = "none";
+          document.getElementById("aggiungiCorsiTitle").style.display = "none";
+          document.getElementById("elimina").style.display = "block";
+          document.getElementById("salva").style.display = "block";
+          document.getElementById("modificaCorsiTitle").style.display = "block";
+          document.getElementById("titolo").disabled = true;
+
+
+      }
+      function btnVisible(btn){
+          document.getElementById("elimina").style.display = "none";
+          document.getElementById("salva").style.display = "none";
+          document.getElementById("modificaCorsiTitle").style.display = "none";
+          document.getElementById("aggiungi").style.display = "block";
+          document.getElementById("aggiungiCorsiTitle").style.display = "block";
+          document.getElementById("titolo").disabled = false;
+          document.getElementById("titolo").value = "";
+          document.getElementById("descrizione").value = "";
+
+
+
+          
       }
   </script>
     </body>
