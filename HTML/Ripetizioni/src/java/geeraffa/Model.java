@@ -140,7 +140,7 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Utente WHERE ruolo = 'Docente'");
+            st.executeQuery("SELECT * FROM Docente");
             
             rs = st.getResultSet();
         }
