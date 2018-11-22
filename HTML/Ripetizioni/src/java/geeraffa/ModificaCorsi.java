@@ -5,13 +5,10 @@
  */
 package geeraffa;
 
-import dao.Studente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -22,13 +19,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
+import org.json.JSONObject;
 
 /**
  *
- * @author GEERAFFA
+ * @author Andrea
  */
-@WebServlet(name = "Controller", urlPatterns = {"/Controller"})
-public class Controller extends HttpServlet {
+@WebServlet(name = "ModificaCorsi", urlPatterns = {"/ModificaCorsi"})
+public class ModificaCorsi extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,52 +40,45 @@ public class Controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        
-        String action = request.getParameter("toDo");
-        
         //Context
         ServletContext ctx = getServletContext();
+        
         //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+        RequestDispatcher rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
         
         HttpSession ses = request.getSession();
-        
-        switch(action){
-            case "login":
-                rd = ctx.getRequestDispatcher("/Login");
-                break;
-            case "index":
-                System.out.println("ARRIVO DALL'INDEX!!!");
-                break;
-            case "logout":
-                ses.invalidate();
-                break;
-            case "prenota":
-                rd = ctx.getRequestDispatcher("/Prenota");
-                break;
-            case "registration":
-                rd = ctx.getRequestDispatcher("/Registration");
-                break;
-            case "tab_docenti":
-                System.out.println("ARRIVO DALL'ADMIN!!!");
-                rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
-                break;
-            case "tab_corsi":
-                System.out.println("ARRIVO DALL'ADMIN!!!");
-                rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
-                break;
-            case "tab_prenotazioni":
-                System.out.println("ARRIVO DALL'ADMIN!!!");
-                rd = ctx.getRequestDispatcher("/tab_prenotazioni.jsp");
-                break;
-            case "modificaCorsi":
-                System.out.println("ARRIVO DA TAB CORSI!!!");
-                rd = ctx.getRequestDispatcher("/ModificaCorsi");
-                break; 
+                
+        String titolo = request.getParameter("titolo");
+        String descrizione = request.getParameter("descrizione");
+        String elimina = request.getParameter("elimina");
+        String salva = request.getParameter("salva");
+        String aggiungi = request.getParameter("aggiungi");
 
-        }
         
-        rd.forward(request, response);        
+        Model.registerDriver();
+        
+        System.out.println("Funziona:" + titolo +" - " + descrizione);
+        
+        if (elimina != null) {
+            System.out.println("STO ELIMINANDO IL CORSO");
+            ResultSet rs = Model.getDocentiCorso(titolo);
+            if(rs.next()){
+                System.out.println("IMPOSSIBILE ELIMINARE IL CORSO IN QUANTO CI SONO DOCENTI COLLEGATI AD ESSO");
+            }
+            else
+                Model.deleteCorso(titolo);
+        }
+        else if(salva != null){ 
+            System.out.println("STO AGGIORNANDO IL CORSO");
+            Model.updateCorso(titolo, descrizione);
+        }
+        else if(aggiungi != null){
+            System.out.println("STO AGGIUNGENDO UN NUOVO CORSO");
+            Model.addCorso(titolo,descrizione);
+        }
+        else
+            System.out.println("ERROR");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -104,7 +96,7 @@ public class Controller extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificaCorsi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -122,7 +114,7 @@ public class Controller extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificaCorsi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -133,7 +125,7 @@ public class Controller extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Controller";
+        return "Short description";
     }// </editor-fold>
 
 }
