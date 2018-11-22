@@ -91,7 +91,12 @@ public class Login extends HttpServlet {
             obj.put("Company List", company);*/
             
             if(rs.next())   //Username e password validi!
-                obj.put("logged", "Y");                
+            {
+                obj.put("logged", "Y");
+                obj.put("nome", rs.getString("Nome"));
+                obj.put("cognome", rs.getString("Cognome"));
+                obj.put("email", rs.getString("Email"));
+            }
             else
                 obj.put("logged", "N");
             
