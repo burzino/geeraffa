@@ -44,12 +44,12 @@ public class Prenota extends HttpServlet {
         ServletContext ctx = getServletContext();
         
         //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+        RequestDispatcher rd = ctx.getRequestDispatcher("/prenotazione.jsp");
         
         HttpSession ses = request.getSession();
         
         //ses.setAttribute("logged", "N");
-        JSONObject obj = new JSONObject();
+        /*JSONObject obj = new JSONObject();
         obj.put("Name", "crunchify.com");
         obj.put("Author", "App Shah");
 
@@ -59,7 +59,7 @@ public class Prenota extends HttpServlet {
         company.put("Compnay: Google");
         obj.put("Company List", company);
 
-        System.out.println("JSON " + obj.toString());
+        System.out.println("JSON " + obj.toString());*/
         
         rd.forward(request, response);
     }
