@@ -8,6 +8,8 @@ package geeraffa;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -39,7 +41,7 @@ public class Prenota extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, JSONException {
+            throws ServletException, IOException, JSONException, SQLException {
         //Context
         ServletContext ctx = getServletContext();
         
@@ -47,6 +49,25 @@ public class Prenota extends HttpServlet {
         RequestDispatcher rd = ctx.getRequestDispatcher("/prenotazione.jsp");
         
         HttpSession ses = request.getSession();
+        
+        String mobile = request.getParameter("mobile");
+        String corso = request.getParameter("corso");
+        
+        Model.registerDriver();
+        ResultSet rs = Model.getPrenotazioni();
+        
+        //String prova = rs.getString("DTInizio");
+        
+        //Prenotazione da pagina web
+        if(mobile == null)
+        {
+            
+        }
+        //Prenotazione da pagina web
+        else
+        {
+            
+        }
         
         //ses.setAttribute("logged", "N");
         /*JSONObject obj = new JSONObject();
@@ -80,6 +101,8 @@ public class Prenota extends HttpServlet {
             processRequest(request, response);
         } catch (JSONException ex) {
             Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,6 +120,8 @@ public class Prenota extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JSONException ex) {
+            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

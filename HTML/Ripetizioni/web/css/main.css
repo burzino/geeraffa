@@ -157,7 +157,7 @@ iframe {
 }
 
 .container-login100 {
-  width: 100%;  
+  width: 100%; 
   min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -277,6 +277,26 @@ iframe {
     box-shadow: 0px 0px 70px 25px;
     opacity: 0;
   }
+}
+
+#divSelCorso
+{
+    float: left;
+    width: 180px;
+    margin-left: 20%;
+}
+#divSelCorso2
+{
+    float:right;
+    width: 180px;
+    margin-right: 20%;
+}
+
+#container-select
+{
+    margin:10px auto;
+    width: 50%;
+    height: 80px;
 }
 
 .symbol-input100 {

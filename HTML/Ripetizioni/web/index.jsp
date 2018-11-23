@@ -213,12 +213,12 @@
             <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
             <hr class="bottom-line">
           </div>
-    <%
-        Model.registerDriver();
-        ResultSet rs = Model.getCorsi();
-        while(rs.next())
-        {
-    %>
+        <%
+            Model.registerDriver();
+            ResultSet rs = Model.getCorsi();
+            while(rs.next())
+            {
+        %>
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
                 <img src="img/<%= rs.getString("Titolo")%>.jpg" class="img-responsive">
@@ -228,6 +228,7 @@
                 <% if(ses.getAttribute("logged") == "Y") { %>
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
                     <input type="hidden" name="toDo" value="prenota"/>
+                    <input type="hidden" name="corso" value="<%= rs.getString("Titolo")%>" />
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
                 </form>
