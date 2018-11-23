@@ -58,7 +58,7 @@ public class JSonLogin {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://192.168.1.37:8080/Ripetizioni/Controller?toDo=login&mobile=y";
+                        "http://192.168.1.27:8080/Ripetizioni/Controller?toDo=login&mobile=y";
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter("username", strings[0])
                         .appendQueryParameter("pwd", strings[1])
