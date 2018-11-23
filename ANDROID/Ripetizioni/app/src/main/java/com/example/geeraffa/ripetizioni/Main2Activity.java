@@ -1,6 +1,8 @@
 package com.example.geeraffa.ripetizioni;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,17 +22,31 @@ import org.w3c.dom.Text;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    NavigationView navigationView;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    TextView txtNomeCognome;
+    TextView txtEmail;
+    String userPref;
+    String pwdPref;
+    String logged;
+    boolean primoLog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        //shared preferences per dati login
+        pref = getApplicationContext().getSharedPreferences("LoginPref", 0);
+        editor = pref.edit();
+        userPref =pref.getString("user", null); // getting String
+        pwdPref=pref.getString("pwd", null); // getting String
+        primoLog=true;
+
 
         //Get EXTRA DA LoginTestActivity
-
         Intent myintent = getIntent();
-        String logged = myintent.getStringExtra("logged");
+        logged = myintent.getStringExtra("logged");
         String nome = myintent.getStringExtra("nome");
         String cognome = myintent.getStringExtra("cognome");
         String email = myintent.getStringExtra("email");
@@ -48,30 +64,37 @@ public class Main2Activity extends AppCompatActivity
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
+        //menù item drawer laterale
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
+        //visualizzazione dati utente nel header
         View headerView = navigationView.getHeaderView(0);
-        TextView txtNomeCognome = (TextView) headerView.findViewById(R.id.nomeCognomeDrawer);
-        TextView txtEmail = (TextView) headerView.findViewById(R.id.emailDrawer);
+        txtNomeCognome = (TextView) headerView.findViewById(R.id.nomeCognomeDrawer);
+        txtEmail = (TextView) headerView.findViewById(R.id.emailDrawer);
 
         if (logged!=null) {
             txtNomeCognome.setText(nome + " " + cognome);
             txtEmail.setText(email);
             Menu nav_Menu = navigationView.getMenu();
             nav_Menu.findItem(R.id.action_signin).setVisible(false);
+            nav_Menu.findItem(R.id.nav_prenotazioni).setVisible(true);
 
+        }else
+        //fa il login se ci sono già user e password
+        if (userPref!=null && pwdPref!=null &&userPref!=""&&pwdPref!="" ) {
+            Intent myIntent = new Intent(Main2Activity.this, LoginTestActivity.class);
+            myIntent.putExtra("user", userPref); //Optional parameters
+            myIntent.putExtra("pwd", pwdPref); //Optional parameters
+            Main2Activity.this.startActivity(myIntent);
+            primoLog=false;
         }
     }
 
@@ -103,6 +126,16 @@ public class Main2Activity extends AppCompatActivity
         if (id == R.id.action_settings) {
             Toast.makeText(getApplicationContext(), "apri impostazioni", Toast.LENGTH_LONG).show();
             return true;
+        }else if (id==R.id.action_logout){
+            txtNomeCognome.setText("");
+            txtEmail.setText("");
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.action_signin).setVisible(true);
+            nav_Menu.findItem(R.id.nav_prenotazioni).setVisible(false);
+            editor.remove("user");
+            editor.remove("pwd");
+            logged=null;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -114,14 +147,8 @@ public class Main2Activity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_prenotazioni) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -129,7 +156,6 @@ public class Main2Activity extends AppCompatActivity
         } else if (id== R.id.action_signin)
         {
             Intent myIntent = new Intent(Main2Activity.this, LoginTestActivity.class);
-            myIntent.putExtra("extra", "extraparam from main2activity"); //Optional parameters
             Main2Activity.this.startActivity(myIntent);
         }
 
