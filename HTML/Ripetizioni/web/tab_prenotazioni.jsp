@@ -35,7 +35,7 @@
             <input type="hidden" name="toDo" value="tab_prenotazioni"/>
                 <%
                 Model.registerDriver();
-                ResultSet rs = Model.getPrenotazioni();
+                ResultSet rs = Model.getDocentiCorso(1);
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">

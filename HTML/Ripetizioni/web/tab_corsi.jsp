@@ -149,7 +149,9 @@
           document.getElementById("elimina").style.display = "block";
           document.getElementById("salva").style.display = "block";
           document.getElementById("modificaCorsiTitle").style.display = "block";
-          document.getElementById("titolo").disabled = true;
+          document.getElementById('titolo').onkeydown = function(e){
+            e.preventDefault();
+            }
 
 
       }
@@ -163,9 +165,6 @@
           document.getElementById("titolo").value = "";
           document.getElementById("descrizione").value = "";
 
-
-
-          
       }
   </script>
     </body>

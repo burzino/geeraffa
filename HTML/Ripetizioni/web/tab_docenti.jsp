@@ -32,14 +32,14 @@
     </head>
     <body>
         <form>
-                <input type="hidden" name="toDo" value="modificaocenti"/>
-                <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaCorsi" onclick="btnVisible(this)" style="margin-top:3%; margin-left: 40%;"/>
+                <input type="hidden" name="toDo" value="modificaDocenti"/>
+                <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaDocenti" onclick="btnVisible(this)" style="margin-top:3%; margin-left: 40%;"/>
         </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
                 Model.registerDriver();
-                ResultSet rs = Model.getDocenti();
+                ResultSet rs = Model.getDocentiCorso();
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
@@ -49,7 +49,7 @@
                                     <th>Nome</th>
                                     <th>Cognome</th>
                                     <th>Email</th>
-                                    <th>Data di nascita</th>
+                                    <th>Corso di riferimento</th>
                                     <th>Gestione</th>
 
                                 </thead>
@@ -59,8 +59,8 @@
                                     <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
-                                    <td><%= rs.getString("DataNascita")%></td>
-                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaCorsi" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=rs.getString("dataNascita")%>')" ></td>
+                                    <td><%= rs.getString("Corso")%></td>
+                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=rs.getString("Corso")%>')" ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -72,8 +72,8 @@
         </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
                                     <!-- Modal -->
-                <input type="hidden" name="toDo" value="modificaCorsi"/>
-                <div class="modal fade" id="modificaCorsi" tabindex="-1" role="dialog" aria-labelledby="modificaCorsiLabel" aria-hidden="true">
+                <input type="hidden" name="toDo" value="modificaDocenti"/>
+                <div class="modal fade" id="modificaDocenti" tabindex="-1" role="dialog" aria-labelledby="modificaDocentiLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -104,8 +104,16 @@
                                     <td><input type="text" id="email" name="email"/></td>
                                 </tr>
                                 <tr>
-                                    <td>Data di nascita: </td>
-                                    <td><input type="text" id="dataNascita" name="dataNascita"/></td>
+                                    <td>Corso: </td>
+                                    <td>
+                                        <% 
+                                            rs = Model.getCorsi();
+                                            while(rs.next()){
+                                            %>
+                                                <input type="checkbox" name="corsi" value="<%= rs.getString("titolo")%>" onchange="gestioneCorsi(this)"/>
+                                                <%= rs.getString("titolo")%>
+                                        <%}%>
+                                    </td>
                                 </tr>
                           </table>
                           
@@ -149,37 +157,32 @@
           $('#bootstrap-data-table-export').DataTable();
       } );
        
-      function getId(btn, idDocente, nome, cognome, email, dataNascita){
+      function getId(btn, idDocente, nome, cognome, email, corso){
           //alert(btn.id);
           document.getElementById("idDocente").value = idDocente;
           document.getElementById("nome").value = nome;
           document.getElementById("cognome").value = cognome;
           document.getElementById("email").value = email;
-          document.getElementById("dataNascita").value = dataNascita;
+          document.getElementById("cmbCorso").selectedIndex = corso;
           
           document.getElementById("aggiungi").style.display = "none";
           document.getElementById("aggiungiDocentiTitle").style.display = "none";
           document.getElementById("elimina").style.display = "block";
           document.getElementById("salva").style.display = "block";
           document.getElementById("modificaDocentiTitle").style.display = "block";
-          document.getElementById("titolo").disabled = true;
-
-
       }
       function btnVisible(btn){
+          document.getElementById("idDocente").value = "";
+          document.getElementById("nome").value = "";
+          document.getElementById("cognome").value = "";
+          document.getElementById("email").value = "";
+          //document.getElementById("corso").value = "";
+          
           document.getElementById("elimina").style.display = "none";
           document.getElementById("salva").style.display = "none";
           document.getElementById("modificaDocentiTitle").style.display = "none";
           document.getElementById("aggiungi").style.display = "block";
           document.getElementById("aggiungiDocentiTitle").style.display = "block";
-          document.getElementById("titolo").disabled = false;
-          
-          document.getElementById("idDocente").value = "";
-          document.getElementById("nome").value = "";
-          document.getElementById("cognome").value = "";
-          document.getElementById("email").value = "";
-          document.getElementById("dataNascita").value = "";
-
       }
   </script>
     </body>
