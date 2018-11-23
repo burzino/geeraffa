@@ -134,7 +134,7 @@ public class Model {
         };
         return id;
     }
-        public static ResultSet getDocenti()
+    public static ResultSet getDocenti()
     {
         ResultSet rs = null;
         try {
@@ -145,7 +145,7 @@ public class Model {
             rs = st.getResultSet();
         }
         catch (SQLException e) {
-            System.err.println("getCorsi ERROR: " + e.getMessage());
+            System.err.println("getDocenti ERROR: " + e.getMessage());
         };
         
         return rs;
@@ -161,7 +161,7 @@ public class Model {
             rs = st.getResultSet();
         }
         catch (SQLException e) {
-            System.err.println("getCorsi ERROR: " + e.getMessage());
+            System.err.println("getPrenotazioni ERROR: " + e.getMessage());
         };
         
         return rs;
@@ -178,7 +178,7 @@ public class Model {
             rs = st.getResultSet();
         }
         catch (SQLException e) {
-            System.err.println("getCorsi ERROR: " + e.getMessage());
+            System.err.println("getDocentiCorso ERROR: " + e.getMessage());
         };
         
         return rs;
@@ -215,7 +215,7 @@ public class Model {
             conn.close();
         } 
         catch (Exception e) {
-            System.out.println("insUtente ERROR: " + e.getMessage());
+            System.out.println("updateCorso ERROR: " + e.getMessage());
         }
         
     }
@@ -232,7 +232,7 @@ public class Model {
             conn.close();
         } 
         catch (Exception e) {
-            System.out.println("insUtente ERROR: " + e.getMessage());
+            System.out.println("deleteCorso ERROR: " + e.getMessage());
         }
         
     }
@@ -249,9 +249,26 @@ public class Model {
             conn.close();
         } 
         catch (Exception e) {
-            System.out.println("insUtente ERROR: " + e.getMessage());
+            System.out.println("insCorso ERROR: " + e.getMessage());
         }
         
     }
-
+    public static void insDocente(String nome, String cognome, String email, String dataNascita) {
+        String sql = "";
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            sql = "INSERT INTO Docente(nome, cognome ,email, dataNascita) VALUES("
+                    + "'" + nome + "', '" + cognome + "','" + email 
+                    + "', '" + dataNascita + "')";
+            
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println("insDocente ERROR: " + e.getMessage());
+        }
+        
+    }
 }
