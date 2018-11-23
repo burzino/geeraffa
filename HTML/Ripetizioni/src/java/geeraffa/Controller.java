@@ -83,6 +83,10 @@ public class Controller extends HttpServlet {
                 System.out.println("ARRIVO DA TAB CORSI!!!");
                 rd = ctx.getRequestDispatcher("/ModificaCorsi");
                 break; 
+            case "modificaDocenti":
+                System.out.println("ARRIVO DA TAB DOCENTI!!!");
+                rd = ctx.getRequestDispatcher("/ModificaDocenti");
+                break; 
 
         }
         

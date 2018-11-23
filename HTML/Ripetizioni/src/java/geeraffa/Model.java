@@ -271,4 +271,39 @@ public class Model {
         }
         
     }
+    public static void updateDocente(String id_docente, String nome, String cognome, String email, String dataNascita) {
+        String sql = "";
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            int idDocente = Integer.parseInt(id_docente);
+            sql = "UPDATE Docente SET Nome ='" + nome + "',Cognome = '" + cognome + "',email = '" + email + "', DataNascita = '" + dataNascita +"' WHERE id_docente =" + idDocente;
+            System.out.println(sql);
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println("updateCorso ERROR: " + e.getMessage());
+        }
+        
+    }
+    
+    public static void deleteDocente(String id_docente) {
+        String sql = "";
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            int idDocente = Integer.parseInt(id_docente);
+            sql = "DELETE FROM docente WHERE id_docente =" + idDocente;
+            System.out.println(sql);
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println("deleteCorso ERROR: " + e.getMessage());
+        }
+        
+    }
 }
