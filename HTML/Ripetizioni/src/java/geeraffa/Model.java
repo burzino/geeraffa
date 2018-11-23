@@ -156,7 +156,24 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM prenotazione");
+            st.executeQuery("SELECT * FROM Prenotazione");
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getPrenotazioni ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
+    
+    public static ResultSet getCorsoPrenotazione(String titolo)
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Corso where Titolo='" + titolo + "'");
             
             rs = st.getResultSet();
         }
@@ -182,7 +199,8 @@ public class Model {
         };
         
         return rs;
-    }
+    }    
+    
     //Update QUERY
     public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
         Studente stud = new Studente(getLastID_Utente(), username, pwd, nome, cognome, email, ruolo);
