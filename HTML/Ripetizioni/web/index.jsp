@@ -86,7 +86,7 @@
                       <!--<li>a href="#" onclick="document.getElementById('frmout').submit();">LOGOUT</a><!--</li>-->
                     
                   <!--</li>-->
-                  </form>-->
+                  <!--</form>-->
                   <% } %>                                      
                     
                 </ul>

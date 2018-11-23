@@ -190,8 +190,8 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            sql = "INSERT INTO Utente(ID_Utente, Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
-                    + getLastID_Utente() + ",'" + username + "', '" + pwd + "','" + nome 
+            sql = "INSERT INTO Utente(Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
+                    + "'" + username + "', '" + pwd + "','" + nome 
                     + "', '" + cognome + "', '" + email + "','" + ruolo + "')";
             
             st.executeUpdate(sql);
