@@ -68,7 +68,10 @@ public class Login extends HttpServlet {
                 ses.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
                 ses.setAttribute("id", rs.getString("ID_Utente"));
                 ses.setAttribute("ruolo", rs.getString("Ruolo"));
-
+                
+                if(rs.getString("Ruolo").equals("Admin"))
+                    rd = ctx.getRequestDispatcher("/admin.jsp");
+                    
                 ses.setAttribute("logged", "Y");
             }
             else
