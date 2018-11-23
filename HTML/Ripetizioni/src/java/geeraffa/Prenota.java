@@ -61,9 +61,9 @@ public class Prenota extends HttpServlet {
         //Prenotazione da pagina web
         if(mobile == null)
         {
-            
+            rd.forward(request, response);
         }
-        //Prenotazione da pagina web
+        //Prenotazione da APP
         else
         {
             
@@ -81,8 +81,7 @@ public class Prenota extends HttpServlet {
         obj.put("Company List", company);
 
         System.out.println("JSON " + obj.toString());*/
-        
-        rd.forward(request, response);
+              
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

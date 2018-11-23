@@ -47,21 +47,43 @@
             <div class="form-group" id="divSelCorso">
                 <label for="selCorsoPrenota"> Corso </label>
                 <select id="selCorsoPrenota" class="form-control">
-                    
+                    <% 
+                        Model.registerDriver();
+                        String corso_param = request.getParameter("corso");
+                        ResultSet rsCorsi = Model.getCorsi();
+                        while(rsCorsi.next())
+                        {
+                    %>
+                    <option value="<%= rsCorsi.getString("Titolo")%>"
+                        <% if(rsCorsi.getString("Titolo").equals(corso_param)) {%> 
+                            selected="selected"
+                        <% } %> >
+                            <%= rsCorsi.getString("Titolo")%>
+                    </option>
+                    <% } %>
                 </select>
             </div>
             <div class="form-group" id="divSelCorso2">
                 <label for="selCorsoPrenota"> Docente </label>
                 <select id="selCorsoPrenota" class="form-control">
-                    
+                    <% 
+                        Model.registerDriver();
+                        ResultSet rsDoc = Model.getCorsoDocente(corso_param);
+                        while(rsDoc.next())
+                        {    
+                           ResultSet rsNomeDoc = Model.getNomeDocente(rsDoc.getInt("Docente"));
+                           //System.out.println("AAAA : " + rsNomeDoc.getInt("Docente"));
+                           if(rsNomeDoc.next()){
+                    %>
+                            <option value="<%= rsDoc.getInt("Docente")%>">
+                                    <%= rsNomeDoc.getString("Cognome")%> <%= rsNomeDoc.getString("Nome")%>
+                            </option>
+                    <%      }
+                    } %>
                 </select>
             </div>
         </div>
             <input type="hidden" name="toDo" value="tab_corsi"/>
-                <%
-                    Model.registerDriver();
-                    ResultSet rs = Model.getPrenotazioni();
-                %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
                         <div class="col-md-12">
@@ -72,25 +94,29 @@
                                     <th>Conferma</th>
                                 </thead>
                                 <tbody>
-                                    <%while(rs.next()){ 
-                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                        Date data = dateFormat.parse(rs.getString("DTInizio"));
-                                        dateFormat.applyPattern("dd-MM-yyyy");
-                                        String dataOK = dateFormat.format(data);
-                                        String oraInizio = rs.getString("DtInizio").split(" ")[1].substring(0,5);
-                                        String oraFine = rs.getString("DTFine").split(" ")[1].substring(0,5);
+                                    <%
+                                        Model.registerDriver();
+                                        ResultSet rsPren = Model.getPrenotazioni();
+                                        
+                                        while(rsPren.next()){ 
+                                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                            Date data = dateFormat.parse(rsPren.getString("DTInizio"));
+                                            dateFormat.applyPattern("dd-MM-yyyy");
+                                            String dataOK = dateFormat.format(data);
+                                            String oraInizio = rsPren.getString("DtInizio").split(" ")[1].substring(0,5);
+                                            String oraFine = rsPren.getString("DTFine").split(" ")[1].substring(0,5);
                                     %>
-                                    <tr>
-                                    
-                                    <td><%= dataOK%></td>
-                                    <td><%= oraInizio %> - <%= oraFine %></td>
-                                    <td>
-                                        <input type="button" class="btn btn-warning" data-toggle="modal" 
-                                               data-target="#modificaCorsi"
-                                               value="Prenota"/>
-                                    </td>
-                                </tr>
-                                <% } %>
+                                        <tr>
+
+                                            <td><%= dataOK%></td>
+                                            <td><%= oraInizio %> - <%= oraFine %></td>
+                                            <td>
+                                                <input type="button" class="btn btn-warning" data-toggle="modal" 
+                                                       data-target="#modificaCorsi"
+                                                       value="Prenota"/>
+                                            </td>
+                                        </tr>
+                                    <% } %>
                                 
                                 </tbody>
                             </table>
