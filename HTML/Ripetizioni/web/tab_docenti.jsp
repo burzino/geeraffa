@@ -14,7 +14,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-
         <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
         <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
 
@@ -35,11 +34,11 @@
                 <input type="hidden" name="toDo" value="modificaDocenti"/>
                 <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaDocenti" onclick="btnVisible(this)" style="margin-top:3%; margin-left: 40%;"/>
         </form>
-        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
+        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
                 Model.registerDriver();
-                ResultSet rs = Model.getDocentiCorso();
+                ResultSet rs = Model.getDocenti();
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
@@ -49,9 +48,7 @@
                                     <th>Nome</th>
                                     <th>Cognome</th>
                                     <th>Email</th>
-                                    <th>Corso di riferimento</th>
                                     <th>Gestione</th>
-
                                 </thead>
                                 <tbody>
                                 <%while(rs.next()){ %>
@@ -59,8 +56,7 @@
                                     <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
-                                    <td><%= rs.getString("Corso")%></td>
-                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=rs.getString("Corso")%>')" ></td>
+                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>')" ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -68,10 +64,9 @@
                         </div>
                     </div>
                 </div>
-                
         </form>
-        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
-                                    <!-- Modal -->
+        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
+                 <!-- Modal -->
                 <input type="hidden" name="toDo" value="modificaDocenti"/>
                 <div class="modal fade" id="modificaDocenti" tabindex="-1" role="dialog" aria-labelledby="modificaDocentiLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -82,11 +77,9 @@
                         </button>
                         <h5 class="modal-title" id="modificaDocentiTitle">Modifica Docenti</h5>
                         <h5 class="modal-title" id="aggiungiDocentiTitle">Aggiungi Nuovo Docente</h5>
-
-                        
                       </div>
                       <div class="modal-body">
-                          <table style="width: 98%;">
+                          <table style="width: 100%;">
                               <tr id="hiddenID" style="display: none;">
                                     <td>ID docente </td>
                                     <td><input type="text" id="idDocente" name="idDocente"/></td>
@@ -106,30 +99,40 @@
                                 <tr>
                                     <td>Corso: </td>
                                     <td>
+                                        <table>
                                         <% 
                                             rs = Model.getCorsi();
+                                            int i = 0;
                                             while(rs.next()){
                                             %>
-                                                <input type="checkbox" name="corsi" value="<%= rs.getString("titolo")%>" onchange="gestioneCorsi(this)"/>
-                                                <%= rs.getString("titolo")%>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="corsi" value="<%= rs.getString("titolo")%>" onchange="gestioneCorsi(this)"/><%= rs.getString("titolo")%>
+                                                </td>
+                                                <%  i = 0;
+                                                    while(i<2 && rs.next()){%>
+                                                <td>
+                                                    <input type="checkbox" name="corsi" value="<%= rs.getString("titolo")%>" onchange="gestioneCorsi(this)"/><%= rs.getString("titolo")%>
+                                                </td>
+                                                <% i++;
+                                                }%>
+                                            </tr>
+                                                
                                         <%}%>
+                                        </table>
                                     </td>
                                 </tr>
                           </table>
-                          
                       </div>
                       <div class="modal-footer">
                           <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Annulla" id="annulla"/>
                           <input type="submit" class="btn btn-danger" value="Elimina" name="elimina" id="elimina"/>
                           <input type="submit" class="btn btn-success" value="Salva" name="salva" id="salva"/>
                           <input type="submit" class="btn btn-success" value="Aggiungi" name="aggiungi" id="aggiungi"/>
-
-
                       </div>
                     </div>
                   </div>
                 </div>
-                
             </form>
                                 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
@@ -163,20 +166,20 @@
           document.getElementById("nome").value = nome;
           document.getElementById("cognome").value = cognome;
           document.getElementById("email").value = email;
-          document.getElementById("cmbCorso").selectedIndex = corso;
           
           document.getElementById("aggiungi").style.display = "none";
           document.getElementById("aggiungiDocentiTitle").style.display = "none";
           document.getElementById("elimina").style.display = "block";
           document.getElementById("salva").style.display = "block";
           document.getElementById("modificaDocentiTitle").style.display = "block";
+          
+          
       }
       function btnVisible(btn){
           document.getElementById("idDocente").value = "";
           document.getElementById("nome").value = "";
           document.getElementById("cognome").value = "";
           document.getElementById("email").value = "";
-          //document.getElementById("corso").value = "";
           
           document.getElementById("elimina").style.display = "none";
           document.getElementById("salva").style.display = "none";

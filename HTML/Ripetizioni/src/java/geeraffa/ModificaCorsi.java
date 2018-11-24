@@ -61,12 +61,7 @@ public class ModificaCorsi extends HttpServlet {
         
         if (elimina != null) {
             System.out.println("STO ELIMINANDO IL CORSO");
-            ResultSet rs = Model.getDocentiCorso(titolo);
-            if(rs.next()){
-                System.out.println("IMPOSSIBILE ELIMINARE IL CORSO IN QUANTO CI SONO DOCENTI COLLEGATI AD ESSO");
-            }
-            else
-                Model.deleteCorso(titolo);
+            Model.deleteCorso(titolo);
         }
         else if(salva != null){ 
             System.out.println("STO AGGIORNANDO IL CORSO");
@@ -77,7 +72,7 @@ public class ModificaCorsi extends HttpServlet {
             Model.addCorso(titolo,descrizione);
         }
         else
-            System.out.println("ERROR");
+            System.out.println("ERROR IN MODIFICACORSI");
         rd.forward(request, response);
     }
 

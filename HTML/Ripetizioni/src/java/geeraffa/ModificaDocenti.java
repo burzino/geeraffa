@@ -45,13 +45,36 @@ public class ModificaDocenti extends HttpServlet {
         RequestDispatcher rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
         
         HttpSession ses = request.getSession();
-                
-
         
+        String idDocente = request.getParameter("idDocente");
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String email = request.getParameter("email");
+        String[] corsi=request.getParameterValues("corsi");
+        String elimina = request.getParameter("elimina");
+        String salva = request.getParameter("salva");
+        String aggiungi = request.getParameter("aggiungi");
+        for (int i = 0; i < corsi.length; i++) {
+            System.out.println(corsi[i]);
+        }
         Model.registerDriver();
+
+        System.out.println("Funziona:" + idDocente + "'" + nome +" - " + cognome + " - " + email );
         
-        
-        
+        if (elimina != null) {
+            System.out.println("STO ELIMINANDO IL DOCENTE");
+            Model.deleteDocente(idDocente);
+        }
+        else if(salva != null){ 
+            System.out.println("STO AGGIORNANDO IL DOCENTE");
+            Model.updateDocente(idDocente,nome,cognome,email,corsi);
+        }
+        else if(aggiungi != null){
+            System.out.println("STO AGGIUNGENDO UN NUOVO CORSO");
+            Model.insDocente(nome,cognome,email,corsi);
+        }
+        else
+            System.out.println("ERROR");
         rd.forward(request, response);
     }
 
