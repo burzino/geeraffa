@@ -3,9 +3,11 @@
     Created on : 23-nov-2018, 10.24.45
     Author     : Geeraffa
 --%>
+<%@page import="javafx.beans.property.IntegerPropertyBase"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.ResultSet"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="geeraffa.*"%>
 <%@ page import="dao.*"%>
@@ -15,6 +17,7 @@
     <%
         HttpSession ses = request.getSession();
         String upperCorso = request.getParameter("corso").toUpperCase();
+        String docente = request.getParameter("docente");
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,10 +46,11 @@
             PRENOTA LA TUA RIPETIZIONE DI <%= upperCorso %>
         </span>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
-        <div id="container-select">
+        <input type="hidden" name="toDo" value="elencoPren"/>
+            <div id="container-select">
             <div class="form-group" id="divSelCorso">
                 <label for="selCorsoPrenota"> Corso </label>
-                <select id="selCorsoPrenota" class="form-control">
+                <select id="selCorsoPrenota" name="corso" class="form-control">
                     <% 
                         Model.registerDriver();
                         String corso_param = request.getParameter("corso");
@@ -64,8 +68,11 @@
                 </select>
             </div>
             <div class="form-group" id="divSelCorso2">
-                <label for="selCorsoPrenota"> Docente </label>
-                <select id="selCorsoPrenota" class="form-control">
+                <label for="selDocentePrenota"> Docente </label>
+                <select id="selDocentePrenota" name="docente" class="form-control">
+                    <option value="tutti" <% if(docente.toUpperCase().equals("TUTTI")) {%> 
+                                                selected="selected" <%}%>
+                    > TUTTI </option>
                     <% 
                         Model.registerDriver();
                         ResultSet rsDoc = Model.getCorsoDocente(corso_param);
@@ -75,15 +82,22 @@
                            //System.out.println("AAAA : " + rsNomeDoc.getInt("Docente"));
                            if(rsNomeDoc.next()){
                     %>
-                            <option value="<%= rsDoc.getInt("Docente")%>">
+                            <option value="<%= rsDoc.getInt("Docente")%>"
+                                    <% if(!(docente.toUpperCase().equals("TUTTI")) 
+                                            &&Integer.parseInt(docente) == rsDoc.getInt("Docente")) {%> 
+                                            selected="selected" 
+                                    <%}%>>
                                     <%= rsNomeDoc.getString("Cognome")%> <%= rsNomeDoc.getString("Nome")%>
                             </option>
                     <%      }
                     } %>
                 </select>
             </div>
+                <div class="form-group" id="divAggiorna">
+                <input type="submit" class="login100-form-btn" id="aggiorna-pren" value="CERCA"/>
+                </div>
         </div>
-            <input type="hidden" name="toDo" value="tab_corsi"/>
+        </form>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
                         <div class="col-md-12">
@@ -91,12 +105,19 @@
                                 <thead>
                                     <th>Giorno</th>
                                     <th>Fascia Oraria</th>
-                                    <th>Conferma</th>
+                                    <th>Docente</th>
+                                    <th>Prenota</th>
                                 </thead>
                                 <tbody>
                                     <%
                                         Model.registerDriver();
-                                        ResultSet rsPren = Model.getPrenotazioni();
+                                        ResultSet rsPren;
+                                        if(docente.toUpperCase().equals("TUTTI"))
+                                            rsPren = Model.getPrenotazioniCorso(corso_param, Integer.parseInt(ses.getAttribute("id").toString()));
+                                        else
+                                            rsPren = Model.getPrenotazioniCorsoDocente(corso_param, Integer.parseInt(docente), Integer.parseInt(ses.getAttribute("id").toString()));
+                                        
+                                        
                                         
                                         while(rsPren.next()){ 
                                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -104,19 +125,24 @@
                                             dateFormat.applyPattern("dd-MM-yyyy");
                                             String dataOK = dateFormat.format(data);
                                             String oraInizio = rsPren.getString("DtInizio").split(" ")[1].substring(0,5);
-                                            String oraFine = rsPren.getString("DTFine").split(" ")[1].substring(0,5);
+                                            String oraFine = rsPren.getString("DTFine").split(" ")[1].substring(0,5);                                            
+                                            
+                                            ResultSet rsDocente = Model.getDocentiPrenotazione(rsPren.getInt("Docente"));
+                                            if(rsDocente.next()){
                                     %>
                                         <tr>
 
                                             <td><%= dataOK%></td>
                                             <td><%= oraInizio %> - <%= oraFine %></td>
+                                            <td><%= rsDocente.getString("Cognome") %> <%= rsDocente.getString("Nome") %></td>
                                             <td>
                                                 <input type="button" class="btn btn-warning" data-toggle="modal" 
                                                        data-target="#modificaCorsi"
                                                        value="Prenota"/>
                                             </td>
                                         </tr>
-                                    <% } %>
+                                    <% }
+                                        } %>
                                 
                                 </tbody>
                             </table>

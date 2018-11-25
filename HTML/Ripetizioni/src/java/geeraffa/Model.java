@@ -205,13 +205,13 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getPrenotazioniCorso(String corso)
+    public static ResultSet getPrenotazioniCorso(String corso, int ID_Utente)
     {
         ResultSet rs = null;
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"'");
+            st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"' and Studente=" + ID_Utente);
             
             rs = st.getResultSet();
         }
@@ -222,14 +222,14 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getPrenotazioniCorsoDocente(String corso, int ID_Docente)
+    public static ResultSet getPrenotazioniCorsoDocente(String corso, int ID_Docente, int ID_Utente)
     {
         ResultSet rs = null;
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"'"
-                            + " and Docente=" + ID_Docente);
+                            + " and Docente=" + ID_Docente + " and Studente=" + ID_Utente);
             
             rs = st.getResultSet();
         }
