@@ -52,6 +52,7 @@ public class Prenota extends HttpServlet {
         
         String mobile = request.getParameter("mobile");
         String corso = request.getParameter("corso");
+        String docente = request.getParameter("docente");
         
         Model.registerDriver();
         ResultSet rs = Model.getPrenotazioni();

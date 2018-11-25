@@ -205,7 +205,57 @@ public class Model {
         return rs;
     }
     
+    public static ResultSet getPrenotazioniCorso(String corso)
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"'");
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getPrenotazioniCorso ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
     
+    public static ResultSet getPrenotazioniCorsoDocente(String corso, int ID_Docente)
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"'"
+                            + " and Docente=" + ID_Docente);
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getPrenotazioniCorsoDocente ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
+    
+    public static ResultSet getDocentiPrenotazione(int ID_Docente)
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Docente where ID_Docente=" + ID_Docente);
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getDocentiPrenotazione ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
     
     public static ResultSet getCorsoPrenotazione(String titolo)
     {
