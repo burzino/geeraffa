@@ -28,8 +28,8 @@ import org.json.JSONObject;
  *
  * @author GEERAFFA
  */
-@WebServlet(name = "Prenota", urlPatterns = {"/Prenota"})
-public class Prenota extends HttpServlet {
+@WebServlet(name = "Visualizza", urlPatterns = {"/Visualizza"})
+public class Visualizza extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,18 +46,12 @@ public class Prenota extends HttpServlet {
         ServletContext ctx = getServletContext();
         
         //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/prenotazione.jsp");
+        RequestDispatcher rd = ctx.getRequestDispatcher("/visualizzazione.jsp");
         
         HttpSession ses = request.getSession();
         
         String mobile = request.getParameter("mobile");
-        String corso = request.getParameter("corso");
-        String docente = request.getParameter("docente");
         
-        Model.registerDriver();
-        ResultSet rs = Model.getPrenotazioni();
-        
-        //String prova = rs.getString("DTInizio");
         
         //Prenotazione da pagina web
         if(mobile == null)
@@ -100,9 +94,9 @@ public class Prenota extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JSONException ex) {
-            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,9 +114,9 @@ public class Prenota extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JSONException ex) {
-            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Prenota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

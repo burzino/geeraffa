@@ -281,30 +281,20 @@ iframe {
 
 #divSelCorso
 {
-    float: left;
+    margin: 10px auto;
     width: 180px;
-    margin-left: 20%;
-}
-#divSelCorso2
-{
-    float:right;
-    width: 180px;
-    margin-right: 20%;
 }
 
 #container-select
 {
-    margin:10px auto;
-    width: 50%;
-    height: 150px;
-    border:2px solid red;
+    margin:5px auto;
+    width: 30%;
 }
 
 #divAggiorna
 {
     margin-left:25%;
     width: 50%;
-    height: 80px; 
 }
 
 .symbol-input100 {

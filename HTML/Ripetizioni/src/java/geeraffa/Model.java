@@ -188,13 +188,13 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getPrenotazioni()
+    public static ResultSet getPrenotazioniPersonali(int ID_Utente)
     {
         ResultSet rs = null;
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Prenotazione");
+            st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Utente);
             
             rs = st.getResultSet();
         }
