@@ -28,8 +28,8 @@ import org.json.JSONObject;
  *
  * @author GEERAFFA
  */
-@WebServlet(name = "Visualizza", urlPatterns = {"/Visualizza"})
-public class Visualizza extends HttpServlet {
+@WebServlet(name = "VisualizzaPrenotazioni", urlPatterns = {"/VisualizzaPrenotazioni"})
+public class VisualizzaPrenotazioni extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -94,9 +94,9 @@ public class Visualizza extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JSONException ex) {
-            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,9 +114,9 @@ public class Visualizza extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JSONException ex) {
-            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Visualizza.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

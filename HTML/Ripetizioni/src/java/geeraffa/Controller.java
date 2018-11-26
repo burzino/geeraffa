@@ -62,7 +62,7 @@ public class Controller extends HttpServlet {
                 ses.invalidate();
                 break;
             case "visualizza":
-                rd = ctx.getRequestDispatcher("/Visualizza");
+                rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
                 break;
             case "elencoPren":
                 rd = ctx.getRequestDispatcher("/prenotazione.jsp");
