@@ -31,6 +31,7 @@ public class JSonLogin {
             final String OWM_EMAIL = "email";
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
+
             return forecastJson.getString(OWM_LOGGED)+ "-" +forecastJson.getString(OWM_NOME)+ "-"+forecastJson.getString(OWM_COGNOME)+ "-"+forecastJson.getString(OWM_EMAIL);
 
 

@@ -4,17 +4,27 @@
     Author     : GEERAFFA
 --%>
 
+<%@page import="java.util.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="geeraffa.*"%>
+<%@ page import="dao.*"%>
 <!DOCTYPE html>
 <html lang="it">
+    <%
+    HttpSession ses = request.getSession();
+    Model.registerDriver();
+    List<Studente> lstStud = Model.getUtenti();
+    for (int i = 0; i < lstStud.size(); i++) {
+            //System.out.println(lstStud.get(i).getUsername());
+        }
+    %>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GEERAFFA -
-    <% if(request.getAttribute("logged") == "Y") {%>
-        <%= request.getAttribute("name")%>
+    <% if(ses.getAttribute("logged") == "Y") {%>
+        <%= ses.getAttribute("name")%>
     <% } else {%>
         ripetizioni
     <%}%>
@@ -40,7 +50,7 @@
       <div class="bg-color">
         <header id="main-header">
           <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
+              <div class="container" >
               <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
@@ -48,37 +58,51 @@
                 <span class="icon-bar"></span>
               </button>
                 <a class="navbar-brand" href="#main-header">GEE<span class="logo-dec">RAFFA</span>
-                    <% if(request.getAttribute("logged") == "Y"){ %>
-                    - BUONA NAVIGAZIONE, <%= request.getAttribute("name")%>! <%}%>
+                    <% if(ses.getAttribute("logged") == "Y"){ %>
+                    - BUONA NAVIGAZIONE, <%=ses.getAttribute("name")%>! <%}%>
                 </a>
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
-              <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                  <li class="active"><a href="#main-header">Home</a></li>                  
+                <div class="collapse navbar-collapse menutendasmart" id="myNavbar" >
+                <ul class="nav navbar-nav navbar-right">                    
+                    <li class="active"><a href="#main-header">Home</a></li>
+                    
                   <!----<li class=""><a href="#service">Services</a></li>-->
                   <li class=""><a href="#corsi">Corsi</a></li>
-                  <li class=""><a href="#testimonial">Testimonial</a></li>
-                  <!---<li class=""><a href="#blog">Blog</a></li>-->
+                  <!--<li class=""><a href="#testimonial">Testimonial</a></li>-->
                   <li class=""><a href="#contact">Contact Us</a></li>
-                  <% if(request.getAttribute("logged") == "Y") { %>
-                  
-                    <li class=""><a href="<%= request.getContextPath()%>/index.jsp">Logout</a></li>
+                  <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
+                  <li class=""><a href="<%= request.getContextPath()%>/admin.jsp">
+                          GESTISCI</a></li>
                   <% } %>
+                  
+                  <% if(ses.getAttribute("logged") == "Y") {%>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=visualizza&corso=tutti">LE MIE PRENOTAZIONI</a></li>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>
+                  <!--<form action="<%= request.getContextPath()%>/Controller" id="frmout" method="post">
+                  <li class="">
+                    
+                        <input type="hidden" name="toDo" value="logout"/>
+                      <!--<li>a href="#" onclick="document.getElementById('frmout').submit();">LOGOUT</a><!--</li>-->
+                    
+                  <!--</li>-->
+                  <!--</form>-->
+                  <% } %>                                      
+                    
                 </ul>
               </div>
             </div>
           </nav>
         </header>
-        <% if(request.getAttribute("logged") != "Y"){ %>
+        <% if(ses.getAttribute("logged") != "Y"){ %>
         <div class="wrapper">
           <div class="container">
-            <div class="row">
+            <div class="row" >
               <div class="banner-info text-center wow fadeIn delay-05s">
                   <h1 class="bnr-title">Semplifica la gestione delle tue prenotazioni con <span class="logo-dec">GE</span>E<span class="logo-dec">RA</span>F<span class="logo-dec">FA</span></h1>
                 <h2 class="bnr-sub-title"></h2>
-                <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il login</p>
+                <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il login    </p>
                 <div class="brn-btn">
                   <a href="<%= request.getContextPath()%>/login.jsp" class="btn btn-download">LOG IN!</a>
                   <a href="<%= request.getContextPath()%>/registration.jsp" class="btn btn-more">Registrati</a>
@@ -184,30 +208,33 @@
     <!---->
     <section id="corsi" class="section-padding wow fadeInUp delay-05s">
     <div class="container">
-        <div class="row">
+        <div class="row" style="padding-top: 50px">
           <div class="col-md-12 text-center">
-            <h2 class="service-title pad-bt15" <% if(request.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
-            <p class="sub-title pad-bt15"<% if(request.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
+            <h2 class="service-title pad-bt15" <% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
+            <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
             <hr class="bottom-line">
           </div>
-    <%
-        Model.registerDriver();
-        ResultSet rs = Model.getCorsi();
-        while(rs.next())
-        {
-    %>
+        <%
+            Model.registerDriver();
+            ResultSet rs = Model.getCorsi();
+            while(rs.next())
+            {
+        %>
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
                 <img src="img/<%= rs.getString("Titolo")%>.jpg" class="img-responsive">
               <figcaption>
                 <h2><%= rs.getString("Titolo")%></h2>
                 <p><%= rs.getString("Descrizione")%></p>
-                
+                <% if(ses.getAttribute("logged") == "Y") { %>
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
-                    <input type="hidden" name="url" value="<%= request.getRequestURL()%>"/>
+                    <input type="hidden" name="toDo" value="prenota"/>
+                    <input type="hidden" name="docente" value="tutti"/>
+                    <input type="hidden" name="corso" value="<%= rs.getString("Titolo")%>" />
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
                 </form>
+                <% } %>
               </figcaption>              
             </figure>
           </div>
@@ -215,83 +242,6 @@
         </div>
       </div>
     </section>
-        <!--
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port02.jpg" class="img-responsive">
-              <figcaption>
-                <h2>ProgIII</h2>
-                <p>Quel che forse faremo di prog III.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port03.jpg" class="img-responsive">
-              <figcaption>
-                <h2>Prenotazione android</h2>
-                <p>Stessa cosa ma su android.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port04.jpg" class="img-responsive">
-              <figcaption>
-                <h2>Database per prj db</h2>
-                <p>Non mi ricordo cosa faceva.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port05.jpg" class="img-responsive">
-              <figcaption>
-                <h2>Algoritmi</h2>
-                <p>Stra TRIGGERED.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Carino il gestore che si credeva dio onnipotente.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Wei campione.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Carino il gestore che si credeva dio onnipotente.</p>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
-            <figure>
-              <img src="img/port06.jpg" class="img-responsive">
-              <figcaption>
-                <h2>SO</h2>
-                <p>Carino il gestore che si credeva dio onnipotente.</p>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-    </section>-->
-    <!---->
     <!---->
     <section id="testimonial" class="wow fadeInUp delay-05s">
       <div class="bg-testicolor">
@@ -475,4 +425,3 @@
 
 </body>
 </html>
-

@@ -67,6 +67,9 @@ public class Controller extends HttpServlet {
             case "elencoPren":
                 rd = ctx.getRequestDispatcher("/prenotazione.jsp");
                 break;
+            case "elencoCorsi":
+                rd = ctx.getRequestDispatcher("/VisualizzaCorsi");
+                break;
             case "registration":
                 rd = ctx.getRequestDispatcher("/Registration");
                 break;

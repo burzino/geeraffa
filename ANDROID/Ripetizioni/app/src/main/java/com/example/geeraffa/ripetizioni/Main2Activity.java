@@ -15,28 +15,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class Main2Activity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    String userPref, pwdPref, logged;
+    boolean primoLog;
+    TextView txtNomeCognome,txtEmail;
+    ListView lstCorsi;
+    CorsiAdapter adapterCorsi;
     NavigationView navigationView;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
-    TextView txtNomeCognome;
-    TextView txtEmail;
-    String userPref;
-    String pwdPref;
-    String logged;
-    boolean primoLog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        lstCorsi=(ListView)findViewById(R.id.lstCorsi);
         //shared preferences per dati login
+        //prende utente e password se sono già salvati sul dispositivo
         pref = getApplicationContext().getSharedPreferences("LoginPref", 0);
         editor = pref.edit();
         userPref =pref.getString("user", null); // getting String
@@ -44,7 +48,7 @@ public class Main2Activity extends AppCompatActivity
         primoLog=true;
 
 
-        //Get EXTRA DA LoginTestActivity
+        //prende i parametri arrivati da LoginTestActivity
         Intent myintent = getIntent();
         logged = myintent.getStringExtra("logged");
         String nome = myintent.getStringExtra("nome");
@@ -64,14 +68,14 @@ public class Main2Activity extends AppCompatActivity
             }
         });
 
-
+        //Menù laterale con l'item menu e i dati del profilo
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        //menù item drawer laterale
+        //Item menù del Drawer(lista bottoni del menù)
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -80,6 +84,7 @@ public class Main2Activity extends AppCompatActivity
         txtNomeCognome = (TextView) headerView.findViewById(R.id.nomeCognomeDrawer);
         txtEmail = (TextView) headerView.findViewById(R.id.emailDrawer);
 
+        //se arrivano i dati dall'activity login, visualizza i dati del profilo e permette di effettuare prenotazioni
         if (logged!=null) {
             txtNomeCognome.setText(nome + " " + cognome);
             txtEmail.setText(email);
@@ -88,7 +93,7 @@ public class Main2Activity extends AppCompatActivity
             nav_Menu.findItem(R.id.nav_prenotazioni).setVisible(true);
 
         }else
-        //fa il login se ci sono già user e password
+        //se non si è loggati ma ci sono user e pwd salvati sul dispositivo, avvia il login automaticamente
         if (userPref!=null && pwdPref!=null &&userPref!=""&&pwdPref!="" ) {
             Intent myIntent = new Intent(Main2Activity.this, LoginTestActivity.class);
             myIntent.putExtra("user", userPref); //Optional parameters
@@ -96,8 +101,9 @@ public class Main2Activity extends AppCompatActivity
             Main2Activity.this.startActivity(myIntent);
             primoLog=false;
         }
+        mostraCorsi();
     }
-
+    //chiude il menu se si preme il pulsante back del dispositivo
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,14 +113,15 @@ public class Main2Activity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+    // Inflate the menu; this adds items to the action bar if it is present.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
 
+    //Avvia la funzione del bottone clickato nel menu in alto a destra(non nel drawer)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -134,13 +141,14 @@ public class Main2Activity extends AppCompatActivity
             nav_Menu.findItem(R.id.nav_prenotazioni).setVisible(false);
             editor.remove("user");
             editor.remove("pwd");
+            editor.commit();
             logged=null;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
-
+    //Avvia la funzione del bottone clickato nel drawer
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -162,5 +170,29 @@ public class Main2Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    public void mostraCorsi(){
+        final ArrayList<Corso> listCorsi = new ArrayList<Corso>();
+        adapterCorsi = new CorsiAdapter(Main2Activity.this,R.layout.corso_layout,listCorsi);
+        lstCorsi.setAdapter(adapterCorsi);
+        JSonCorsi JCorsi=new JSonCorsi();
+        try {
+            String[] corsi = JCorsi.doit();
+            for (int i=0;i<corsi.length;i++){
+                String[] corso = corsi[i].split("-");
+                listCorsi.add(new Corso(corso[0],corso[1]));
+            }
+            adapterCorsi.notifyDataSetChanged();
+
+
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
