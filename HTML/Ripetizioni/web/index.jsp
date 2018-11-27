@@ -78,7 +78,7 @@
                   <% } %>
                   
                   <% if(ses.getAttribute("logged") == "Y") {%>
-                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=visualizza&corso=tutti">LE MIE PRENOTAZIONI</a></li>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
                   <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>
                   <!--<form action="<%= request.getContextPath()%>/Controller" id="frmout" method="post">
                   <li class="">

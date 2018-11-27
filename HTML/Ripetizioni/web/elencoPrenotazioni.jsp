@@ -53,7 +53,7 @@
         <% } %>
         <form class="login100-form validate-form" 
               action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
-        <input type="hidden" name="toDo" value="visualizza"/>
+        <input type="hidden" name="toDo" value="elencoPren"/>
             <div id="container-select">
             <div class="form-group" id="divSelCorso">
                 <label for="selCorsoPrenota"> Corso </label>
@@ -126,7 +126,8 @@
                                             <td><%= rsDocente.getString("Cognome") %> <%= rsDocente.getString("Nome") %></td>
                                             <td>
                                                 <input type="button" class="btn btn-danger" data-toggle="modal" 
-                                                       value="Elimina"/>
+                                                    onclick="window.location.href='<%= request.getContextPath()%>/Controller?toDo=disdici&id=<%= rsPren.getInt("ID_Prenotazione")%>'"
+                                                value="Disdici"/>
                                             </td>
                                         </tr>
                                     <% }
@@ -137,7 +138,7 @@
                         </div>
                     </div>
                 </div> 
-        </form>
+        <!--</form>-->
                                 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>

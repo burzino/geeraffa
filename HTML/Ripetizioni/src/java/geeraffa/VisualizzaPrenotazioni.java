@@ -46,7 +46,7 @@ public class VisualizzaPrenotazioni extends HttpServlet {
         ServletContext ctx = getServletContext();
         
         //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/visualizzazione.jsp");
+        RequestDispatcher rd = ctx.getRequestDispatcher("/elencoPrenotazioni.jsp");
         
         HttpSession ses = request.getSession();
         

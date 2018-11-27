@@ -61,11 +61,12 @@ public class Controller extends HttpServlet {
             case "logout":
                 ses.invalidate();
                 break;
-            case "visualizza":
+            case "elencoPren":
                 rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
                 break;
-            case "elencoPren":
-                rd = ctx.getRequestDispatcher("/prenotazione.jsp");
+            case "disdici":
+                Model.disdiciPren(Integer.parseInt(request.getParameter("id")));
+                rd = ctx.getRequestDispatcher("/elencoPrenotazioni.jsp?corso=tutti");
                 break;
             case "elencoCorsi":
                 rd = ctx.getRequestDispatcher("/VisualizzaCorsi");

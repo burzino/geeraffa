@@ -194,7 +194,7 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Utente);
+            st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Utente + " and Disdetta=0");
             
             rs = st.getResultSet();
         }
@@ -211,7 +211,7 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"' and Studente=" + ID_Utente);
+            st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso +"' and Studente=" + ID_Utente + " and Disdetta=0");
             
             rs = st.getResultSet();
         }
@@ -458,6 +458,22 @@ public class Model {
         }
         
     }
+    public static void disdiciPren(int ID_Pren) {
+        String sql = "";
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            sql = "UPDATE Prenotazione set Disdetta=1 where ID_Prenotazione=" + ID_Pren;
+            System.out.println(sql + " - PRENOTAZIONE DISDETTA");
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println("disdiciPren ERROR: " + e.getMessage());
+        }
+        
+    }
     
     public static void updateDocente(String id_docente, String nome, String cognome, String email, String[] corsi) {
         String sql = "";
@@ -493,5 +509,5 @@ public class Model {
             System.out.println("deleteCorso ERROR: " + e.getMessage());
         }
         
-    }
+    }    
 }
