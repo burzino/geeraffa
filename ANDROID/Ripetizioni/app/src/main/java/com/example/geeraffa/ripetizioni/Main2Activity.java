@@ -1,9 +1,12 @@
 package com.example.geeraffa.ripetizioni;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -34,10 +37,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     NavigationView navigationView;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+   // ProgressDialog barProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+      /*  setContentView(R.layout.progress_dialog_fullscreen_layout);
+        getWindow().setLayout(AppBarLayout.LayoutParams.MATCH_PARENT,
+                AppBarLayout.LayoutParams.MATCH_PARENT);*/
         lstCorsi=(ListView)findViewById(R.id.lstCorsi);
         //shared preferences per dati login
         //prende utente e password se sono già salvati sul dispositivo
@@ -102,6 +109,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             primoLog=false;
         }
         mostraCorsi();
+       /* final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                 Qui il ProgressDialog viene chiuso
+                barProgressDialog.dismiss();
+            }
+        }, 3000);*/
     }
     //chiude il menu se si preme il pulsante back del dispositivo
     @Override
