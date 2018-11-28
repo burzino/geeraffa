@@ -5,20 +5,9 @@ function setXMLHttpRequest() {
     var xhr = null;
     if (window.XMLHttpRequest) {      // browser standard con supporto nativo
       xhr = new XMLHttpRequest();}
-    else if (window.ActiveXObject) {   // browser MS Internet Explorer 6 o 						// precedente - ActiveX
+    else if (window.ActiveXObject) {   // browser MS Internet Explorer 6 o precedente - ActiveX
       xhr = new ActiveXObject("Microsoft.XMLHTTP");}
     return xhr;
-}
-
-function onLoadTabella(corso, url)
-{
-    xhrObj.open("GET", url+"&corso="+corso, true);
-    
-    xhrObj.onreadystatechange = aggiorna; // indico la funzione (updatePage) 
-                                            // da invocare quando il server
-                                            // termina l’esecuzione della richiesta
-
-    xhrObj.send(null);
 }
 
 function aggiornaTabella(corso, url)
@@ -63,8 +52,7 @@ function aggiorna()
                         +   "<td>" + dati[1] + "</td>"
                         +   "<td>" + dati[2] + "</td>"
                         +   "<td>" + dati[3] + "</td>"
-                        +   "<td>"
-                        +   "<input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici' onclick=\"aggiornaTabDisdici('tutti','/Ripetizioni/Controller?')\" />"
+                        +   "<td><input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici' onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici')\" />"
                         +   "</td>"
                         +"</tr>";
             }
