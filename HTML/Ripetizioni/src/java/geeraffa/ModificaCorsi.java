@@ -58,18 +58,40 @@ public class ModificaCorsi extends HttpServlet {
         Model.registerDriver();
         
         System.out.println("Funziona:" + titolo +" - " + descrizione);
-        
+        String sql;
+        ResultSet rs;
         if (elimina != null) {
             System.out.println("STO ELIMINANDO IL CORSO");
-            Model.deleteCorso(titolo);
+            sql = "UPDATE corsodocente SET Attivo = 0 WHERE Corso = '" + titolo + "'";
+            Model.eseguiNonQuery(sql);
+            sql = "UPDATE Corso SET Attivo = 0 WHERE Titolo = '" + titolo + "'";
+            Model.eseguiNonQuery(sql);
+            System.out.println("CORSO ELIMINATO CORRETTAMENTE");
         }
         else if(salva != null){ 
             System.out.println("STO AGGIORNANDO IL CORSO");
-            Model.updateCorso(titolo, descrizione);
+            sql = "UPDATE corsodocente SET Attivo = 0 WHERE Docente = '" + titolo + "'";
+            Model.eseguiNonQuery(sql);
+            sql = "UPDATE Corso SET Descrizione = '" + descrizione + "' WHERE Titolo = '" + titolo + "'";
+            Model.eseguiNonQuery(sql);
+            System.out.println("CORSO MODIFICATO CORRETTAMENTE");
         }
         else if(aggiungi != null){
             System.out.println("STO AGGIUNGENDO UN NUOVO CORSO");
-            Model.addCorso(titolo,descrizione);
+            
+            sql = "SELECT * FROM Corso WHERE Titolo ='" + titolo + "'";
+            rs = Model.eseguiQuery(sql);
+            if (rs.next()) {
+                sql = "UPDATE Corso SET Attivo = 1, Descrizione = '" + descrizione + "' WHERE titolo = '" + titolo + "'";
+                Model.eseguiNonQuery(sql);
+            }
+            else{
+                sql = "INSERT INTO Corso(titolo, descrizione) VALUES(" + "'" + titolo + "', '" + descrizione + "')";
+                Model.eseguiNonQuery(sql);
+                sql = "SELECT MAX(ID_Docente) FROM Docente";
+                rs = Model.eseguiQuery(sql);
+            }
+            System.out.println("CORSO INSERITO CORRETTAMENTE");
         }
         else
             System.out.println("ERROR IN MODIFICACORSI");

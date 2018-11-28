@@ -124,7 +124,7 @@ public class ModificaDocenti extends HttpServlet {
                 sql = "INSERT INTO corsodocente(Docente,corso) VALUES(" + id_docente + ",'" + corsi[i] + "')";
                 Model.eseguiNonQuery(sql);
             }
-            System.out.println("DOCENTE MODIFICATO CORRETTAMENTE");
+            System.out.println("DOCENTE INSERITO CORRETTAMENTE");
             
         }
         else
