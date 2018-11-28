@@ -30,7 +30,9 @@
 
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
     </head>
-    <body onload="onLoadTabella('tutti','/Ripetizioni/Controller?toDo=aggiornaPren')">
+    
+    <body style="background-color: #abc" onload="onLoadTabella('tutti','/Ripetizioni/Controller?toDo=aggiornaPren')">
+    <jsp:include page="header.jsp"></jsp:include>    
             <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 ELENCO DELLE TUE RIPETIZIONI PRENOTATE
             </span>
@@ -40,7 +42,7 @@
             <div id="container-select">
             <div class="form-group" id="divSelCorso">
                 <label for="selCorsoPrenota"> Corso </label>
-                <select id="selCorsoPrenota" name="corso" class="form-control"
+                <select style="background-color: #abc" id="selCorsoPrenota" name="corso" class="form-control"
                         onchange="aggiornaTabella(this.value, '<%= request.getContextPath()%>/Controller?toDo=aggiornaPren')" >
                     <option <% if(corso.equals("tutti")) {%>
                                 selected="selected"
