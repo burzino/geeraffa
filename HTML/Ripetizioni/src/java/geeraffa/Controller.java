@@ -64,9 +64,12 @@ public class Controller extends HttpServlet {
             case "elencoPren":
                 rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
                 break;
+            case "aggiornaPren":
+                rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni");
+                break;
             case "disdici":
                 Model.disdiciPren(Integer.parseInt(request.getParameter("id")));
-                rd = ctx.getRequestDispatcher("/elencoPrenotazioni.jsp?corso=tutti");
+                rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni");
                 break;
             case "elencoCorsi":
                 rd = ctx.getRequestDispatcher("/VisualizzaCorsi");
