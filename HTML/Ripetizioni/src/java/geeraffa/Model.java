@@ -36,6 +36,38 @@ public class Model {
         }
     }
     
+    public static ResultSet eseguiQuery(String sql){
+        ResultSet rs = null;
+        try {
+            registerDriver();
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery(sql);
+            
+            rs = st.getResultSet();
+            System.out.println(sql);
+        }
+        catch (SQLException e) {
+            System.err.println("ESEGUIQUERY ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
+    
+    public static void esequiNonQuery(String sql){
+        try {
+            registerDriver();
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println("ESEGUINONQUERYERROR: " + e.getMessage());
+        }
+    }
+    
     //Select QUERY
     public static List<Studente> getUtenti()
     {
@@ -160,7 +192,23 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Docente");
+            st.executeQuery("SELECT * FROM Docente WHERE Attivo = 1");
+            
+            rs = st.getResultSet();
+        }
+        catch (SQLException e) {
+            System.err.println("getDocenti ERROR: " + e.getMessage());
+        };
+        
+        return rs;
+    }
+    public static ResultSet getIDDocenti(String email)
+    {
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Docente WHERE email ='" + email + "'");
             
             rs = st.getResultSet();
         }
@@ -291,13 +339,13 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getDocentiCorsoTabDocenti()
+    public static ResultSet getDocentiCorsoTabDocenti(int docente)
     {
         ResultSet rs = null;
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Docente LEFT JOIN CorsoDocente ON (Docente.ID_Docente = CorsoDocente.Docente) LEFT JOIN Corso ON(Corso.titolo = CorsoDocente.corso)");
+            st.executeQuery("SELECT * FROM corsodocente WHERE docente =" + docente);
             
             rs = st.getResultSet();
         }
@@ -368,6 +416,7 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
+            titolo = titolo.toLowerCase();
             sql = "UPDATE CORSO SET TITOLO ='" + titolo + "',DESCRIZIONE = '" + descrizione + "' WHERE titolo ='" + titolo +"'";
             System.out.println(sql);
             st.executeUpdate(sql);
@@ -421,17 +470,22 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            sql = "INSERT INTO Docente(nome, cognome ,email) VALUES("
+            rs = getIDDocenti(email);
+            if(rs.next()){
+                id_docente = rs.getInt("ID_docente");
+                sql = "UPDATE Docente set Attivo = 1 WHERE ID_Docente = " + id_docente;
+            }
+            else{
+                sql = "INSERT INTO Docente(nome, cognome ,email) VALUES("
                     + "'" + nome + "', '" + cognome + "','" + email + "')";
+                id_docente = getLastID_Docente();
+            }
             
             st.executeUpdate(sql);
             System.out.println(sql);
             
             st.close();
             conn.close();
-            
-            id_docente = getLastID_Docente();
-            
             System.out.println(id_docente);
             for (int i = 0; i < corsi.length; i++) {
                 sql = "INSERT INTO corsodocente(Docente,corso) VALUES(" + id_docente + ",'" + corsi[i] + "')";
@@ -481,11 +535,17 @@ public class Model {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             int idDocente = Integer.parseInt(id_docente);
-            sql = "UPDATE Docente SET Nome ='" + nome + "',Cognome = '" + cognome + "',email = '" + email + "' WHERE id_docente =" + idDocente;
+            sql = "UPDATE Docente SET Nome ='" + nome + "',Cognome = '" + cognome + "',email = '" + email + "', attivo = 1 WHERE id_docente =" + idDocente;
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
             conn.close();
+            
+            for (int i = 0; i < corsi.length; i++){
+                sql = "INSERT INTO corsodocente(Docente,corso) VALUES(" + id_docente + ",'" + corsi[i] + "')";
+                System.err.println(sql);
+                insDocenteCorso(sql);
+            }
         } 
         catch (Exception e) {
             System.out.println("updateCorso ERROR: " + e.getMessage());
@@ -499,7 +559,25 @@ public class Model {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             int idDocente = Integer.parseInt(id_docente);
-            sql = "DELETE FROM docente WHERE id_docente =" + idDocente;
+            sql = "UPDATE Docente SET Attivo = 0 WHERE ID_Docente = " + id_docente;
+            System.out.println(sql);
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            System.out.println("deleteCorso ERROR: " + e.getMessage());
+        }
+        
+    }    
+    
+    public static void deleteCorsoDocente(String id_docente) {
+        String sql = "";
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            int idDocente = Integer.parseInt(id_docente);
+            sql = "UPDATE corsodocente SET Attivo = 0 WHERE Docente = " + id_docente;
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
