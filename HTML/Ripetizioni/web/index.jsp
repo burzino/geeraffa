@@ -43,7 +43,7 @@
 
 <body>
 
-  <div class="loader"></div>
+  <!--<div class="loader"></div>-->
   <div id="myDiv">
     <!--HEADER-->
     <div class="header">
