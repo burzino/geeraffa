@@ -94,7 +94,7 @@ public class Model {
         return lst;
     }
     
-    public static List<Prenotazione> listPrenotazioni(String corso)
+    public static List<Prenotazione> listPrenotazioni(String corso, int ID_Studente)
     {
         List<Prenotazione> lst = new ArrayList<Prenotazione>();
         
@@ -102,10 +102,11 @@ public class Model {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            if(corso.equals("tutti"))
-                st.executeQuery("SELECT * FROM Prenotazione where Disdetta=0");
+            if(corso.equals("tutti") || corso.equals("TUTTI"))
+                st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Studente + " and Disdetta=0");
             else
-                st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso + "' and Disdetta=0");
+                st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso 
+                        + "' and Disdetta=0 and Studente=" + ID_Studente);
             rs = st.getResultSet();
             
             while(rs.next())

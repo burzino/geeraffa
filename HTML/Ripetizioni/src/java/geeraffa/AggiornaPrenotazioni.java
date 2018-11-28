@@ -43,10 +43,12 @@ public class AggiornaPrenotazioni extends HttpServlet {
             throws ServletException, IOException, ParseException {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession ses = request.getSession();
+            
             List<Prenotazione> lstPren;
             response.setContentType("text/plain");
             Model.registerDriver();
-            lstPren = Model.listPrenotazioni(request.getParameter("corso"));
+            lstPren = Model.listPrenotazioni(request.getParameter("corso"), Integer.parseInt(ses.getAttribute("id").toString()));
 
             //Creo stringa con dati da passare alla pagina delle prenotazioni
             String str = "";
