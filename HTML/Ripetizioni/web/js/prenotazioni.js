@@ -52,7 +52,8 @@ function aggiorna()
                         +   "<td>" + dati[1] + "</td>"
                         +   "<td>" + dati[2] + "</td>"
                         +   "<td>" + dati[3] + "</td>"
-                        +   "<td><input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici' onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici')\" />"
+                        +   "<td><input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
+                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + dati[4] + "')\" />"
                         +   "</td>"
                         +"</tr>";
             }

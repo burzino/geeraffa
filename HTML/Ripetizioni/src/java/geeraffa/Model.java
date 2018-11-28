@@ -103,9 +103,9 @@ public class Model {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             if(corso.equals("tutti"))
-                st.executeQuery("SELECT * FROM Prenotazione");
+                st.executeQuery("SELECT * FROM Prenotazione where Disdetta=0");
             else
-                st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso + "'");
+                st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso + "' and Disdetta=0");
             rs = st.getResultSet();
             
             while(rs.next())
@@ -115,7 +115,6 @@ public class Model {
                         rs.getString("DTFine"), rs.getInt("Disdetta"));
                 lst.add(stud);
             }
-            System.out.println("HHH " + lst.get(0).getDataInizio());
         }
         catch (SQLException e) {
             System.err.println("listPrenotazioni ERROR: " + e.getMessage());
