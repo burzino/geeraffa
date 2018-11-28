@@ -52,7 +52,7 @@ public class Model {
         return rs;
     }
     
-    public static void esequiNonQuery(String sql){
+    public static void eseguiNonQuery(String sql){
         try {
             registerDriver();
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
