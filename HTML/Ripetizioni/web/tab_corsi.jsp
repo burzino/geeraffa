@@ -40,8 +40,9 @@
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
             <input type="hidden" name="toDo" value="tab_corsi"/>
                 <%
-                Model.registerDriver();
-                ResultSet rs = Model.getCorsi();
+                    String sql;
+                    sql = "SELECT * FROM Corso";
+                ResultSet rs = Model.eseguiQuery(sql);
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
