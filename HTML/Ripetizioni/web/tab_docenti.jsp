@@ -38,7 +38,9 @@
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
                 Model.registerDriver();
-                ResultSet rs = Model.getDocenti();
+                String sql = "SELECT * FROM Docente WHERE Attivo = 1";
+                ResultSet rs = Model.eseguiQuery(sql);
+                ResultSet rsCorsi = null;
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
@@ -51,12 +53,21 @@
                                     <th>Gestione</th>
                                 </thead>
                                 <tbody>
-                                <%while(rs.next()){ %>
+                                <%
+                                    String corsi;
+                                    while(rs.next()){
+                                        sql = "SELECT * FROM CorsoDocente WHERE attivo = 1 AND Docente = " + rs.getInt("ID_Docente");
+                                        rsCorsi = Model.eseguiQuery(sql);
+                                        corsi = "";
+                                        while(rsCorsi.next()){
+                                           corsi+=rsCorsi.getString("Corso") +";";
+                                        }
+                                        %>
                                 <tr>
                                     <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
-                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>')" ></td>
+                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=corsi%>')" ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -101,18 +112,19 @@
                                     <td>
                                         <table>
                                         <% 
-                                            rs = Model.getCorsi();
+                                            sql = "SELECT * FROM Corso";
+                                            rs = Model.eseguiQuery(sql);
                                             int i = 0;
                                             while(rs.next()){
                                             %>
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="corsi" value="<%= rs.getString("titolo")%>" onchange="gestioneCorsi(this)"/><%= rs.getString("titolo")%>
+                                                    <input type="checkbox" class="corsi" name="corsi" id="<%= rs.getString("titolo")%>" value="<%= rs.getString("titolo")%>" /><%= rs.getString("titolo")%>
                                                 </td>
                                                 <%  i = 0;
                                                     while(i<2 && rs.next()){%>
                                                 <td>
-                                                    <input type="checkbox" name="corsi" value="<%= rs.getString("titolo")%>" onchange="gestioneCorsi(this)"/><%= rs.getString("titolo")%>
+                                                    <input type="checkbox" class="corsi" name="corsi" id="<%= rs.getString("titolo")%>" value="<%= rs.getString("titolo")%>"/><%= rs.getString("titolo")%>
                                                 </td>
                                                 <% i++;
                                                 }%>
@@ -127,7 +139,7 @@
                       <div class="modal-footer">
                           <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Annulla" id="annulla"/>
                           <input type="submit" class="btn btn-danger" value="Elimina" name="elimina" id="elimina"/>
-                          <input type="submit" class="btn btn-success" value="Salva" name="salva" id="salva"/>
+                          <input type="submit" class="btn btn-success" value="Salva Modifiche" name="salva" id="salva"/>
                           <input type="submit" class="btn btn-success" value="Aggiungi" name="aggiungi" id="aggiungi"/>
                       </div>
                     </div>
@@ -172,8 +184,24 @@
           document.getElementById("elimina").style.display = "block";
           document.getElementById("salva").style.display = "block";
           document.getElementById("modificaDocentiTitle").style.display = "block";
+          var corsi = corso.split(";");
+            $('.corsi').attr('checked', false);
+          //alert(corsi);
+          document.getElementsByName("corsi").checked = false;
+          for (var i = 0; i < corsi.length-1; i++) {
+            document.getElementById(corsi[i]).checked = true;
+          }   
           
-          
+        var checked = $(this).prop('checked');
+          $('#checkboxes').find('input:checkbox').prop('checked', checked);
+    
+        for(var i =0; i< checks.length;i++){
+            var check = checks[i];
+            if(!check.disabled){
+                check.checked = false;
+            }
+        }
+            
       }
       function btnVisible(btn){
           document.getElementById("idDocente").value = "";
