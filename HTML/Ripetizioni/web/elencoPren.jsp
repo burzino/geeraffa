@@ -27,11 +27,10 @@
         <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">    
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/main.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrapA.min.css">
 
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
     </head>
-    <body onload="aggiornaTabella('tutti', '<%= request.getContextPath()%>/Controller?toDo=aggiornaPren')">
+    <body onload="onLoadTabella('tutti','/Ripetizioni/Controller?toDo=aggiornaPren')">
             <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 ELENCO DELLE TUE RIPETIZIONI PRENOTATE
             </span>
@@ -76,7 +75,6 @@
                 <th scope="col">Prenota</th>
             </thead>
             <tbody id="tablePren">
-
             </tbody>
         </table>
                              
