@@ -42,15 +42,13 @@ public class Model {
             registerDriver();
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
-            st.executeQuery(sql);
-            
-            rs = st.getResultSet();
             System.out.println(sql);
+            st.executeQuery(sql);
+            rs = st.getResultSet();
         }
         catch (SQLException e) {
             System.err.println("ESEGUIQUERY ERROR: " + e.getMessage());
         };
-        
         return rs;
     }
     
@@ -59,6 +57,7 @@ public class Model {
             registerDriver();
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
+            System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
             conn.close();
@@ -90,36 +89,6 @@ public class Model {
         }
         catch (SQLException e) {
             System.err.println("Login ERROR: " + e.getMessage());
-        };
-        
-        return lst;
-    }
-    
-    public static List<Prenotazione> listPrenotazioni(String corso)
-    {
-        List<Prenotazione> lst = new ArrayList<Prenotazione>();
-        
-        ResultSet rs = null;
-        try {
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
-            if(corso.equals("tutti"))
-                st.executeQuery("SELECT * FROM Prenotazione");
-            else
-                st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso + "'");
-            rs = st.getResultSet();
-            
-            while(rs.next())
-            {
-                Prenotazione stud = new Prenotazione(rs.getInt("ID_Prenotazione"), rs.getInt("Studente"),
-                        rs.getInt("Docente"), rs.getString("Corso"), rs.getString("DTInizio"),
-                        rs.getString("DTFine"), rs.getInt("Disdetta"));
-                lst.add(stud);
-            }
-            System.out.println("HHH " + lst.get(0).getDataInizio());
-        }
-        catch (SQLException e) {
-            System.err.println("listPrenotazioni ERROR: " + e.getMessage());
         };
         
         return lst;
