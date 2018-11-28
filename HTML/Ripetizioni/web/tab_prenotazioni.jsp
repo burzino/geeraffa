@@ -3,6 +3,8 @@
     Created on : 21-nov-2018, 9.13.45
     Author     : Geeraffa
 --%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,29 +36,71 @@
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
             <input type="hidden" name="toDo" value="tab_prenotazioni"/>
                 <%
-                Model.registerDriver();
-                ResultSet rs = Model.getDocentiCorso(1);
+                    String sql;
+                    sql = "SELECT Docente.nome AS nDocente, "
+                            + "Docente.cognome AS cDocente, "
+                            + "Prenotazione.corso AS corso, "
+                            + "Prenotazione.disdetta, "
+                            + "Prenotazione.DTInizio, "
+                            + "Prenotazione.DTFine, "
+                            + "Utente.nome AS nStudente, "
+                            + "Utente.cognome AS cStudente "
+                            + "FROM Prenotazione "
+                            + "JOIN Docente ON Docente.ID_Docente = Prenotazione.docente "
+                            + "JOIN Utente ON Utente.ID_Utente = Prenotazione.studente";
+                    
+                ResultSet rs = Model.eseguiQuery(sql);
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
                         <div class="col-md-12">
                             <table id="bootstrap-data-table" class="table table-striped table-bordered" style="text-align:center;">
                                 <thead>
-                                    <th>Username</th>
-                                    <th>Nome</th>
-                                    <th>Cognome</th>
-                                    <th>Email</th>  
-                                    <th>Gestione</th>
+                                    <th>Docente</th>
+                                    <th>Corso</th>
+                                    <th>Studente</th>
+                                    <th>Data</th>  
+                                    <th>Ora</th>
+                                    <th>Stato</th>
 
                                 </thead>
                                 <tbody>
-                                <%while(rs.next()){ %>
+                                <%while(rs.next()){ 
+                                
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date data = dateFormat.parse(rs.getString("DTInizio"));
+                                    dateFormat.applyPattern("dd-MM-yyyy");
+                                    String dataOK = dateFormat.format(data);
+                                    String oraInizio = rs.getString("DTInizio").split(" ")[1].substring(0,5);
+                                    String oraFine = rs.getString("DTFine").split(" ")[1].substring(0,5);
+                                    
+                                    
+                                    DateFormat dataCorrente = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    Date date = new Date();
+                                    System.out.println(dataCorrente.format(date));
+                                    Date dataFine = dateFormat.parse(rs.getString("DTFine"));
+                                    System.out.println(dataCorrente.format(date));
+                                    String stato;
+                                    if (date.toString().compareTo(dataFine.toString()) > 0) {
+                                            stato = "ESPLETATA";
+                                        }
+                                    else if(date.toString().compareTo(dataFine.toString()) < 0)
+                                        stato = "ATTIVA";
+                                    else
+                                        stato ="IN CORSO";
+                                    
+                                    if (rs.getInt("disdetta") == 1 )
+                                        stato = "DISDETTA";
+
+                                
+                                %>
                                 <tr>
-                                    <td><%= rs.getString("Username")%></td>
-                                    <td><%= rs.getString("Nome")%></td>
-                                    <td><%= rs.getString("Cognome")%></td>
-                                    <td><%= rs.getString("Email")%></td>
-                                    <td><input type="button" class="btn btn-secondary" value="modifica" id="<%=rs.getInt("ID_Utente")%>"  ></td>
+                                    <td><%= rs.getString("cDocente")%> <%= rs.getString("nDocente")%></td>
+                                    <td><%= rs.getString("corso")%></td>
+                                    <td><%= rs.getString("cStudente")%> <%= rs.getString("nStudente")%></td>
+                                    <td><%= dataOK%></td>
+                                    <td><%= oraInizio%> - <%= oraFine%></td>
+                                    <td><%= stato%></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
