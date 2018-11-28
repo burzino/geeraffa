@@ -23,7 +23,7 @@ function onLoadTabella(corso, url)
 
 function aggiornaTabella(corso, url)
 {
-    url_ = url
+    url_ = url;
     xhrObj.open("GET", url+"&corso="+corso, true);
     
     xhrObj.onreadystatechange = aggiorna; // indico la funzione (updatePage) 
@@ -48,7 +48,7 @@ function aggiorna()
                     "<tr>"
                     +   "<td colspan='5'> Nessuna prenotazione di " 
                     + document.getElementById('selCorsoPrenota').value + "</td>"
-                    +"</tr>"
+                    +"</tr>";
         }
         else
         {
