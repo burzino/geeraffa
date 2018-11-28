@@ -1,3 +1,6 @@
+var xhrObj = setXMLHttpRequest();
+var url_;
+
 function setXMLHttpRequest() {
     var xhr = null;
     if (window.XMLHttpRequest) {      // browser standard con supporto nativo
@@ -7,8 +10,16 @@ function setXMLHttpRequest() {
     return xhr;
 }
 
-var xhrObj = setXMLHttpRequest();
-var url_;
+function onLoadTabella(corso, url)
+{
+    xhrObj.open("GET", url+"&corso="+corso, true);
+    
+    xhrObj.onreadystatechange = aggiorna; // indico la funzione (updatePage) 
+                                            // da invocare quando il server
+                                            // termina l’esecuzione della richiesta
+
+    xhrObj.send(null);
+}
 
 function aggiornaTabella(corso, url)
 {
@@ -30,22 +41,33 @@ function aggiorna()
         var i;
         var table = document.getElementById("tablePren");
         table.innerHTML = "";
-        for(i=0; i < str.length-1; i++)
+        if(str.length-1 == 0)
         {
-            //alert(str);
-            var dati = str[i].split(";");
+            var dati = str[0].split(";");
             table.innerHTML += 
                     "<tr>"
-                    +   "<td>" + dati[0] + "</td>"
-                    +   "<td>" + dati[1] + "</td>"
-                    +   "<td>" + dati[2] + "</td>"
-                    +   "<td>" + dati[3] + "</td>"
-                    +   "<td>"
-                    +   "<input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici' onclick=\"window.location.href='"+ url_ + "?toDo=disdici&id=" + dati[4] + "'\"/>"
-                    +   "</td>"
-                    +"</tr>";
+                    +   "<td colspan='5'> Nessuna prenotazione di " 
+                    + document.getElementById('selCorsoPrenota').value + "</td>"
+                    +"</tr>"
         }
-        //document.getElementById("txt").value = txt; // assegno risp al campo cap
-						     // della form della pagina html
+        else
+        {
+            //alert(url_)
+            for(i=0; i < str.length-1; i++)
+            {
+                //alert(str);
+                var dati = str[i].split(";");
+                table.innerHTML += 
+                        "<tr>"
+                        +   "<td>" + dati[0] + "</td>"
+                        +   "<td>" + dati[1] + "</td>"
+                        +   "<td>" + dati[2] + "</td>"
+                        +   "<td>" + dati[3] + "</td>"
+                        +   "<td>"
+                        +   "<input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici' onclick=\"aggiornaTabDisdici('tutti','/Ripetizioni/Controller?')\" />"
+                        +   "</td>"
+                        +"</tr>";
+            }
+        }
     }
 }

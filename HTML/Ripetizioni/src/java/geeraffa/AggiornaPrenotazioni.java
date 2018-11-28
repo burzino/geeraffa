@@ -19,6 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,10 +47,11 @@ public class AggiornaPrenotazioni extends HttpServlet {
             response.setContentType("text/plain");
             Model.registerDriver();
             lstPren = Model.listPrenotazioni(request.getParameter("corso"));
-            System.out.println("SSS "+ lstPren.size());
-            
+
+            //Creo stringa con dati da passare alla pagina delle prenotazioni
             String str = "";
             for (int i = 0; i < lstPren.size(); i++) {
+                //Modifico formato della DATA in quello standard europeo
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date data = dateFormat.parse(lstPren.get(i).getDataInizio());
                 dateFormat.applyPattern("dd-MM-yyyy");
@@ -61,6 +65,7 @@ public class AggiornaPrenotazioni extends HttpServlet {
                         + ";" + lstPren.get(i).getID_Prenotazione()
                         +"?";
             }
+            //Invio la risposta
             out.println(str);
             out.flush();
         }
