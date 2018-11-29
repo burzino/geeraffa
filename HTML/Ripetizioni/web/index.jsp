@@ -221,7 +221,7 @@
         %>
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
-                <img src="img/corsi/<%= rs.getString("Titolo")%>.jpg" class="img-responsive">
+                <img src="<%= rs.getString("path")%>" class="img-responsive">
               <figcaption>
                 <h2><%= rs.getString("Titolo")%></h2>
                 <p><%= rs.getString("Descrizione")%></p>
