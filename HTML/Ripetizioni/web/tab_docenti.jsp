@@ -112,7 +112,7 @@
                                     <td>
                                         <table>
                                         <% 
-                                            sql = "SELECT * FROM Corso";
+                                            sql = "SELECT * FROM Corso WHERE Attivo = 1";
                                             rs = Model.eseguiQuery(sql);
                                             int i = 0;
                                             while(rs.next()){
@@ -215,6 +215,8 @@
           document.getElementById("modificaDocentiTitle").style.display = "none";
           document.getElementById("aggiungi").style.display = "block";
           document.getElementById("aggiungiDocentiTitle").style.display = "block";
+          $('.corsi').attr('checked', false);
+
       }
   </script>
     </body>

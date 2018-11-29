@@ -123,7 +123,7 @@ public class Model {
         
         return lst;
     }
-    
+ /*   
     public static ResultSet login(String user, String pwd)
     {
         ResultSet rs = null;
@@ -419,7 +419,8 @@ public class Model {
         
         return rs;
     }
-
+*/
+/*
     //Update QUERY
     public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
         Studente stud = new Studente(getLastID_Utente(), username, pwd, nome, cognome, email, ruolo);
@@ -616,5 +617,5 @@ public class Model {
             System.out.println("deleteCorso ERROR: " + e.getMessage());
         }
         
-    }    
+    }    */
 }

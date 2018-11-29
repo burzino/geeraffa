@@ -41,7 +41,7 @@
             <input type="hidden" name="toDo" value="tab_corsi"/>
                 <%
                     String sql;
-                    sql = "SELECT * FROM Corso";
+                    sql = "SELECT * FROM Corso WHERE Attivo = 1";
                 ResultSet rs = Model.eseguiQuery(sql);
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
