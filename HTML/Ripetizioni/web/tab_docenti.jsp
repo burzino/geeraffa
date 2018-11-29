@@ -185,15 +185,16 @@
           document.getElementById("salva").style.display = "block";
           document.getElementById("modificaDocentiTitle").style.display = "block";
           var corsi = corso.split(";");
-            $('.corsi').attr('checked', false);
+          $('.corsi').attr('checked', false);
+
           //alert(corsi);
-          document.getElementsByName("corsi").checked = false;
+
           for (var i = 0; i < corsi.length-1; i++) {
             document.getElementById(corsi[i]).checked = true;
           }   
           
-        var checked = $(this).prop('checked');
-          $('#checkboxes').find('input:checkbox').prop('checked', checked);
+        //var checked = $(this).prop('checked');
+        //  $('#checkboxes').find('input:checkbox').prop('checked', checked);
     
         for(var i =0; i< checks.length;i++){
             var check = checks[i];

@@ -77,22 +77,22 @@
                                     
                                     DateFormat dataCorrente = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                                     Date date = new Date();
-                                    System.out.println(dataCorrente.format(date));
-                                    Date dataFine = dateFormat.parse(rs.getString("DTFine"));
-                                    System.out.println(dataCorrente.format(date));
+                                    
+                                    Date dCorrente = dataCorrente.parse(dataCorrente.format(date));
+                                    Date dataFine = data;
+                                    //System.out.println(dataFine);
                                     String stato;
-                                    if (date.toString().compareTo(dataFine.toString()) > 0) {
-                                            stato = "ESPLETATA";
+                                    
+                                    if (dCorrente.toString().compareTo(dataFine.toString()) < 0) {
+                                            stato = "CONCLUSA";
                                         }
-                                    else if(date.toString().compareTo(dataFine.toString()) < 0)
+                                    else if(dCorrente.toString().compareTo(dataFine.toString()) > 0)
                                         stato = "ATTIVA";
                                     else
                                         stato ="IN CORSO";
                                     
                                     if (rs.getInt("disdetta") == 1 )
                                         stato = "DISDETTA";
-
-                                
                                 %>
                                 <tr>
                                     <td><%= rs.getString("cDocente")%> <%= rs.getString("nDocente")%></td>
@@ -100,7 +100,7 @@
                                     <td><%= rs.getString("cStudente")%> <%= rs.getString("nStudente")%></td>
                                     <td><%= dataOK%></td>
                                     <td><%= oraInizio%> - <%= oraFine%></td>
-                                    <td><%= stato%></td>
+                                    <td class="<%= stato%>"><%= stato%></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -133,6 +133,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
+          $('.CONCLUSA').css('background-color', '#b2ff59');
+          $('.ATTIVA').css('background-color', '#ffca28');
+          $('.DISDETTA').css('background-color', '#ff7043');
+          $('.IN CORSO').css('background-color', '#ffca28');
       } );
   </script>
     </body>

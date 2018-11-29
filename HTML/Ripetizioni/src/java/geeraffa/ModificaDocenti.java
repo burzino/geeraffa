@@ -101,7 +101,7 @@ public class ModificaDocenti extends HttpServlet {
             System.out.println("DOCENTE MODIFICATO CORRETTAMENTE");
         }
         else if(aggiungi != null){
-            System.out.println("STO AGGIUNGENDO UN NUOVO CORSO");
+            System.out.println("STO AGGIUNGENDO UN NUOVO DOCENTE");
             sql = "SELECT ID_Docente FROM Docente WHERE email ='" + email + "'";
             rs = Model.eseguiQuery(sql);
             if (rs.next()) {
