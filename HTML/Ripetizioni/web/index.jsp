@@ -215,8 +215,7 @@
             <hr class="bottom-line">
           </div>
         <%
-            Model.registerDriver();
-            ResultSet rs = Model.getCorsi();
+            ResultSet rs = Model.eseguiQuery("Select * from Corso");
             while(rs.next())
             {
         %>
