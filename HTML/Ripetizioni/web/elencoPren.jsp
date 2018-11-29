@@ -50,8 +50,7 @@
                             <% } %>
                         value="tutti">TUTTI</option>
                     <% 
-                        Model.registerDriver();
-                        ResultSet rsCorsi = Model.getCorsi();
+                        ResultSet rsCorsi = Model.eseguiQuery("Select * from Corso");
                         while(rsCorsi.next())
                         {
                     %>

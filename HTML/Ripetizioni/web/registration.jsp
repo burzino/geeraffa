@@ -50,19 +50,6 @@
                         <div class="form-group">
                             <input required type="password" class="form-input" name="password" id="password" placeholder="Password"/>
                         </div>
-                        <!--<div class="form-group">
-                            <label for="Select ruolo">Ruolo (cliccare per aprire le opzioni): </label>
-                            <select name="ruolo" class="form-input" style="background-color: white" id="selectRuolo">
-                            <%
-                                Model.registerDriver();
-                                ResultSet rs = Model.getRuoli_NoAdmin();
-                                while(rs.next())
-                                {
-                            %>
-                                    <option value="<%= rs.getString("Nome")%>"> <%= rs.getString("Nome")%> </option>
-                            <% } %>
-                            </select>
-                        </div>-->
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>Accetto tutti i <a href="#" class="term-service">Termini di Servizio</a></label>
