@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author masiu
+ * @author GEERAFFA
  */
 @WebServlet(name = "VisualizzaCorsi", urlPatterns = {"/VisualizzaCorsi"})
 public class VisualizzaCorsi extends HttpServlet {
@@ -46,9 +46,8 @@ public class VisualizzaCorsi extends HttpServlet {
         ServletContext ctx = getServletContext();
         HttpSession ses = request.getSession();
         
-        
-        Model.registerDriver();
-        ResultSet rs=Model.getCorsi();
+        String sql = "Select * from Corso";
+        ResultSet rs=Model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
         while (rs.next()) {            

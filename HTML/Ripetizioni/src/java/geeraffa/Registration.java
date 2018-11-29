@@ -61,8 +61,10 @@ public class Registration extends HttpServlet {
         if(mobile == null)
         {
             //Inserimento nel DB
-            Model.registerDriver();
-            Model.insUtente(username, pwd, nome, cognome, email, ruolo);
+            String sql =    "INSERT INTO Utente(Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
+                            + "'" + username + "', '" + pwd + "','" + nome 
+                            + "', '" + cognome + "', '" + email + "','" + ruolo + "')";
+            Model.eseguiNonQuery(sql);
             System.out.println("Utente INSERITO!");
 
             ses.setAttribute("logged", "Y");

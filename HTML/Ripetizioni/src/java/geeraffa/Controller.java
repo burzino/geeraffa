@@ -68,7 +68,8 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni");
                 break;
             case "disdici":
-                Model.disdiciPren(Integer.parseInt(request.getParameter("id")));
+                String sql = "UPDATE Prenotazione set Disdetta=1 where ID_Prenotazione="+request.getParameter("id");
+                Model.eseguiNonQuery(sql);
                 rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni");
                 break;
             case "elencoCorsi":

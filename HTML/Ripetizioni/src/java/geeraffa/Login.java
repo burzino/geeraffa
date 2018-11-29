@@ -55,8 +55,9 @@ public class Login extends HttpServlet {
         String username = request.getParameter("username");
         String pwd = request.getParameter("pwd");
         
-        Model.registerDriver();
-            ResultSet rs = Model.login(username, pwd);
+        String sql = "SELECT * FROM Utente where ((username='"
+                    + username + "' or Email='" + username + "')  and Pwd='" + pwd + "')";
+        ResultSet rs = Model.eseguiQuery(sql);
             
         //Login da pagina web
         if(mobile == null)
