@@ -153,6 +153,7 @@
           document.getElementById('titolo').onkeydown = function(e){
             e.preventDefault();
             }
+          $('body').css('padding', 0);
 
 
       }
@@ -165,6 +166,7 @@
           document.getElementById("titolo").disabled = false;
           document.getElementById("titolo").value = "";
           document.getElementById("descrizione").value = "";
+          $('body').css('padding', 0);
 
       }
   </script>

@@ -29,7 +29,7 @@
 
         <title>docenti</title>
     </head>
-    <body>
+    <body style="padding: 0;">
         <form>
                 <input type="hidden" name="toDo" value="modificaDocenti"/>
                 <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaDocenti" onclick="btnVisible(this)" style="margin-top:3%; margin-left: 40%;"/>
@@ -186,6 +186,7 @@
           document.getElementById("modificaDocentiTitle").style.display = "block";
           var corsi = corso.split(";");
           $('.corsi').attr('checked', false);
+          $('body').css('padding', 0);
 
           //alert(corsi);
 
@@ -216,6 +217,7 @@
           document.getElementById("aggiungi").style.display = "block";
           document.getElementById("aggiungiDocentiTitle").style.display = "block";
           $('.corsi').attr('checked', false);
+          $('body').css('padding', 0);
 
       }
   </script>
