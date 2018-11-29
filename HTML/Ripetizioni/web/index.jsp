@@ -215,7 +215,7 @@
             <hr class="bottom-line">
           </div>
         <%
-            ResultSet rs = Model.eseguiQuery("Select * from Corso");
+            ResultSet rs = Model.eseguiQuery("Select * from Corso where Attivo=1");
             while(rs.next())
             {
         %>

@@ -50,7 +50,7 @@
                             <% } %>
                         value="tutti">TUTTI</option>
                     <% 
-                        ResultSet rsCorsi = Model.eseguiQuery("Select * from Corso");
+                        ResultSet rsCorsi = Model.eseguiQuery("Select * from Corso where Attivo=1");
                         while(rsCorsi.next())
                         {
                     %>
