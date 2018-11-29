@@ -56,7 +56,7 @@ public class Login extends HttpServlet {
         String pwd = request.getParameter("pwd");
         
         Model.registerDriver();
-        ResultSet rs = Model.login(username, pwd);
+            ResultSet rs = Model.login(username, pwd);
             
         //Login da pagina web
         if(mobile == null)
