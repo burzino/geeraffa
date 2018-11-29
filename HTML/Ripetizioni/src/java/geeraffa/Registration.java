@@ -69,7 +69,7 @@ public class Registration extends HttpServlet {
 
             ses.setAttribute("logged", "Y");
             ses.setAttribute("name", nome + " " + cognome);
-            ses.setAttribute("id", Model.getLastID_Utente());
+            ses.setAttribute("id", Model.eseguiQuery("SELECT MAX(ID_Utente) FROM Utente"));
             ses.setAttribute("ruolo", ruolo);
 
             rd = ctx.getRequestDispatcher("/index.jsp");
