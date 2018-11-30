@@ -95,6 +95,7 @@ public class Login extends HttpServlet {
                 obj.put("nome", rs.getString("Nome"));
                 obj.put("cognome", rs.getString("Cognome"));
                 obj.put("email", rs.getString("Email"));
+                obj.put("id", rs.getInt("ID_Utente"));
             }
             else
                 obj.put("logged", "N");
