@@ -63,13 +63,13 @@
                     <a class="nav-link" href="<%= request.getContextPath()%>/index.jsp">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="iframe_admin">Docenti</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="iframe_admin">Visualizza Docenti</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="iframe_admin">Corsi</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="iframe_admin">Visualizza Corsi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="iframe_admin">Prenotazioni</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="iframe_admin">Visualizza Prenotazioni</a>
                 </li>
 
             </ul>
