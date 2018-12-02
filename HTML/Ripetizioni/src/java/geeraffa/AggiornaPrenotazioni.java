@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import org.json.*;
 
 /**
  *
@@ -40,7 +41,7 @@ public class AggiornaPrenotazioni extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException, ParseException, JSONException {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession ses = request.getSession();
@@ -50,10 +51,12 @@ public class AggiornaPrenotazioni extends HttpServlet {
             Model.registerDriver();
             lstPren = Model.listPrenotazioni(request.getParameter("corso"), 
                     Integer.parseInt(ses.getAttribute("id").toString()));
+            
+            JSONArray arrRipetizioni = new JSONArray();
 
             //Creo stringa con dati da passare alla pagina delle prenotazioni
             String str = "";
-            for (int i = 0; i < lstPren.size(); i++) {
+            for (int i = 0; i < lstPren.size(); i++) {                
                 //Modifico formato della DATA in quello standard europeo
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date data = dateFormat.parse(lstPren.get(i).getDataInizio());
@@ -61,15 +64,22 @@ public class AggiornaPrenotazioni extends HttpServlet {
                 String dataOK = dateFormat.format(data);
                 String oraInizio = lstPren.get(i).getDataInizio().split(" ")[1].substring(0,5);
                 String oraFine = lstPren.get(i).getDataInizio().split(" ")[1].substring(0,5);
-                str +=  dataOK
-                        + ";" + oraInizio + " - " + oraFine 
-                        + ";" + lstPren.get(i).getCorso()
-                        + ";" + lstPren.get(i).getDocente()
-                        + ";" + lstPren.get(i).getID_Prenotazione()
-                        +"?";
+                
+                //Creazione array JSON da passare alla chiamata AJAX
+                JSONObject ripetizione = new JSONObject();
+                ripetizione.put("data", dataOK);
+                ripetizione.put("corso", lstPren.get(i).getCorso());
+                ripetizione.put("oraInizio", oraInizio);
+                ripetizione.put("oraFine", oraFine);
+                ripetizione.put("docente", lstPren.get(i).getDocente());
+                ripetizione.put("idPren", lstPren.get(i).getID_Prenotazione());
+                
+                //Aggiungo all'array l'oggetto ripetizione corrente!
+                arrRipetizioni.put(ripetizione);
             }
-            //Invio la risposta
-            out.println(str);
+            
+            //Invio la risposta con l'array JSON
+            out.println(arrRipetizioni);
             out.flush();
         }
     }
@@ -90,6 +100,8 @@ public class AggiornaPrenotazioni extends HttpServlet {
             processRequest(request, response);
         } catch (ParseException ex) {
             Logger.getLogger(AggiornaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(AggiornaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,6 +119,8 @@ public class AggiornaPrenotazioni extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
+            Logger.getLogger(AggiornaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
             Logger.getLogger(AggiornaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

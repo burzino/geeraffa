@@ -26,14 +26,19 @@ function aggiorna()
 {
     if (xhrObj.readyState == 4) {           // 4: server ha completato esecuz. richiesta
         var risp = xhrObj.responseText; // responseText contiene valore di cap
-        var str = risp.split("?");
+        
+        var arrDati = JSON.parse(risp);
+        
         var i;
         var table = document.getElementById("tablePren");
         table.innerHTML = "";
-        if(str.length-1 == 0)
+        if(arrDati.length == 0)
         {
-            var dati = str[0].split(";");
+            if(document.getElementById('selCorsoPrenota').value == 'tutti')
             table.innerHTML += 
+                    "<tr><td colspan='5'> Nessuna prenotazione salvata </td></tr>";
+            else
+                table.innerHTML += 
                     "<tr>"
                     +   "<td colspan='5'> Nessuna prenotazione di " 
                     + document.getElementById('selCorsoPrenota').value + "</td>"
@@ -42,18 +47,16 @@ function aggiorna()
         else
         {
             //alert(url_)
-            for(i=0; i < str.length-1; i++)
+            for(i=0; i < arrDati.length; i++)
             {
-                //alert(str);
-                var dati = str[i].split(";");
                 table.innerHTML += 
                         "<tr>"
-                        +   "<td>" + dati[0] + "</td>"
-                        +   "<td>" + dati[1] + "</td>"
-                        +   "<td>" + dati[2] + "</td>"
-                        +   "<td>" + dati[3] + "</td>"
+                        +   "<td>" + arrDati[i].data + "</td>"                        
+                        +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
+                        +   "<td>" + arrDati[i].corso + "</td>"
+                        +   "<td>" + arrDati[i].docente + "</td>"
                         +   "<td><input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
-                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + dati[4] + "')\" />"
+                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "')\" />"
                         +   "</td>"
                         +"</tr>";
             }
