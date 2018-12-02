@@ -37,7 +37,7 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
-                        <input class="input100" type="text" name="username" placeholder="Username or Email">
+                        <input class="input100" type="text" tabindex="1" name="username" placeholder="Username or Email">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                        <input class="input100" type="password" name="pwd" placeholder="Password">
+                        <input class="input100" type="password" tabindex="2" name="pwd" placeholder="Password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>

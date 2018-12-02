@@ -36,11 +36,11 @@ function aggiorna()
         {
             if(document.getElementById('selCorsoPrenota').value == 'tutti')
             table.innerHTML += 
-                    "<tr><td colspan='5'> Nessuna prenotazione salvata </td></tr>";
+                    "<tr><td colspan='6'> Nessuna prenotazione salvata </td></tr>";
             else
                 table.innerHTML += 
                     "<tr>"
-                    +   "<td colspan='5'> Nessuna prenotazione di " 
+                    +   "<td colspan='6'> Nessuna prenotazione di " 
                     + document.getElementById('selCorsoPrenota').value + "</td>"
                     +"</tr>";
         }
@@ -49,16 +49,32 @@ function aggiorna()
             //alert(url_)
             for(i=0; i < arrDati.length; i++)
             {
+                if(arrDati[i].stato == "ATTIVA")
+                {
+                    table.innerHTML += 
+                        "<tr>"
+                        +   "<td>" + arrDati[i].data + "</td>"                        
+                        +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
+                        +   "<td>" + arrDati[i].corso + "</td>"
+                        +   "<td>" + arrDati[i].docente + "</td>"
+                        +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
+                        +   "<td><input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
+                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "')\" />"
+                        +   "</td>"
+                        +"</tr>";
+            }
+            else
+            {
                 table.innerHTML += 
                         "<tr>"
                         +   "<td>" + arrDati[i].data + "</td>"                        
                         +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
                         +   "<td>" + arrDati[i].corso + "</td>"
                         +   "<td>" + arrDati[i].docente + "</td>"
-                        +   "<td><input type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
-                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "')\" />"
-                        +   "</td>"
+                        +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
+                        +   "<td><input disabled type='button' class='btn btn-danger' value='No action' /> </td>"
                         +"</tr>";
+            }
             }
         }
     }

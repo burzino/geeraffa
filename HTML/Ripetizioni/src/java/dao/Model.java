@@ -103,7 +103,7 @@ public class Model {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             if(corso.equals("tutti") || corso.equals("TUTTI"))
-                st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Studente + " and Disdetta=0");
+                st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Studente);
             else
                 st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso 
                         + "' and Disdetta=0 and Studente=" + ID_Studente);
