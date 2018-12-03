@@ -55,8 +55,8 @@ public class Controller extends HttpServlet {
             case "login":
                 rd = ctx.getRequestDispatcher("/Login");
                 break;
-            case "index":
-                System.out.println("ARRIVO DALL'INDEX!!!");
+            case "prenota":
+                rd = ctx.getRequestDispatcher("/PrenotaRipetizione");
                 break;
             case "logout":
                 ses.invalidate();
