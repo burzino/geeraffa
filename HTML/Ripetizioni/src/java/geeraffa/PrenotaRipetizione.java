@@ -52,7 +52,7 @@ public class PrenotaRipetizione extends HttpServlet {
         //Prenotazione da pagina web
         if(mobile == null)
         {
-            rd = ctx.getRequestDispatcher("/elencoPren.jsp");
+            rd = ctx.getRequestDispatcher("/prenotazione.jsp");
             
             rd.forward(request, response);
         }

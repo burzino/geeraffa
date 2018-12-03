@@ -7,7 +7,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.ResultSet"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="geeraffa.*"%>
 <%@ page import="dao.*"%>
@@ -27,9 +26,9 @@
         <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">    
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
-        <link rel="stylesheet" type="text/css" href="css/pren.css">
+        <link rel="stylesheet" type="text/css" href="css/elenncoPren.css">
         
-        <script type="text/javascript" src="js/prenotazioni.js"></script>
+        <script type="text/javascript" src="js/elencoPren.js"></script>
         
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
     </head>
@@ -39,8 +38,6 @@
             <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 ELENCO DELLE TUE RIPETIZIONI PRENOTATE
             </span>
-        <form class="login100-form validate-form" 
-              action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
         <input type="hidden" name="toDo" value="elencoPren"/>
             <div id="container-select">
             <div class="form-group" id="divSelCorso">
@@ -69,7 +66,6 @@
             <input type="submit" class="login100-form-btn" id="aggiorna-pren" value="CERCA"/>
             </div>-->
         </div>
-        </form>
         <table class="table table-hover" style="width:80%; margin: 20px auto;text-align: center;">
             <thead>
                 <th scope="col">Giorno</th>
