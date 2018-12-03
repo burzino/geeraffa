@@ -25,11 +25,12 @@
         
 
         <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">    
-        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
         <link rel="stylesheet" type="text/css" href="css/pren.css">
+        
         <script type="text/javascript" src="js/prenotazioni.js"></script>
+        
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
     </head>
     
@@ -69,7 +70,7 @@
             </div>-->
         </div>
         </form>
-        <table class="table table-hover" style="width:95%; margin: 20px auto;text-align: center;">
+        <table class="table table-hover" style="width:80%; margin: 20px auto;text-align: center;">
             <thead>
                 <th scope="col">Giorno</th>
                 <th scope="col">Fascia Oraria</th>
@@ -81,19 +82,5 @@
             <tbody id="tablePren">
             </tbody>
         </table>
-                             
-    
-        
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-          $('.CONCLUSA').css('background-color', '#b2ff59');
-          $('.ATTIVA').css('background-color', '#ffca28');
-          $('.DISDETTA').css('background-color', '#ff7043');
-          $('.IN CORSO').css('background-color', '#ffca28');
-      } );
-  </script>
     </body>
 </html>
