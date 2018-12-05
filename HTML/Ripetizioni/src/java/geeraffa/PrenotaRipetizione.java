@@ -5,8 +5,11 @@
  */
 package geeraffa;
 
+import dao.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +41,7 @@ public class PrenotaRipetizione extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, JSONException {
+            throws ServletException, IOException, JSONException, SQLException {
         
         try (PrintWriter out = response.getWriter()) {
             //Context
@@ -50,14 +54,52 @@ public class PrenotaRipetizione extends HttpServlet {
 
             String mobile = request.getParameter("mobile");
             String corso = request.getParameter("corso");
-            String docente = request.getParameter("docente");
+            String doc = request.getParameter("docente");
+            String popolaCmb = request.getParameter("cmb");
 
-            JSONObject obj = new JSONObject();
 
             //Prenotazione da pagina web
             if(mobile == null)
             {
-                
+                String sql = "";
+                //Richiesta di popolazione del cmb dei docenti!
+                if(popolaCmb != null)
+                {
+                    sql =     "SELECT * FROM Docente "
+                            + "INNER JOIN CorsoDocente ON ID_Docente = Docente "
+                            + "WHERE Corso='" + corso + "'";
+                    ResultSet rs = Model.eseguiQuery(sql);
+                    JSONArray arrDocenti = new JSONArray();
+                    
+                    //Ciclo sui risultati della query
+                    while(rs.next())
+                    {
+                        JSONObject docente = new JSONObject();
+                        docente.put("nome", rs.getString("Cognome") + " " + rs.getString("Nome"));
+                        docente.put("corso", corso);
+                        docente.put("idDoc", rs.getString("ID_Docente"));
+                        
+                        arrDocenti.put(docente);
+                    }      
+                    
+                    //Non trovo nessun Docente associato al corso selezionato
+                    if(arrDocenti.length() == 0)
+                    {
+                        JSONArray arr = new JSONArray();
+                        JSONObject corsoJSON = new JSONObject();
+                        corsoJSON.put("corso", corso);
+                        arr.put(corsoJSON);
+                        //Invio la risposta con l'array JSON
+                        out.println(arr);
+                        out.flush();
+                    }
+                    else
+                    {
+                        //Invio la risposta con l'array JSON
+                        out.println(arrDocenti);
+                        out.flush();
+                    }
+                }
                 
 
                 /*rd = ctx.getRequestDispatcher("/prenotazione.jsp");
@@ -70,9 +112,7 @@ public class PrenotaRipetizione extends HttpServlet {
 
             }
             
-            //Invio la risposta con l'array JSON
-            out.println(obj);
-            out.flush();
+            
         }
         
     }
@@ -93,6 +133,8 @@ public class PrenotaRipetizione extends HttpServlet {
             processRequest(request, response);
         } catch (JSONException ex) {
             Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -110,6 +152,8 @@ public class PrenotaRipetizione extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (JSONException ex) {
+            Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
