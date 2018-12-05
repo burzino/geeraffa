@@ -70,7 +70,7 @@ function cercaRipetizioni(corso, docente, url)
 function aggiorna()
 {
     if (xhrObj.readyState == 4) {           // 4: server ha completato esecuz. richiesta
-        var risp = xhrObj.responseText; // responseText contiene valore di cap
+            var risp = xhrObj.responseText; // responseText contiene valore di cap
         
     }
 }
