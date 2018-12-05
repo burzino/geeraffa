@@ -34,7 +34,8 @@
         
         <title>Prenotazione per <%= corso %></title>
     </head>
-    <body>
+    <body onload="cercaRipetizioni('<%= corso %>', document.getElementById('selDocente').value, 
+                '<%= request.getContextPath()%>/Controller?toDo=prenota')">
         <jsp:include page="header.jsp"></jsp:include>
         <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 PRENOTA LA TUA RIPETIZIONE DI <%= corso.toUpperCase() %>
@@ -47,14 +48,18 @@
                     List<Corso> corsi = Model.listCorsi();
                     for (int i = 0; i < corsi.size(); i++) {
                 %>
-                    <option> <%= corsi.get(i).getTitolo() %></option>
+                <option <% if(corsi.get(i).getTitolo().equals(corso)){%>
+                            selected
+                        <% } %>>
+                        <%= corsi.get(i).getTitolo() %></option>
                 <% } %>
                 </select>
                 
             </div>
             <div class="form-group">
                 <label for="selDocente"> Docente: </label>
-                <select id="selDocente" class="form-control">
+                <select id="selDocente" class="form-control" onchange="cercaRipetizioni('<%= corso %>', document.getElementById('selDocente').value, 
+                '<%= request.getContextPath()%>/Controller?toDo=prenota')">
                 <% 
                     List<Docente> docenti = Model.listDocenti();
                     System.out.println("Stampo docenti");
