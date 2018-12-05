@@ -7,6 +7,8 @@ package geeraffa;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -33,34 +37,44 @@ public class PrenotaRipetizione extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, JSONException {
         
-        
-        //Context
-        ServletContext ctx = getServletContext();
-        
-        //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
-        
-        HttpSession ses = request.getSession();
+        try (PrintWriter out = response.getWriter()) {
+            //Context
+            ServletContext ctx = getServletContext();
+
+            //Where to move
+            RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+
+            HttpSession ses = request.getSession();
+
+            String mobile = request.getParameter("mobile");
+            String corso = request.getParameter("corso");
+            String docente = request.getParameter("docente");
+
+            JSONObject obj = new JSONObject();
+
+            //Prenotazione da pagina web
+            if(mobile == null)
+            {
                 
-        String mobile = request.getParameter("mobile");
-        String corso = request.getParameter("corso");
-        
-        System.out.println("DIO PORCONE!CORSO: " + corso);
-        
-        //Prenotazione da pagina web
-        if(mobile == null)
-        {
-            rd = ctx.getRequestDispatcher("/prenotazione.jsp");
+                
+
+                /*rd = ctx.getRequestDispatcher("/prenotazione.jsp");
+
+                rd.forward(request, response);*/
+            }
+            //Prenotazione dal'APP
+            else
+            {
+
+            }
             
-            rd.forward(request, response);
+            //Invio la risposta con l'array JSON
+            out.println(obj);
+            out.flush();
         }
-        //Prenotazione dal'APP
-        else
-        {
-            
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,7 +89,11 @@ public class PrenotaRipetizione extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -89,7 +107,11 @@ public class PrenotaRipetizione extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

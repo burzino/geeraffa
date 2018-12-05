@@ -58,6 +58,9 @@ public class Controller extends HttpServlet {
             case "prenota":
                 rd = ctx.getRequestDispatcher("/PrenotaRipetizione");
                 break;
+            case "prenotaIndex":
+                rd = ctx.getRequestDispatcher("/prenotazione.jsp");
+                break;
             case "logout":
                 ses.invalidate();
                 break;
