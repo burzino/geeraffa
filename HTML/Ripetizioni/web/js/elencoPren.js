@@ -57,14 +57,14 @@ function aggiorna()
         table.innerHTML = "";
         if(arrDati.length == 0)
         {
-            if(document.getElementById('selCorsoPrenota').value == 'tutti')
+            if(document.getElementById('selCorso').value == 'tutti')
             table.innerHTML += 
                     "<tr><td colspan='6'> Nessuna prenotazione salvata </td></tr>";
             else
                 table.innerHTML += 
                     "<tr>"
                     +   "<td colspan='6'> Nessuna prenotazione di " 
-                    + document.getElementById('selCorsoPrenota').value + "</td>"
+                    + document.getElementById('selCorso').value + "</td>"
                     +"</tr>";
         }
         else

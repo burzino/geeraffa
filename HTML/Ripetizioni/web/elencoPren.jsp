@@ -28,6 +28,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
         <link rel="stylesheet" type="text/css" href="css/elenncoPren.css">
         
+        <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/elencoPren.js"></script>
         
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
