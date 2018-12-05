@@ -106,7 +106,7 @@ public class Model {
                 st.executeQuery("SELECT * FROM Prenotazione where Studente=" + ID_Studente);
             else
                 st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso 
-                        + "' and Disdetta=0 and Studente=" + ID_Studente);
+                        + "' and Studente=" + ID_Studente);
             rs = st.getResultSet();
             
             while(rs.next())
@@ -119,6 +119,56 @@ public class Model {
         }
         catch (SQLException e) {
             System.err.println("listPrenotazioni ERROR: " + e.getMessage());
+        };
+        
+        return lst;
+    }
+    
+    public static List<Corso> listCorsi()
+    {
+        List<Corso> lst = new ArrayList<Corso>();
+        
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Corso where Attivo=1");
+            
+            rs = st.getResultSet();
+            while(rs.next())
+            {
+                Corso corso = new Corso(rs.getString("Titolo"), rs.getString("Descrizione"));
+                lst.add(corso);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("listCorsi ERROR: " + e.getMessage());
+        };
+        
+        return lst;
+    }
+    
+    public static List<Docente> listDocenti()
+    {
+        List<Docente> lst = new ArrayList<Docente>();
+        
+        ResultSet rs = null;
+        try {
+            Connection conn = DriverManager.getConnection(URL, USER, PWD);
+            Statement st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Docente where Attivo=1");
+            
+            rs = st.getResultSet();
+            while(rs.next())
+            {
+                Docente docente = new Docente(rs.getInt("ID_Docente"),
+                        rs.getString("Cognome"), rs.getString("Nome"), rs.getString("Email"),
+                        rs.getInt("Attivo"));
+                lst.add(docente);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("listDocenti ERROR: " + e.getMessage());
         };
         
         return lst;
