@@ -5,15 +5,6 @@ $(document).ready( function() {
     orderselect(document.getElementById("selCorso"));
 });
 
-function setXMLHttpRequest() {
-    var xhr = null;
-    if (window.XMLHttpRequest) {      // browser standard con supporto nativo
-      xhr = new XMLHttpRequest();}
-    else if (window.ActiveXObject) {   // browser MS Internet Explorer 6 o precedente - ActiveX
-      xhr = new ActiveXObject("Microsoft.XMLHTTP");}
-    return xhr;
-}
-
 function orderselect(selElem)
 {
     var tmpAry = new Array();
@@ -31,6 +22,15 @@ function orderselect(selElem)
         selElem.options[i] = op;
     }
     return;
+}
+
+function setXMLHttpRequest() {
+    var xhr = null;
+    if (window.XMLHttpRequest) {      // browser standard con supporto nativo
+      xhr = new XMLHttpRequest();}
+    else if (window.ActiveXObject) {   // browser MS Internet Explorer 6 o precedente - ActiveX
+      xhr = new ActiveXObject("Microsoft.XMLHTTP");}
+    return xhr;
 }
 
 function aggiornaTabella(corso, url)
