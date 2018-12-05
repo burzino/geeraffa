@@ -41,8 +41,8 @@
         <input type="hidden" name="toDo" value="elencoPren"/>
             <div id="container-select">
             <div class="form-group" id="divSelCorso">
-                <label for="selCorsoPrenota"> Corso </label>
-                <select style="background-color: #abc" id="selCorsoPrenota" name="corso" class="form-control form-control-lg" 
+                <label for="selCorso"> Corso </label>
+                <select style="background-color: #abc" id="selCorso" name="corso" class="form-control form-control-lg" 
                         onchange="aggiornaTabella(this.value, '<%= request.getContextPath()%>/Controller?toDo=aggiornaPren')" >
                     <option <% if(corso.equals("tutti")) {%>
                                 selected="selected"
