@@ -34,22 +34,24 @@
         
         <title>Prenotazione per <%= corso %></title>
     </head>
-    <body onload="cercaRipetizioni('<%= corso %>', document.getElementById('selDocente').value, 
+    <body onload="salvaUrl('<%= corso %>', document.getElementById('selDocente'), 
                 '<%= request.getContextPath()%>/Controller?toDo=prenota')">
         <jsp:include page="header.jsp"></jsp:include>
-        <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
+        <span id="titolo" class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 PRENOTA LA TUA RIPETIZIONE DI <%= corso.toUpperCase() %>
         </span>
         <div id="container-select" style="border: 1px red solid; width: 20%">
             <div class="form-group">
                 <label for="selCorso"> Corso: </label>
-                <select id="selCorso" class="form-control">
+                <select id="selCorso" class="form-control"
+                        onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
+                        >
                 <% 
                     List<Corso> corsi = Model.listCorsi();
                     for (int i = 0; i < corsi.size(); i++) {
                 %>
                 <option <% if(corsi.get(i).getTitolo().equals(corso)){%>
-                            selected
+                            selected="selected"
                         <% } %>>
                         <%= corsi.get(i).getTitolo() %></option>
                 <% } %>
@@ -58,37 +60,23 @@
             </div>
             <div class="form-group">
                 <label for="selDocente"> Docente: </label>
-                <select id="selDocente" class="form-control" onchange="cercaRipetizioni('<%= corso %>', document.getElementById('selDocente').value, 
-                '<%= request.getContextPath()%>/Controller?toDo=prenota')">
-                <% 
-                    List<Docente> docenti = Model.listDocenti();
-                    System.out.println("Stampo docenti");
-                    for (int j = 0; j < docenti.size(); j++) {
-                %>
-                    <option> <%= docenti.get(j).getCognome()%> <%= docenti.get(j).getNome()%></option>
-                <% } %>
+                <select id="selDocente" class="form-control" disabled>
                 </select>
             </div>
             <div class="form-group" id="selData">
                 <label for="selData"> Data: </label>            
-                <input type="date" name="dataPren" class="form-control" onchange="cambioData()" id="dataPren"/>
+                <input disabled type="date" name="dataPren" class="form-control" onchange="cambioData()" id="dataPren"/>
             </div>
             <div class="form-group" style="float:left;">
                 <label for="selDalle"> Dalle: </label>
                 <select id="selDalle" class="form-control">
-                    <option>1</option>
-                    <option>1</option>
-                    <option>1</option>
-                    <option>1</option>
+                    
                 </select>
             </div>
             <div class="form-group" style="float:right;">
                 <label for="selAlle"> Alle: </label>
                 <select id="selAlle" class="form-control">
-                    <option>1</option>
-                    <option>1</option>
-                    <option>1</option>
-                    <option>1</option>
+                    
                 </select>
             </div>
         </div>
