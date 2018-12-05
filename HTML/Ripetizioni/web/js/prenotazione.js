@@ -1,4 +1,4 @@
-/*$(document).ready( function() {
+$(document).ready( function() {
     
     
     var now = new Date();
@@ -7,11 +7,10 @@
 
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
-   //$('#dataPren').val(today);
-   dataPren.min = today;
+   document.getElementById("dataPren").setAttribute("min", today);
    
    orderselect(document.getElementById("selCorso"));
-});*/
+});
 
 //Settaggio chiamata AJAX
 var xhrObj = setXMLHttpRequest();
@@ -38,6 +37,7 @@ function salvaDati(corso, cmbDoc, url)
     url_ = url;
     corso_ = corso;
     dataPren = document.getElementById("dataPren");
+    dataPren.min = dataPren.value;
     popolaCmbDocenti(corso, cmbDoc);
 }
 
@@ -153,7 +153,6 @@ function popolaOrari()
 {
     if (xhrObj.readyState == 4) {
         var risp = xhrObj.responseText;
-        alert(risp);
         var arrPren = JSON.parse(risp);
         var selDalle = document.getElementById("selDalle");
         var selAlle = document.getElementById("selAlle");
