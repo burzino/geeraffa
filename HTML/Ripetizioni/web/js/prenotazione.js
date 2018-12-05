@@ -55,10 +55,10 @@ function setXMLHttpRequest() {
     return xhr;
 }   
 
-function aggiornaTabella(corso, url)
+function cercaRipetizioni(corso, docente, url)
 {
     url_ = url;
-    xhrObj.open("GET", url+"&corso="+corso, true);
+    xhrObj.open("GET", url+"&corso="+corso + "&docente=" +docente, true);
     
     xhrObj.onreadystatechange = aggiorna; // indico la funzione (updatePage) 
                                             // da invocare quando il server
@@ -72,55 +72,5 @@ function aggiorna()
     if (xhrObj.readyState == 4) {           // 4: server ha completato esecuz. richiesta
         var risp = xhrObj.responseText; // responseText contiene valore di cap
         
-        var arrDati = JSON.parse(risp);
-        
-        var i;
-        var table = document.getElementById("tablePren");
-        table.innerHTML = "";
-        if(arrDati.length == 0)
-        {
-            if(document.getElementById('selCorso').value == 'tutti')
-            table.innerHTML += 
-                    "<tr><td colspan='6'> Nessuna prenotazione salvata </td></tr>";
-            else
-                table.innerHTML += 
-                    "<tr>"
-                    +   "<td colspan='6'> Nessuna prenotazione di " 
-                    + document.getElementById('selCorso').value + "</td>"
-                    +"</tr>";
-        }
-        else
-        {
-            //alert(url_)
-            for(i=0; i < arrDati.length; i++)
-            {
-                if(arrDati[i].stato == "ATTIVA")
-                {
-                    table.innerHTML += 
-                        "<tr>"
-                        +   "<td>" + arrDati[i].data + "</td>"                        
-                        +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
-                        +   "<td>" + arrDati[i].corso + "</td>"
-                        +   "<td>" + arrDati[i].docente + "</td>"
-                        +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
-                        +   "<td><input style='width:100px' type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
-                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "')\" />"
-                        +   "</td>"
-                        +"</tr>";
-            }
-            else
-            {
-                table.innerHTML += 
-                        "<tr>"
-                        +   "<td>" + arrDati[i].data + "</td>"                        
-                        +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
-                        +   "<td>" + arrDati[i].corso + "</td>"
-                        +   "<td>" + arrDati[i].docente + "</td>"
-                        +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
-                        +   "<td><input style='width:100px' disabled type='button' class='btn btn-danger' value='No action' /> </td>"
-                        +"</tr>";
-            }
-            }
-        }
     }
 }
