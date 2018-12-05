@@ -1,5 +1,5 @@
-$(document).ready( function() {
-    dataPren = document.getElementById("dataPren");
+/*$(document).ready( function() {
+    
     
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
@@ -7,17 +7,22 @@ $(document).ready( function() {
 
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
-   $('#dataPren').val(today);
+   //$('#dataPren').val(today);
    dataPren.min = today;
    
    orderselect(document.getElementById("selCorso"));
-});
+});*/
 
 //Settaggio chiamata AJAX
 var xhrObj = setXMLHttpRequest();
 var url_;
+var corso_;
 var dataPren;
+var docente;
 
+var orari = ['15:00', '16:00', '17:00', '18:00',  '19:00'];
+
+//HTTP request
 function setXMLHttpRequest() {
     var xhr = null;
     if (window.XMLHttpRequest) {      // browser standard con supporto nativo
@@ -27,24 +32,55 @@ function setXMLHttpRequest() {
     return xhr;
 }
 
-function salvaUrl(corso, cmbDoc, url)
+//Onload del body
+function salvaDati(corso, cmbDoc, url)
 {
     url_ = url;
+    corso_ = corso;
+    dataPren = document.getElementById("dataPren");
     popolaCmbDocenti(corso, cmbDoc);
 }
 
-//AJAX
+//Onchange del corso - AJAX - Onchange del corso - AJAX
 function popolaCmbDocenti(corso, cmbDocenti)
 {   
+    //Disabilito e azzero i campi del form
+    
+    document.getElementById("selDocente").disabled = true;
+    document.getElementById("dataPren").disabled = true;
+    document.getElementById("selDalle").disabled = true;
+    document.getElementById("selAlle").disabled = true;
+    
+    document.getElementById("selDocente").innerHTML = "";
+    document.getElementById("dataPren").value = "";
+    document.getElementById("selDalle").innerHTML = "";
+    document.getElementById("selAlle").innerHTML = "";
+    
     xhrObj.open("GET", url_+"&corso="+corso+"&cmb=true", true);
     
-    xhrObj.onreadystatechange = popola;
+    xhrObj.onreadystatechange = popolaDocenti;
 
     xhrObj.send(null);
 }
 
-//Ricevo risposta dal SERVER
-function popola()
+//onchange selAlle - popola selDalle
+function popolaCmbOrario(oraInizio)
+{   
+    var selAlle = document.getElementById("selAlle");
+    selAlle.disabled = true;
+    selAlle.innerHTML = "";
+    
+    
+    for (var i = 0; i < orari.length; i++) {
+        if(orari[i] > oraInizio)
+            selAlle.innerHTML += "<option>" + orari[i] + "</option>";
+    }
+    selAlle.disabled = false;
+}
+
+
+//Ricevo risposta dal SERVER per popolare cmb dei Docenti - onchange selCorso
+function popolaDocenti()
 {
     //Ricevuta risposta dal SERVER!!
     if (xhrObj.readyState == 4) {
@@ -63,6 +99,8 @@ function popola()
         {
             document.getElementById("selDocente").disabled = true;
             document.getElementById("dataPren").disabled = true;
+            document.getElementById("selDalle").disabled = false;
+            document.getElementById("selAlle").disabled = false;
             alert("Nessun docente insegna " + arrDocenti[0].corso);
         }
         else
@@ -74,7 +112,6 @@ function popola()
                         + arrDocenti[i].nome + "</option>";
             }
             
-            
             orderselect(document.getElementById("selDocente"));
             document.getElementById("selDocente").disabled = false;
             document.getElementById("dataPren").disabled = false;
@@ -82,13 +119,72 @@ function popola()
     }
 }
 
-function cambioData(){
+//onchange dataPren - AJAX
+function cambioData(docenteSel){    
     var date = new Date(dataPren.value);
     var day = date.getDay();
+    docente = docenteSel;
     
+    document.getElementById("selDalle").disabled = true;
+    document.getElementById("selAlle").disabled = true;
+        
     //day 0 = domenica - day 6 = sabato!
-    
+    if(day == 0 || day == 6)
+    {
+        alert("Selezionare un giorno feriale (lun-ven)!");
+        dataPren.value = "";
+    }
+    else
+        ricercaRipetizioni();
 }
+
+//Richiamo SERVLET per capire le fasce orarie disponibili - onchange dataPren
+function ricercaRipetizioni()
+{
+    xhrObj.open("GET", url_+"&corso="+corso_
+            +"&docente="+docente+"&data="+dataPren.value, true);
+    
+    xhrObj.onreadystatechange = popolaOrari;
+
+    xhrObj.send(null);
+}
+
+function popolaOrari()
+{
+    if (xhrObj.readyState == 4) {
+        var risp = xhrObj.responseText;
+        alert(risp);
+        var arrPren = JSON.parse(risp);
+        var selDalle = document.getElementById("selDalle");
+        var selAlle = document.getElementById("selAlle");
+        
+        selDalle.innerHTML = "";
+        
+        //Nessuna prenotazione trovata per il docente selezionata nella data messa
+        if(arrPren[0].oraInizio == "none")
+        {           
+            for (var i = 0; i < orari.length; i++) {
+                selDalle.innerHTML += "<option>" + orari[i] + "</option>";
+            }
+        }
+        else
+        {
+            for (var i = 0; i < orari.length-1; i++) {
+                if(orari[i] != arrPren[0].oraInizio 
+                        && !(orari[i]<arrPren[0].oraFine && orari[i]>arrPren[0].oraInizio))
+                    selDalle.innerHTML +=
+                        "<option>" + orari[i] + "</option>";
+            }
+        }
+        
+        selDalle.disabled = false;
+        popolaCmbOrario(selDalle.value);
+        
+        selAlle.disabled = false;
+    }   
+}
+
+
 
 function orderselect(selElem)
 {

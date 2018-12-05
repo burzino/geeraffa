@@ -100,6 +100,51 @@ public class PrenotaRipetizione extends HttpServlet {
                         out.flush();
                     }
                 }
+                //Ricerco le ripetizioni di un determinato docente
+                else if(doc != null)
+                {
+                    String dataPren = request.getParameter("data");
+                    sql =     "SELECT * from Prenotazione "
+                            + "inner join Docente on Docente=ID_Docente "
+                            + "where Corso='" + corso + "' "
+                            + "and datediff(DTInizio, '" + dataPren + "') = 0 "
+                            + "and Disdetta=0 "
+                            + "and Docente=" + doc;
+                    ResultSet rs = Model.eseguiQuery(sql);
+                    
+                    //Creo JSONArray da inviare come risposta
+                    JSONArray arrPren = new JSONArray();
+                    int res = 0;
+                    
+                    while(rs.next())
+                    {
+                        JSONObject pren = new JSONObject();
+                        pren.put("oraInizio", rs.getString("DTInizio").split(" ")[1].substring(0, 5));
+                        pren.put("oraFine", rs.getString("DTFine").split(" ")[1].substring(0, 5));
+                        arrPren.put(pren);
+                        res++;
+                    }
+                    
+                    if(res == 0)
+                    {
+                        //Invio la risposta con l'array JSON
+                        JSONArray arr = new JSONArray();
+                        JSONObject obj = new JSONObject();
+                        obj.put("oraInizio", "none");
+                        arr.put(obj);
+                        
+                        out.println(arr);
+                        out.flush();
+                    }
+                    else
+                    {
+                        //Invio la risposta con l'array JSON
+                        out.println(arrPren);
+                        out.flush();
+                    }
+                    
+                    
+                }
                 
 
                 /*rd = ctx.getRequestDispatcher("/prenotazione.jsp");

@@ -17,11 +17,15 @@ function orderselect(selElem)
     while (selElem.options.length > 0) {
         selElem.options[0] = null;
     }
+    var sel = 0;
     for (var i=0;i<tmpAry.length;i++) {
         var op = new Option(tmpAry[i][0], tmpAry[i][1]);
-        selElem.options[i] = op;
+        selElem.options[i] = op;        
+        if(selElem.options[i].value == "tutti")
+            sel = i;
     }
-    return;
+    
+    selElem.selectedIndex = sel;
 }
 
 function setXMLHttpRequest() {

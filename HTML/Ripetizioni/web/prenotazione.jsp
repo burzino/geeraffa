@@ -34,53 +34,59 @@
         
         <title>Prenotazione per <%= corso %></title>
     </head>
-    <body onload="salvaUrl('<%= corso %>', document.getElementById('selDocente'), 
+    <body onload="salvaDati('<%= corso %>', document.getElementById('selDocente'), 
                 '<%= request.getContextPath()%>/Controller?toDo=prenota')">
         <jsp:include page="header.jsp"></jsp:include>
         <span id="titolo" class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 PRENOTA LA TUA RIPETIZIONE DI <%= corso.toUpperCase() %>
         </span>
-        <div id="container-select" style="border: 1px red solid; width: 20%">
-            <div class="form-group">
-                <label for="selCorso"> Corso: </label>
-                <select id="selCorso" class="form-control"
-                        onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
-                        >
-                <% 
-                    List<Corso> corsi = Model.listCorsi();
-                    for (int i = 0; i < corsi.size(); i++) {
-                %>
-                <option <% if(corsi.get(i).getTitolo().equals(corso)){%>
-                            selected="selected"
-                        <% } %>>
-                        <%= corsi.get(i).getTitolo() %></option>
-                <% } %>
-                </select>
-                
+        <form action="<%=request.getContextPath()%>/Controller" method="post">
+            <input type="hidden" name="toDo" value="salvaPren" />
+            <div id="container-select" style="width: 60%">
+                <div class="form-group">
+                    <label for="selCorso"> Corso: </label>
+                    <select id="selCorso" name="corso" class="form-control"
+                            onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
+                            >
+                    <% 
+                        List<Corso> corsi = Model.listCorsi();
+                        for (int i = 0; i < corsi.size(); i++) {
+                    %>
+                    <option <% if(corsi.get(i).getTitolo().equals(corso)){%>
+                                selected="selected"
+                            <% } %>>
+                            <%= corsi.get(i).getTitolo() %></option>
+                    <% } %>
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <label for="selDocente"> Docente: </label>
+                    <select id="selDocente" name="docente" class="form-control" disabled>
+                    </select>
+                </div>
+                <div class="form-group" id="selData">
+                    <label for="selData"> Data: </label>            
+                    <input disabled type="date" name="dataPren" class="form-control" 
+                           onchange="cambioData(document.getElementById('selDocente').value)" id="dataPren"/>
+                </div>
+                <div class="form-group" style="float:left;">
+                    <label for="selDalle"> Dalle: </label>
+                    <select disabled name="oraInizio" id="selDalle" class="form-control"
+                            onchange="popolaCmbOrario(this.value)">
+                    </select>
+                </div>
+                <div class="form-group" style="float:right;">
+                    <label for="selAlle"> Alle: </label>
+                    <select disabled name="oraFine" id="selAlle" class="form-control">                    
+                    </select>
+                </div>
+                <div class="container-login100-form-btn">
+                        <input type="submit" class="login100-form-btn" value="PRENOTA"/>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="selDocente"> Docente: </label>
-                <select id="selDocente" class="form-control" disabled>
-                </select>
-            </div>
-            <div class="form-group" id="selData">
-                <label for="selData"> Data: </label>            
-                <input disabled type="date" name="dataPren" class="form-control" onchange="cambioData()" id="dataPren"/>
-            </div>
-            <div class="form-group" style="float:left;">
-                <label for="selDalle"> Dalle: </label>
-                <select id="selDalle" class="form-control">
-                    
-                </select>
-            </div>
-            <div class="form-group" style="float:right;">
-                <label for="selAlle"> Alle: </label>
-                <select id="selAlle" class="form-control">
-                    
-                </select>
-            </div>
-        </div>
-        <table class="table table-hover" style="width:40%; margin: 20px auto;text-align: center;">
+    </form>
+    <!--    <table class="table table-hover" style="width:40%; margin: 20px auto;text-align: center;">
             <thead>
                 <th scope="col">Giorno</th>
                 <th scope="col">Fascia Oraria</th>
@@ -91,5 +97,6 @@
             <tbody id="tablePren">
             </tbody>
         </table>
+    -->
     </body>
 </html>

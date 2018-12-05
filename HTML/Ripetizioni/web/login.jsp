@@ -30,7 +30,8 @@
                     <img src="img/img-01.png" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 320px">
+                <form class="login100-form validate-form" 
+                      action="<%=request.getContextPath()%>/Controller" method="post" style="width: 320px">
                     <input type="hidden" name="toDo" value="login"/>
                     <span class="login100-form-title">
                         LOGIN - GEE<span class="logo-dec">RAFFA</span> 

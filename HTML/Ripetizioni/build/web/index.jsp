@@ -43,7 +43,7 @@
 
 <body>
 
-  <div class="loader"></div>
+  <!--<div class="loader"></div>-->
   <div id="myDiv">
     <!--HEADER-->
     <div class="header">
@@ -59,7 +59,7 @@
               </button>
                 <a class="navbar-brand" href="#main-header">GEE<span class="logo-dec">RAFFA</span>
                     <% if(ses.getAttribute("logged") == "Y"){ %>
-                    - BUONA NAVIGAZIONE, <%=ses.getAttribute("name")%>! <%}%>
+                    - RIECCOTI, <%=ses.getAttribute("name")%>! <%}%>
                 </a>
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->
@@ -78,7 +78,7 @@
                   <% } %>
                   
                   <% if(ses.getAttribute("logged") == "Y") {%>
-                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=visualizza&corso=tutti">LE MIE PRENOTAZIONI</a></li>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
                   <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>
                   <!--<form action="<%= request.getContextPath()%>/Controller" id="frmout" method="post">
                   <li class="">
@@ -215,21 +215,19 @@
             <hr class="bottom-line">
           </div>
         <%
-            Model.registerDriver();
-            ResultSet rs = Model.getCorsi();
+            ResultSet rs = Model.eseguiQuery("Select * from Corso where Attivo=1");
             while(rs.next())
             {
         %>
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
-                <img src="img/<%= rs.getString("Titolo")%>.jpg" class="img-responsive">
+                <img src="<%= rs.getString("path")%>" class="img-responsive">
               <figcaption>
                 <h2><%= rs.getString("Titolo")%></h2>
                 <p><%= rs.getString("Descrizione")%></p>
                 <% if(ses.getAttribute("logged") == "Y") { %>
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
-                    <input type="hidden" name="toDo" value="prenota"/>
-                    <input type="hidden" name="docente" value="tutti"/>
+                    <input type="hidden" name="toDo" value="prenotaIndex"/>
                     <input type="hidden" name="corso" value="<%= rs.getString("Titolo")%>" />
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>

@@ -70,6 +70,9 @@ public class Controller extends HttpServlet {
             case "aggiornaPren":
                 rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni");
                 break;
+            case "salvaPren":
+                rd = ctx.getRequestDispatcher("/SalvaPren");
+                break;
             case "disdici":
                 String sql = "UPDATE Prenotazione set Disdetta=1 where ID_Prenotazione="+request.getParameter("id");
                 Model.eseguiNonQuery(sql);
