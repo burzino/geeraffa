@@ -42,7 +42,7 @@
             <div id="container-select">
             <div class="form-group" id="divSelCorso">
                 <label for="selCorsoPrenota"> Corso </label>
-                <select style="background-color: #abc" id="selCorsoPrenota" name="corso" class="form-control"
+                <select style="background-color: #abc" id="selCorsoPrenota" name="corso" class="form-control form-control-lg" 
                         onchange="aggiornaTabella(this.value, '<%= request.getContextPath()%>/Controller?toDo=aggiornaPren')" >
                     <option <% if(corso.equals("tutti")) {%>
                                 selected="selected"
