@@ -227,7 +227,7 @@
                 <p><%= rs.getString("Descrizione")%></p>
                 <% if(ses.getAttribute("logged") == "Y") { %>
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
-                    <input type="hidden" name="toDo" value="prenota"/>
+                    <input type="hidden" name="toDo" value="prenotaIndex"/>
                     <input type="hidden" name="corso" value="<%= rs.getString("Titolo")%>" />
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
