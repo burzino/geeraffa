@@ -1,6 +1,10 @@
 var xhrObj = setXMLHttpRequest();
 var url_;
 
+$(document).ready( function() {
+    orderselect(document.getElementById("selCorso"));
+});
+
 function setXMLHttpRequest() {
     var xhr = null;
     if (window.XMLHttpRequest) {      // browser standard con supporto nativo
@@ -8,6 +12,25 @@ function setXMLHttpRequest() {
     else if (window.ActiveXObject) {   // browser MS Internet Explorer 6 o precedente - ActiveX
       xhr = new ActiveXObject("Microsoft.XMLHTTP");}
     return xhr;
+}
+
+function orderselect(selElem)
+{
+    var tmpAry = new Array();
+    for (var i=0;i<selElem.options.length;i++) {
+        tmpAry[i] = new Array();
+        tmpAry[i][0] = selElem.options[i].text;
+        tmpAry[i][1] = selElem.options[i].value;
+    }
+    tmpAry.sort();
+    while (selElem.options.length > 0) {
+        selElem.options[0] = null;
+    }
+    for (var i=0;i<tmpAry.length;i++) {
+        var op = new Option(tmpAry[i][0], tmpAry[i][1]);
+        selElem.options[i] = op;
+    }
+    return;
 }
 
 function aggiornaTabella(corso, url)
