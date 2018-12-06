@@ -24,11 +24,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
+        <!-- JS -->
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/prenotazione.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         
+        <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/prenotazione.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
         
         
         
@@ -58,18 +64,25 @@
                             <%= corsi.get(i).getTitolo() %></option>
                     <% } %>
                     </select>
-
+                    
                 </div>
+                    
                 <div class="form-group">
                     <label for="selDocente"> Docente: </label>
                     <select id="selDocente" name="docente" class="form-control" disabled>
                     </select>
                 </div>
-                <div class="form-group" id="selData">
+                <div class="form-group">
+                    <label for="dataPren"> Data: </label><br>
+                    <input readonly style="background-color: rgba(255,255,255,0);" 
+                           type="text" name="dataPren"  id="dataPren" class="form-control"
+                           onchange="cambioData(document.getElementById('selDocente').value)">
+                </div>
+                <!--<div class="form-group" id="selData">
                     <label for="selData"> Data: </label>            
                     <input disabled type="date" name="dataPren" class="form-control" 
                            onchange="cambioData(document.getElementById('selDocente').value)" id="dataPren"/>
-                </div>
+                </div>-->
                 <div class="form-group" style="float:left;">
                     <label for="selDalle"> Dalle: </label>
                     <select disabled name="oraInizio" id="selDalle" class="form-control"
