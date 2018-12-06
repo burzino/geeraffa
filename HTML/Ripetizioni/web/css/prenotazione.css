@@ -1,0 +1,10 @@
+.ui-datepicker-week-end {
+    display:none
+}
+        
+#dataPren
+{
+    display: inline;
+    width: 93%;
+    margin-right:3px;
+}
