@@ -9,6 +9,9 @@ import dao.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -39,7 +42,7 @@ public class SalvaPren extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, JSONException {
+            throws ServletException, IOException, SQLException, JSONException, ParseException {
             
         //Context
         ServletContext ctx = getServletContext();
@@ -60,8 +63,14 @@ public class SalvaPren extends HttpServlet {
         //Registrazione da pagina web
         if(mobile == null)
         {
-            String dataInizio = dataPren + " " + oraInizio + ":00.000000";
-            String dataFine = dataPren + " " + oraFine + ":00.000000";
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
+            Date data = dateFormat.parse(dataPren);
+            dateFormat.applyPattern("yyyy-MM-dd");
+            String dataOK = dateFormat.format(data);
+            
+            String dataInizio = dataOK + " " + oraInizio + ":00.000000";
+            String dataFine = dataOK + " " + oraFine + ":00.000000";
+            
             //Inserimento nel DB
             String sql =      "INSERT INTO Prenotazione "
                             + "(Studente, Docente, Corso, DTInizio, DTFine) "
@@ -101,6 +110,8 @@ public class SalvaPren extends HttpServlet {
             Logger.getLogger(SalvaPren.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
             Logger.getLogger(SalvaPren.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(SalvaPren.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,6 +131,8 @@ public class SalvaPren extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(SalvaPren.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
+            Logger.getLogger(SalvaPren.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(SalvaPren.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

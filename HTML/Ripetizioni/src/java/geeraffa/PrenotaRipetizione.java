@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -41,7 +44,7 @@ public class PrenotaRipetizione extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, JSONException, SQLException {
+            throws ServletException, IOException, JSONException, SQLException, ParseException {
         
         try (PrintWriter out = response.getWriter()) {
             //Context
@@ -104,10 +107,16 @@ public class PrenotaRipetizione extends HttpServlet {
                 else if(doc != null)
                 {
                     String dataPren = request.getParameter("data");
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
+                    Date data = dateFormat.parse(dataPren);
+                    dateFormat.applyPattern("yyyy-MM-dd");
+                    String dataOK = dateFormat.format(data);
+                    
                     sql =     "SELECT * from Prenotazione "
                             + "inner join Docente on Docente=ID_Docente "
                             + "where Corso='" + corso + "' "
-                            + "and datediff(DTInizio, '" + dataPren + "') = 0 "
+                            + "and datediff(DTInizio, '" + dataOK + "') = 0 "
                             + "and Disdetta=0 "
                             + "and Docente=" + doc;
                     ResultSet rs = Model.eseguiQuery(sql);
@@ -180,6 +189,8 @@ public class PrenotaRipetizione extends HttpServlet {
             Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -199,6 +210,8 @@ public class PrenotaRipetizione extends HttpServlet {
         } catch (JSONException ex) {
             Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(PrenotaRipetizione.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
