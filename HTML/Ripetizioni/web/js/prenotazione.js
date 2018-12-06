@@ -1,3 +1,38 @@
+//Creazione datepicker con JQuery UI
+$( function() {
+          $( "#dataPren" ).datepicker({
+                dateFormat: "dd/mm/yy",
+                showOn: "button",
+                buttonImage: "img/calendar.png",
+                buttonText: "Seleziona una data",
+                minDate: 0,
+                showAnim: "clip",
+                closeText: "Chiudi",
+                //Imposto la lingua italiana del calendario!
+                prevText: "&#x3C;Prec",
+                nextText: "Succ&#x3E;",
+                currentText: "Oggi",
+                monthNames: [ "Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
+                        "Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre" ],
+                monthNamesShort: [ "Gen","Feb","Mar","Apr","Mag","Giu",
+                        "Lug","Ago","Set","Ott","Nov","Dic" ],
+                dayNames: [ "Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato" ],
+                dayNamesShort: [ "Dom","Lun","Mar","Mer","Gio","Ven","Sab" ],
+                dayNamesMin: [ "Do","Lu","Ma","Me","Gi","Ve","Sa" ],
+                weekHeader: "Sm",
+                dateFormat: "dd/mm/yy",
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ""
+            });
+});
+
+$( function() {
+    $( "#datepicker" ).datepicker( "option",
+        $.datepicker.regional[ "it"] );
+});
+
 $(document).ready( function() {
     
     
@@ -7,7 +42,7 @@ $(document).ready( function() {
 
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
-   document.getElementById("dataPren").setAttribute("min", today);
+   //document.getElementById("dataPren").setAttribute("min", today);
    
    orderselect(document.getElementById("selCorso"));
 });
@@ -37,7 +72,7 @@ function salvaDati(corso, cmbDoc, url)
     url_ = url;
     corso_ = corso;
     dataPren = document.getElementById("dataPren");
-    dataPren.min = dataPren.value;
+    //dataPren.min = dataPren.value;
     popolaCmbDocenti(corso, cmbDoc);
 }
 
