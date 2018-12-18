@@ -8,6 +8,7 @@ package geeraffa;
 import dao.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +71,10 @@ public class Registration extends HttpServlet {
 
             ses.setAttribute("logged", "Y");
             ses.setAttribute("name", nome + " " + cognome);
-            ses.setAttribute("id", Model.eseguiQuery("SELECT MAX(ID_Utente) FROM Utente"));
+            sql = "SELECT MAX(ID_Utente) as ID from Utente";
+            ResultSet rs = Model.eseguiQuery(sql);
+            if(rs.next())
+                ses.setAttribute("id", rs.getInt("ID"));
             ses.setAttribute("ruolo", ruolo);
 
             rd = ctx.getRequestDispatcher("/index.jsp");
