@@ -90,7 +90,7 @@ public class PrenotaRipetizione extends HttpServlet {
                     {
                         JSONArray arr = new JSONArray();
                         JSONObject corsoJSON = new JSONObject();
-                        corsoJSON.put("corso", corso);
+                        corsoJSON.put("corso", "none");
                         arr.put(corsoJSON);
                         //Invio la risposta con l'array JSON
                         out.println(arr);

@@ -60,39 +60,100 @@ public class SalvaPren extends HttpServlet {
         /*String oraInizio = request.getParameter("oraInizio");
         String oraFine = request.getParameter("oraFine");*/
         
-        String fasciaOraria = request.getParameter("orario");        
-        
-        String [] orari = fasciaOraria.split("-");
-        
-        //GESTIRE ARRIVO DI PIÙ FASCE ORARIE (OGNI ORA È: "XX:00,")
-        
-        //Ci sono almeno due fasce orarie selezionate
-        if(orari.length > 1)
-        {
-            //System.out.println("EDDAJE ");
-        }
-        
         //Registrazione da pagina web
         if(mobile == null)
         {
+        
+            String fasciaOraria = request.getParameter("orario");        
+
+            String [] orari = fasciaOraria.split("-");
+
+            //Divido l'array arrivato da JS per reperire gli orari selezionati
+            String[] fasce = orari[0].split(","); //es. fasce = {'15', '16' }
+            
+            //Setto la data corretta da inserire nel DB
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
             Date data = dateFormat.parse(dataPren);
             dateFormat.applyPattern("yyyy-MM-dd");
             String dataOK = dateFormat.format(data);
             
-            String dataInizio = dataOK + " " + "17:00" + ":00.000000";
-            String dataFine = dataOK + " " + "18:00" + ":00.000000";
+            //Ci sono almeno due fasce orarie selezionate
+            if(fasce.length > 1)
+            {
+                //Capire se è una fascia > di un'ora (es. 15-17) oppure fasce multiple (es 15-16 e 17-18)
+                int i = 0;
+                while(i < fasce.length-1 && 
+                        Integer.parseInt(fasce[i+1]) - Integer.parseInt(fasce[i]) == 1)
+                    i++;
+                
+                //Diverse fasce in un singolo giorno
+                if(i < fasce.length-1)
+                {
+                    //Dovrò fare due insert nel DB
+                    String dataInizio = dataOK + " " + fasce[0] + ":00:00.000000";
+                    String dataFine = dataOK + " " + (Integer.parseInt(fasce[0]) + 1) + ":00:00.000000";
+
+                    //Inserimento nel DB
+                    String sql =      "INSERT INTO Prenotazione "
+                                    + "(Studente, Docente, Corso, DTInizio, DTFine) "
+                                    + "VALUES("
+                                    + ses.getAttribute("id") + ", " + docente + ", "
+                                    + "'" + corso + "', '" + dataInizio + "' ,"
+                                    + "'" + dataFine + "')";                    
+                    Model.eseguiNonQuery(sql);
+                    System.out.println("Prenotazione SALVATA! (1/2)");
+                    
+                    //Secondo inserimento
+                    dataInizio = dataOK + " " + fasce[1] + ":00:00.000000";
+                    dataFine = dataOK + " " + (Integer.parseInt(fasce[1]) + 1) + ":00:00.000000";
+
+                    //Inserimento nel DB
+                    sql =      "INSERT INTO Prenotazione "
+                                    + "(Studente, Docente, Corso, DTInizio, DTFine) "
+                                    + "VALUES("
+                                    + ses.getAttribute("id") + ", " + docente + ", "
+                                    + "'" + corso + "', '" + dataInizio + "' ,"
+                                    + "'" + dataFine + "')";                    
+                    Model.eseguiNonQuery(sql);
+                    System.out.println("Prenotazione SALVATA! (2/2)");
+                }
+                //Fascia con più di un'ora
+                else
+                {
+                    String dataInizio = dataOK + " " + fasce[0] + ":00:00.000000";
+                    String dataFine = dataOK + " " + (Integer.parseInt(fasce[1]) + 1) + ":00:00.000000";
+
+                    //Inserimento nel DB
+                    String sql =      "INSERT INTO Prenotazione "
+                                    + "(Studente, Docente, Corso, DTInizio, DTFine) "
+                                    + "VALUES("
+                                    + ses.getAttribute("id") + ", " + docente + ", "
+                                    + "'" + corso + "', '" + dataInizio + "' ,"
+                                    + "'" + dataFine + "')";                    
+                    Model.eseguiNonQuery(sql);
+                    System.out.println("Prenotazione SALVATA!");
+                    
+                    
+                }
+            }
+            //Unica fascia oraria selezionata
+            else
+            {
+                String dataInizio = dataOK + " " + fasce[0] + ":00:00.000000";
+                String dataFine = dataOK + " " + (Integer.parseInt(fasce[0]) + 1) + ":00:00.000000";
+
+                //Inserimento nel DB
+                String sql =      "INSERT INTO Prenotazione "
+                                + "(Studente, Docente, Corso, DTInizio, DTFine) "
+                                + "VALUES("
+                                + ses.getAttribute("id") + ", " + docente + ", "
+                                + "'" + corso + "', '" + dataInizio + "' ,"
+                                + "'" + dataFine + "')";                    
+                Model.eseguiNonQuery(sql);
+                System.out.println("Prenotazione SALVATA!");                
+            }
             
-            //Inserimento nel DB
-            String sql =      "INSERT INTO Prenotazione "
-                            + "(Studente, Docente, Corso, DTInizio, DTFine) "
-                            + "VALUES("
-                            + ses.getAttribute("id") + ", " + docente + ", "
-                            + "'" + corso + "', '" + dataInizio + "' ,"
-                            + "'" + dataFine + "')";                    
-            Model.eseguiNonQuery(sql);
-            System.out.println("Prenotazione SALVATA!");
-            
+            //Ridirigo l'utente all'elenco delle sue prenotazioni
             rd = ctx.getRequestDispatcher("/elencoPren.jsp");
 
             rd.forward(request, response);
