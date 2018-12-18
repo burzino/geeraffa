@@ -59,7 +59,7 @@
               </button>
                 <a class="navbar-brand" href="#main-header">GEE<span class="logo-dec">RAFFA</span>
                     <% if(ses.getAttribute("logged") == "Y"){ %>
-                    - RIECCOTI, <%=ses.getAttribute("name")%>! <%}%>
+                    - CIAO, <%=ses.getAttribute("name")%>! <%}%>
                 </a>
                  
                 <!--<img src="img/Logo_Round.jpg"/>-->
