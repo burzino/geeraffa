@@ -14,25 +14,78 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>GEERAFFA - Admin - Corsi</title>
 
-        <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-        <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-        <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-        <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
+        <link rel="shortcut icon" href="img/Logo_Round.jpg">
+
+        <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css">-->
 
-        <title>prenptazioni</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="img/icons/favicon.ico"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+        <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="css/util.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <!--===============================================================================================-->  
+
+        <link rel="stylesheet" href="css/newcss.css">
     </head>
-    <body>
+    <body style="background-color: #abc;">
+        <%
+        HttpSession ses = request.getSession();
+        if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
+        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
+                <input type="hidden" name="toDo" value="noAdmin"/>
+                <h1 style="color: red; text-align: center;">ACCESSO NEGATO</h1>
+                <br><br>
+                <br><br><br>
+                <div style="text-align:center;">
+                    <input type="submit" class="btn btn-danger" value="Ritorna alla home" name="home" id="home"/>  
+                </div>
+
+        </form>
+         <%}else{ %>
+         <nav style="background-color: #475369; " class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="<%= request.getContextPath()%>/index.jsp">GEERAFFA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div style="background-color: #475369" class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<%= request.getContextPath()%>/index.jsp">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="">Visualizza Docenti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="">Visualizza Corsi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="">Visualizza Prenotazioni</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
             <input type="hidden" name="toDo" value="tab_prenotazioni"/>
                 <%
@@ -54,7 +107,7 @@
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="bootstrap-data-table" class="table table-striped table-bordered" style="text-align:center;">
+                            <table id="bootstrap-data-table" class="table table-hover" style="text-align:left; padding-left: 2%; padding-right: 2%; width: 90%; margin: auto;">
                                 <thead>
                                     <th>Docente</th>
                                     <th>Corso</th>
@@ -70,23 +123,23 @@
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     Date data = dateFormat.parse(rs.getString("DTInizio"));
                                     dateFormat.applyPattern("dd-MM-yyyy");
+                                    
                                     String dataOK = dateFormat.format(data);
                                     String oraInizio = rs.getString("DTInizio").split(" ")[1].substring(0,5);
                                     String oraFine = rs.getString("DTFine").split(" ")[1].substring(0,5);
                                     
-                                    
-                                    DateFormat dataCorrente = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    DateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                                     Date date = new Date();
+                                    Date dataCorrente = dateFormat1.parse(dateFormat1.format(date));
                                     
-                                    Date dCorrente = dataCorrente.parse(dataCorrente.format(date));
-                                    Date dataFine = data;
-                                    //System.out.println(dataFine);
-                                    String stato;
+                                    Date dataFine = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("DTFine"));
                                     
-                                    if (dCorrente.toString().compareTo(dataFine.toString()) < 0) {
+                                    String stato = "";
+                                    
+                                   if (dataFine.before(dataCorrente)) {
                                             stato = "CONCLUSA";
                                         }
-                                    else if(dCorrente.toString().compareTo(dataFine.toString()) > 0)
+                                    else if(dataCorrente.before(dataFine))
                                         stato = "ATTIVA";
                                     else
                                         stato ="IN CORSO";
@@ -111,33 +164,26 @@
                 
         </form>
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="js/jquery.min.js"></script>
 
+<!--    <script src="assets/js/lib/data-table/datatables.min.js"></script><!-- gestisce ricerca e paginazione della tabella  da problemi al padding-->
+<!--    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script><!-- script che gestisce la ricerca e paginazione della tabella, inoltre non da il problema del padding quando viene aperto e chiuso il modal-->  
+<!--    <script src="assets/js/init/datatables-init.js"></script><!-- gestisce ricerca e paginazione della tabella ma non da problema al padding-->
 
-    <script src="assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     
-    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="assets/js/init/datatables-init.js"></script>
-
-
     <script type="text/javascript">
         $(document).ready(function() {
-          $('#bootstrap-data-table-export').DataTable();
           $('.CONCLUSA').css('background-color', '#b2ff59');
           $('.ATTIVA').css('background-color', '#ffca28');
           $('.DISDETTA').css('background-color', '#ff7043');
           $('.IN CORSO').css('background-color', '#ffca28');
       } );
   </script>
+  <%}%>
+
     </body>
 </html>

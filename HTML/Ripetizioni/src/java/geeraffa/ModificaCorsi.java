@@ -7,7 +7,6 @@ package geeraffa;
 
 import dao.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
-import org.json.JSONObject;
 
 /**
  *
@@ -54,7 +51,7 @@ public class ModificaCorsi extends HttpServlet {
         String elimina = request.getParameter("elimina");
         String salva = request.getParameter("salva");
         String aggiungi = request.getParameter("aggiungi");
-
+        String path = request.getParameter("txtPath");
         
         Model.registerDriver();
         
@@ -71,9 +68,10 @@ public class ModificaCorsi extends HttpServlet {
         }
         else if(salva != null){ 
             System.out.println("STO AGGIORNANDO IL CORSO");
-            sql = "UPDATE corsodocente SET Attivo = 0 WHERE Docente = '" + titolo + "'";
-            Model.eseguiNonQuery(sql);
-            sql = "UPDATE Corso SET Descrizione = '" + descrizione + "' WHERE Titolo = '" + titolo + "'";
+            sql = "UPDATE Corso SET"
+                    + " Descrizione = '" + descrizione + "',"
+                    + " Path = 'img/corsi/" + path +"'"
+                    + " WHERE Titolo = '" + titolo + "'";
             Model.eseguiNonQuery(sql);
             System.out.println("CORSO MODIFICATO CORRETTAMENTE");
         }
@@ -83,14 +81,16 @@ public class ModificaCorsi extends HttpServlet {
             sql = "SELECT * FROM Corso WHERE Titolo ='" + titolo + "'";
             rs = Model.eseguiQuery(sql);
             if (rs.next()) {
-                sql = "UPDATE Corso SET Attivo = 1, Descrizione = '" + descrizione + "' WHERE titolo = '" + titolo + "'";
+                sql = "UPDATE Corso SET "
+                        + "Attivo = 1, "
+                        + "Descrizione = '" + descrizione + "' "
+                        + "Path = 'img/corsi/" + path +"'"
+                        + "WHERE titolo = '" + titolo + "'";
                 Model.eseguiNonQuery(sql);
             }
             else{
-                sql = "INSERT INTO Corso(titolo, descrizione) VALUES(" + "'" + titolo + "', '" + descrizione + "')";
+                sql = "INSERT INTO Corso(titolo, descrizione, path) VALUES(" + "'" + titolo + "', '" + descrizione + "', 'img/corsi/" + path + "')";
                 Model.eseguiNonQuery(sql);
-                sql = "SELECT MAX(ID_Docente) FROM Docente";
-                rs = Model.eseguiQuery(sql);
             }
             System.out.println("CORSO INSERITO CORRETTAMENTE");
         }

@@ -66,7 +66,7 @@ public class ModificaDocenti extends HttpServlet {
         }
         
 
-        System.out.println("Funziona:" + idDocente + "'" + nome +" - " + cognome + " - " + email );
+        System.out.println("SONO IN MODIFICADOCENTI:" + idDocente + "'" + nome +" - " + cognome + " - " + email );
         
         String sql;
         int id_docente = 0;
@@ -95,7 +95,7 @@ public class ModificaDocenti extends HttpServlet {
                     sql = "UPDATE corsodocente SET Attivo = 1 WHERE Docente = " + idDocente + " AND Corso = '" + corsi[i] + "'";
                 }
                 else{
-                    sql = "INSERT INTO corsodocente(Docente,corso,Attivo) VALUES(" + id_docente + ",'" + corsi[i] + "', Attivo = 1)";
+                    sql = "INSERT INTO corsodocente(Docente,corso,Attivo) VALUES(" + id_docente + ",'" + corsi[i] + "', 1)";
                 }
                 Model.eseguiNonQuery(sql);
             }
@@ -111,19 +111,29 @@ public class ModificaDocenti extends HttpServlet {
                 id_docente = rs.getInt("id_docente");
             }
             else{
-                sql = "INSERT INTO Docente(nome, cognome ,email) VALUES(" + "'" + nome + "', '" + cognome + "','" + email + "')";
+                sql = "INSERT INTO Docente(nome, cognome ,email) VALUES('" + nome + "', '" + cognome + "','" + email + "')";
                 Model.eseguiNonQuery(sql);
-                sql = "SELECT MAX(ID_Docente) FROM Docente";
+                sql = "SELECT MAX(ID_Docente) AS id FROM docente";
                 rs = Model.eseguiQuery(sql);
-                id_docente = rs.getInt("id_docente");
+                if(rs.next())
+                    id_docente = rs.getInt("id");
             }
             
-            sql = "UPDATE corsodocente SET Attivo = 0 WHERE Docente = " + idDocente;
-            Model.eseguiNonQuery(sql);
+            sql = "UPDATE corsodocente SET Attivo = 0 WHERE Docente = " + id_docente;
+            Model.eseguiNonQuery(sql);  
             
             for (int i = 0; corsi != null && i < corsi.length; i++) {
-                sql = "INSERT INTO corsodocente(Docente,corso) VALUES(" + id_docente + ",'" + corsi[i] + "')";
+                System.out.println("STO AGGIUNGENDO UN NUOVO CORSODOCENTE");
+                sql = "SELECT * FROM CorsoDocente WHERE Docente =" + id_docente + " AND corso = '"+corsi[i]+"'";
+                rs = Model.eseguiQuery(sql);
+                if (rs.next()) {
+                    sql = "UPDATE CorsoDocente SET Attivo = 1 WHERE Docente =" + id_docente + " AND corso = '"+corsi[i]+"'"; Model.eseguiNonQuery(sql);
+                }
+                else{
+                    sql = "INSERT INTO CorsoDocente(Docente, Corso) VALUES(" + id_docente + ", '" + corsi[i] + "')";
+                }
                 Model.eseguiNonQuery(sql);
+                System.out.println("CORSODOCENTE INSERITO CORRETTAMENTE");
             }
             System.out.println("DOCENTE INSERITO CORRETTAMENTE");
             

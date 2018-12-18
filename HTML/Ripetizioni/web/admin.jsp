@@ -13,6 +13,9 @@
 <!doctype html>
 
 <html class="no-js" lang=""> <!--<![endif]-->
+    
+    
+    
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +30,6 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/style.css">-->
-    <link rel="stylesheet" href="css/newcss.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->	
@@ -45,12 +47,28 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <!--===============================================================================================-->      
+    <!--===============================================================================================-->  
+    
+    <link rel="stylesheet" href="css/newcss.css">
 
 
 </head>
 
-<body style="width:98%; background-color: #475369; ">
+<body style="width:98%; background-color: #abc; ">
+    <%
+    HttpSession ses = request.getSession();
+    if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
+    <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
+            <input type="hidden" name="toDo" value="noAdmin"/>
+            <h1 style="color: red; text-align: center;">ACCESSO NEGATO</h1>
+            <br><br>
+            <br><br><br>
+            <div style="text-align:center;">
+                <input type="submit" class="btn btn-danger" value="Ritorna alla home" name="home" id="home"/>  
+            </div>
+            
+    </form>
+     <%}else{ %>
     <nav style="background-color: #475369; " class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="<%= request.getContextPath()%>/index.jsp">GEERAFFA</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,13 +81,13 @@
                     <a class="nav-link" href="<%= request.getContextPath()%>/index.jsp">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="iframe_admin">Visualizza Docenti</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="">Visualizza Docenti</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="iframe_admin">Visualizza Corsi</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="">Visualizza Corsi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="iframe_admin">Visualizza Prenotazioni</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="">Visualizza Prenotazioni</a>
                 </li>
 
             </ul>
@@ -80,7 +98,13 @@
     <div class="content">  
         <div class="animated fadeIn">
             <div class="row">
-                <iframe src="img/logo1.png" name="iframe_admin" class="iframe_admin" ></iframe>
+                <span class="login100-form-title" style="margin: auto; padding-top: 2%; color: #475369; width: 90%">
+                    Benvenuto nella sezione admin, da qui puoi visualizzare e modificare le informazioni salvate sulla piattaforma.
+                    <br>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="" style="font-size: 30px"> Visualizza Docenti</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="" style="font-size: 30px">Visualizza Corsi</a>
+                    <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="" style="font-size: 30px">Visualizza Prenotazioni</a>
+                </span>
             </div>
         </div>
     </div>
@@ -90,6 +114,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
+<%}%>
 </body>
 </html>

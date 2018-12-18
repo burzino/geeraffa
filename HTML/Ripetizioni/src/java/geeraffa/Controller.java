@@ -103,7 +103,11 @@ public class Controller extends HttpServlet {
             case "modificaDocenti":
                 System.out.println("ARRIVO DA TAB DOCENTI!!!");
                 rd = ctx.getRequestDispatcher("/ModificaDocenti");
-                break; 
+                break;
+            case "noAdmin":
+                System.out.println("ACCESSO AREA ADMIN NEGATO");
+                rd = ctx.getRequestDispatcher("/index.jsp");
+                break;
 
         }
         
