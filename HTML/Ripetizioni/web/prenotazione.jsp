@@ -76,23 +76,6 @@
                            type="text" name="dataPren" id="dataPren" class="form-control"
                            onchange="cambioData(document.getElementById('selDocente').value)"/>
                 </div>
-                    
-                <!--<div class="form-group" id="selData">
-                    <label for="selData"> Data: </label>            
-                    <input disabled type="date" name="dataPren" class="form-control" 
-                           onchange="cambioData(document.getElementById('selDocente').value)" id="dataPren"/>
-                </div>-->
-                <!--<div class="form-group" style="float:left;">
-                    <label for="selDalle"> Dalle: </label>
-                    <select disabled name="oraInizio" id="selDalle" class="form-control"
-                            onchange="popolaCmbOrario(this.value)">
-                    </select>
-                </div>
-                <div class="form-group" style="float:right;">
-                    <label for="selAlle"> Alle: </label>
-                    <select disabled name="oraFine" id="selAlle" class="form-control">                    
-                    </select>
-                </div>-->
                 
                 <div class="from-group" id="divOrari">
                     
@@ -104,17 +87,5 @@
                 </div>
             </div>
     </form>
-    <!--    <table class="table table-hover" style="width:40%; margin: 20px auto;text-align: center;">
-            <thead>
-                <th scope="col">Giorno</th>
-                <th scope="col">Fascia Oraria</th>
-                <th scope="col">Corso</th>
-                <th scope="col">Docente</th>
-                <th scope="col">Azione</th>
-            </thead>
-            <tbody id="tablePren">
-            </tbody>
-        </table>
-    -->
     </body>
 </html>
