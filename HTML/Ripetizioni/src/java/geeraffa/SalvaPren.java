@@ -121,7 +121,7 @@ public class SalvaPren extends HttpServlet {
                 else
                 {
                     String dataInizio = dataOK + " " + fasce[0] + ":00:00.000000";
-                    String dataFine = dataOK + " " + (Integer.parseInt(fasce[1]) + 1) + ":00:00.000000";
+                    String dataFine = dataOK + " " + (Integer.parseInt(fasce[fasce.length-1]) + 1) + ":00:00.000000";
 
                     //Inserimento nel DB
                     String sql =      "INSERT INTO Prenotazione "
