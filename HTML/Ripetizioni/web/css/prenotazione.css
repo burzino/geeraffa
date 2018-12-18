@@ -8,3 +8,20 @@
     width: 93%;
     margin-right:3px;
 }
+
+#btnPren:disabled
+{
+    background-color: #dddddd;
+}
+
+.btn-danger
+{
+    cursor: none;
+}
+
+.btn-success, .btn-danger, .btn-primary
+{
+    width: 25%;
+    height: 50px;
+}
+
