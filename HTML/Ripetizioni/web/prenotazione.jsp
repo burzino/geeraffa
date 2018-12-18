@@ -34,9 +34,7 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/prenotazione.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-        
-        
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">       
         
         <title>Prenotazione per <%= corso %></title>
     </head>
@@ -69,21 +67,22 @@
                     
                 <div class="form-group">
                     <label for="selDocente"> Docente: </label>
-                    <select id="selDocente" name="docente" class="form-control" disabled>
+                    <select id="selDocente" name="docente" onchange="cambioDocente()" class="form-control" disabled>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="dataPren"> Data: </label><br>
                     <input readonly style="background-color: rgba(255,255,255,0);" 
-                           type="text" name="dataPren"  id="dataPren" class="form-control"
-                           onchange="cambioData(document.getElementById('selDocente').value)">
+                           type="text" name="dataPren" id="dataPren" class="form-control"
+                           onchange="cambioData(document.getElementById('selDocente').value)"/>
                 </div>
+                    
                 <!--<div class="form-group" id="selData">
                     <label for="selData"> Data: </label>            
                     <input disabled type="date" name="dataPren" class="form-control" 
                            onchange="cambioData(document.getElementById('selDocente').value)" id="dataPren"/>
                 </div>-->
-                <div class="form-group" style="float:left;">
+                <!--<div class="form-group" style="float:left;">
                     <label for="selDalle"> Dalle: </label>
                     <select disabled name="oraInizio" id="selDalle" class="form-control"
                             onchange="popolaCmbOrario(this.value)">
@@ -93,9 +92,15 @@
                     <label for="selAlle"> Alle: </label>
                     <select disabled name="oraFine" id="selAlle" class="form-control">                    
                     </select>
+                </div>-->
+                
+                <div class="from-group" id="divOrari">
+                    
                 </div>
+                <input type="hidden" name="orario" />
+                <input type="hidden" name="data" value="ANO"/>
                 <div class="container-login100-form-btn">
-                        <input type="submit" class="login100-form-btn" value="PRENOTA"/>
+                        <input type="submit" onclick="setFasciaOraria()" id="btnPren" class="login100-form-btn" disabled value="PRENOTA"/>
                 </div>
             </div>
     </form>
