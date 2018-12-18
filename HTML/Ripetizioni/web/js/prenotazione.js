@@ -1,7 +1,6 @@
 //Creazione datepicker con JQuery UI
 $( function() {
           $( "#dataPren" ).datepicker({
-                dateFormat: "dd/mm/yy",
                 showOn: "button",
                 buttonImage: "img/calendar.png",
                 buttonText: "Seleziona una data",
@@ -28,11 +27,6 @@ $( function() {
             });
 });
 
-$( function() {
-    $( "#datepicker" ).datepicker( "option",
-        $.datepicker.regional[ "it"] );
-});
-
 $(document).ready( function() {
     
     
@@ -54,7 +48,7 @@ var corso_;
 var dataPren;
 var docente;
 
-var orari = ['15:00', '16:00', '17:00', '18:00',  '19:00'];
+var orari = ['15', '16', '17', '18', '19'];
 
 //HTTP request
 function setXMLHttpRequest() {
@@ -83,13 +77,14 @@ function popolaCmbDocenti(corso, cmbDocenti)
     
     document.getElementById("selDocente").disabled = true;
     document.getElementById("dataPren").disabled = true;
-    document.getElementById("selDalle").disabled = true;
-    document.getElementById("selAlle").disabled = true;
+    /*document.getElementById("selDalle").disabled = true;
+    document.getElementById("selAlle").disabled = true;*/
     
     document.getElementById("selDocente").innerHTML = "";
     document.getElementById("dataPren").value = "";
-    document.getElementById("selDalle").innerHTML = "";
-    document.getElementById("selAlle").innerHTML = "";
+    /*document.getElementById("selDalle").innerHTML = "";
+    document.getElementById("selAlle").innerHTML = "";*/
+    document.getElementById("divOrari").innerHTML = "";
     
     xhrObj.open("GET", url_+"&corso="+corso+"&cmb=true", true);
     
@@ -113,6 +108,13 @@ function popolaCmbOrario(oraInizio)
     selAlle.disabled = false;
 }
 
+//Onchange del docente
+function cambioDocente()
+{
+    document.getElementById("divOrari").innerHTML = "";
+    document.getElementById("dataPren").value = "";
+    //document.getElementById("btnPren").disabled = true;
+}
 
 //Ricevo risposta dal SERVER per popolare cmb dei Docenti - onchange selCorso
 function popolaDocenti()
@@ -124,6 +126,9 @@ function popolaDocenti()
         var arrDocenti = JSON.parse(risp);
         var cmbDocenti = document.getElementById("selDocente");
         var titolo = document.getElementById("titolo");
+        
+        document.getElementById("divOrari").innerHTML = "";
+        
         titolo.innerHTML = "";
         titolo.innerHTML += "PRENOTA LA TUA RIPETIZIONE DI " + arrDocenti[0].corso.toString().toUpperCase();
         
@@ -134,8 +139,8 @@ function popolaDocenti()
         {
             document.getElementById("selDocente").disabled = true;
             document.getElementById("dataPren").disabled = true;
-            document.getElementById("selDalle").disabled = false;
-            document.getElementById("selAlle").disabled = false;
+            /*document.getElementById("selDalle").disabled = false;
+            document.getElementById("selAlle").disabled = false;*/
             alert("Nessun docente insegna " + arrDocenti[0].corso);
         }
         else
@@ -148,8 +153,9 @@ function popolaDocenti()
             }
             
             orderselect(document.getElementById("selDocente"));
+            document.getElementById("selDocente").selectedIndex = 0;
             document.getElementById("selDocente").disabled = false;
-            document.getElementById("dataPren").disabled = false;
+            //document.getElementById("dataPren").disabled = false;
         }
     }
 }
@@ -160,17 +166,13 @@ function cambioData(docenteSel){
     var day = date.getDay();
     docente = docenteSel;
     
-    document.getElementById("selDalle").disabled = true;
-    document.getElementById("selAlle").disabled = true;
-        
-    //day 0 = domenica - day 6 = sabato!
-    if(day == 0 || day == 6)
-    {
-        alert("Selezionare un giorno feriale (lun-ven)!");
-        dataPren.value = "";
-    }
-    else
-        ricercaRipetizioni();
+    //document.getElementById("btnPren").disabled = false;
+    
+    /*document.getElementById("selDalle").disabled = true;
+    document.getElementById("selAlle").disabled = true;*/
+    
+
+    ricercaRipetizioni();
 }
 
 //Richiamo SERVLET per capire le fasce orarie disponibili - onchange dataPren
@@ -189,37 +191,156 @@ function popolaOrari()
     if (xhrObj.readyState == 4) {
         var risp = xhrObj.responseText;
         var arrPren = JSON.parse(risp);
-        var selDalle = document.getElementById("selDalle");
-        var selAlle = document.getElementById("selAlle");
+        var divOrari = document.getElementById("divOrari");
+        divOrari.innerHTML = "";
+        var i = 0;
+        var j=0;
         
-        selDalle.innerHTML = "";
         
-        //Nessuna prenotazione trovata per il docente selezionata nella data messa
-        if(arrPren[0].oraInizio == "none")
-        {           
-            for (var i = 0; i < orari.length; i++) {
-                selDalle.innerHTML += "<option>" + orari[i] + "</option>";
-            }
-        }
-        else
+        //Creo label per le fasce orarie
+        for(i=0; i<8; i++)
         {
-            for (var i = 0; i < orari.length-1; i++) {
-                if(orari[i] != arrPren[0].oraInizio 
-                        && !(orari[i]<arrPren[0].oraFine && orari[i]>arrPren[0].oraInizio))
-                    selDalle.innerHTML +=
-                        "<option>" + orari[i] + "</option>";
+            if(i%2==0)
+            {
+                divOrari.innerHTML += "<div style='width: 12.5%; float:left'>|" + orari[j] + "</div>"
+                j++;
             }
+            else if(i == 7)
+            {
+                divOrari.innerHTML += "<div style='width: 12.5%; float:left; text-align:right'>" + orari[j] + "|</div>"
+                j++;
+            }
+            else
+                divOrari.innerHTML += "<div style='width: 12.5%; height:20px; float:left'><div/>"
         }
         
-        selDalle.disabled = false;
-        popolaCmbOrario(selDalle.value);
+        //Creo fasce orarie tutte libere
+        for(i=0; i<4; i++)
+        {   
+            divOrari.innerHTML +=
+                      "<button type='button' onclick='selezionaOrario(this)' "
+                    + "class='btn' id='" + orari[i] + "'>LIBERA</button>";
+            document.getElementById(orari[i]).classList.add("btn-success");
+        }
         
-        selAlle.disabled = false;
+        
+        j = 0;
+        if(arrPren[0].oraInizio != "none")
+        {
+            //MEtto occupate le fasce orarie già prenotate
+            for(i=0; i<4; i++)
+            {
+                var btn = document.getElementById(orari[i]);
+                
+                if(j<arrPren.length && 
+                        (arrPren[j].oraInizio == btn.id))
+                {
+                    document.getElementById(orari[i]).classList.remove("btn-success");
+                    document.getElementById(orari[i]).classList.add("btn-danger");
+                    document.getElementById(orari[i]).style.cursor = "default";
+                    document.getElementById(orari[i]).innerHTML = "OCCUPATA";
+                    document.getElementById(orari[i]).disabled = true;
+                    j++;
+                }
+            }
+            j=0;
+            //Controllo se c'è una fascia oraria di più di un'ora (es. 15-17) per
+            //segnare occupate le fasce orarie comprese tra le due ore di inizio e fine
+            for(i=0; i<4; i++)
+            {
+                var btn = document.getElementById(orari[i]);
+                
+                if(j<arrPren.length && 
+                        (btn.id > arrPren[j].oraInizio && btn.id < arrPren[j].oraFine))
+                {   
+                    document.getElementById(orari[i]).classList.remove("btn-success");
+                    document.getElementById(orari[i]).classList.add("btn-danger");
+                    document.getElementById(orari[i]).style.cursor = "default";
+                    document.getElementById(orari[i]).innerHTML = "OCCUPATA";
+                    document.getElementById(orari[i]).disabled = true;
+                    j++;
+                }
+            }
+            
+        }
+        
+        //Verifico se si ci siano delle ripetizioni prenotate in quel giorno
+        /*if(arrPren[0].oraInizio != "none")
+        {
+            //Segno occupate quelle in cui c'è già una ripetizione prenotata
+            for(i=0; i<arrPren.length; i++)
+            {
+                document.getElementById(arrPren[i].oraInizio).classList.remove("btn-success");
+                document.getElementById(arrPren[i].oraInizio).classList.add("btn-danger");
+                document.getElementById(arrPren[i].oraInizio).style.cursor = "default";
+                document.getElementById(arrPren[i].oraInizio).innerHTML = "OCCUPATA";
+                document.getElementById(arrPren[i].oraInizio).disabled = true;
+            }
+        }*/
     }   
 }
 
+//Onclick orari
+function selezionaOrario(btn)
+{
+    //Se è libera --> diventa SELEZINONATA
+    if(btn.className == "btn btn-success")
+    {
+        btn.classList.remove("btn-success");
+        btn.classList.add("btn-primary");
+        btn.innerHTML = "";
+        btn.innerHTML += "SELEZIONATA";
+        document.getElementById("btnPren").disabled = false;
+    }
+    //Se era selezionata --> torna libera
+    else
+    {                 
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-success");
+        btn.innerHTML = "";
+        btn.innerHTML += "LIBERA";        
+        
+        //Se non ci sono orari selezionati --> PRENOTA DISABILITATO
+        var i;
+        var sel=0;
+        
+        for(i=0; i<4; i++)
+        {
+            var btnCheck = document.getElementById(orari[i]);
+            //Se trova un selezionato
+            if(btnCheck.className == "btn btn-primary")
+                sel = 1;
+        }
+        
+        if(sel == 0)
+           document.getElementById("btnPren").disabled = true;
+    }
+}
 
+//Onclick PRENOTA
+function setFasciaOraria()
+{
+    var fasciaOraria = document.forms[0].elements["orario"];
+    
+    var oraSel= "";
+    for(i=0; i<4; i++)
+    {
+        var btnCheck = document.getElementById(orari[i]);
+        //Orario selezionato
+        if(btnCheck.className == "btn btn-primary")
+            oraSel += btnCheck.id + "-";
+    }
+    var fasce = oraSel.split("-");   
+    
+    //Setto il parametro con gli orari selezionati
+    fasciaOraria.value = fasce;
+    
+    
+    var dataPren = document.forms[0].elements["data"];
+    dataPren.value = document.getElementById("dataPren").value;
+}
 
+//Ordina alfabeticamente le select
 function orderselect(selElem)
 {
     var tmpAry = new Array();
