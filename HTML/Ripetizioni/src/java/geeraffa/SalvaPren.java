@@ -56,9 +56,21 @@ public class SalvaPren extends HttpServlet {
         
         String corso = request.getParameter("corso");
         String docente = request.getParameter("docente");
-        String dataPren = request.getParameter("dataPren");
-        String oraInizio = request.getParameter("oraInizio");
-        String oraFine = request.getParameter("oraFine");
+        String dataPren = request.getParameter("data");
+        /*String oraInizio = request.getParameter("oraInizio");
+        String oraFine = request.getParameter("oraFine");*/
+        
+        String fasciaOraria = request.getParameter("orario");        
+        
+        String [] orari = fasciaOraria.split("-");
+        
+        //GESTIRE ARRIVO DI PIÙ FASCE ORARIE (OGNI ORA È: "XX:00,")
+        
+        //Ci sono almeno due fasce orarie selezionate
+        if(orari.length > 1)
+        {
+            //System.out.println("EDDAJE ");
+        }
         
         //Registrazione da pagina web
         if(mobile == null)
@@ -68,8 +80,8 @@ public class SalvaPren extends HttpServlet {
             dateFormat.applyPattern("yyyy-MM-dd");
             String dataOK = dateFormat.format(data);
             
-            String dataInizio = dataOK + " " + oraInizio + ":00.000000";
-            String dataFine = dataOK + " " + oraFine + ":00.000000";
+            String dataInizio = dataOK + " " + "17:00" + ":00.000000";
+            String dataFine = dataOK + " " + "18:00" + ":00.000000";
             
             //Inserimento nel DB
             String sql =      "INSERT INTO Prenotazione "

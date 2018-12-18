@@ -128,8 +128,9 @@ public class PrenotaRipetizione extends HttpServlet {
                     while(rs.next())
                     {
                         JSONObject pren = new JSONObject();
-                        pren.put("oraInizio", rs.getString("DTInizio").split(" ")[1].substring(0, 5));
-                        pren.put("oraFine", rs.getString("DTFine").split(" ")[1].substring(0, 5));
+                        //Salvo solo le due cifre dell'ora (es 17:00 --> salvo 17)
+                        pren.put("oraInizio", rs.getString("DTInizio").split(" ")[1].substring(0, 2));
+                        pren.put("oraFine", rs.getString("DTFine").split(" ")[1].substring(0, 2));
                         arrPren.put(pren);
                         res++;
                     }
