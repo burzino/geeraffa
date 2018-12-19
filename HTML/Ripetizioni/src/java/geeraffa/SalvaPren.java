@@ -77,7 +77,7 @@ public class SalvaPren extends HttpServlet {
             dateFormat.applyPattern("yyyy-MM-dd");
             String dataOK = dateFormat.format(data);
             
-            //Ci sono almeno due fasce orarie selezionate
+            //Ci sono due fasce orarie selezionate
             if(fasce.length > 1)
             {
                 //Capire se è una fascia > di un'ora (es. 15-17) oppure fasce multiple (es 15-16 e 17-18)
@@ -105,7 +105,7 @@ public class SalvaPren extends HttpServlet {
                     
                     //Secondo inserimento
                     dataInizio = dataOK + " " + fasce[1] + ":00:00.000000";
-                    dataFine = dataOK + " " + (Integer.parseInt(fasce[1]) + 1) + ":00:00.000000";
+                    dataFine = dataOK + " " + (Integer.parseInt(fasce[fasce.length - 1]) + 1) + ":00:00.000000";
 
                     //Inserimento nel DB
                     sql =      "INSERT INTO Prenotazione "
