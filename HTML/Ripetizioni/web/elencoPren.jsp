@@ -36,7 +36,6 @@
     
     <body style="background-color: #abc" onload="aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=aggiornaPren')">
     <jsp:include page="header.jsp"></jsp:include>    
-    <h1> <%= corso %> </h1>
             <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 ELENCO DELLE TUE RIPETIZIONI PRENOTATE
             </span>
