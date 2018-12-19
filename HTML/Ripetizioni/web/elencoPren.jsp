@@ -36,6 +36,7 @@
     
     <body style="background-color: #abc" onload="aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=aggiornaPren')">
     <jsp:include page="header.jsp"></jsp:include>    
+    <h1> <%= corso %> </h1>
             <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 ELENCO DELLE TUE RIPETIZIONI PRENOTATE
             </span>
@@ -50,15 +51,16 @@
                             <% } %>
                         value="tutti">TUTTI</option>
                     <% 
-                        ResultSet rsCorsi = Model.eseguiQuery("Select * from Corso where Attivo=1");
-                        while(rsCorsi.next())
+                        List<Corso> corsi = Model.listCorsi();
+
+                        for (int i = 0; i < corsi.size(); i++) 
                         {
                     %>
-                    <option value="<%= rsCorsi.getString("Titolo")%>"
-                        <% if(rsCorsi.getString("Titolo").equals(corso)) {%> 
+                    <option <% if(corso.equals(corsi.get(i).getTitolo())) {%> 
                             selected="selected"
-                        <% } %> >
-                            <%= rsCorsi.getString("Titolo")%>
+                        <% } %>
+                        value="<%= corsi.get(i).getTitolo()%>">
+                            <%= corsi.get(i).getTitolo()%>
                     </option>
                     <% } %>
                 </select>
