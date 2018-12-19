@@ -186,6 +186,7 @@ function popolaOrari()
             else
                 divOrari.innerHTML += "<div style='width: 12.5%; height:20px; float:left'><div/>"
         }
+
         
         //Creo fasce orarie tutte libere
         for(i=0; i<4; i++)
@@ -216,22 +217,36 @@ function popolaOrari()
                     j++;
                 }
             }
+            
             j=0;
             //Controllo se c'è una fascia oraria di più di un'ora (es. 15-17) per
             //segnare occupate le fasce orarie comprese tra le due ore di inizio e fine
             for(i=0; i<4; i++)
             {
                 var btn = document.getElementById(orari[i]);
-                
-                if(j<arrPren.length && 
+                if(j < arrPren.length && 
                         (btn.id > arrPren[j].oraInizio && btn.id < arrPren[j].oraFine))
-                {   
-                    document.getElementById(orari[i]).classList.remove("btn-success");
-                    document.getElementById(orari[i]).classList.add("btn-danger");
-                    document.getElementById(orari[i]).style.cursor = "default";
-                    document.getElementById(orari[i]).innerHTML = "OCCUPATA";
-                    document.getElementById(orari[i]).disabled = true;
+                {  
+                    btn.classList.remove("btn-success");
+                    btn.classList.add("btn-danger");
+                    btn.style.cursor = "default";doppie
+                    btn.innerHTML = "OCCUPATA";
+                    btn.disabled = true;
                     j++;
+                }
+            }
+            
+            //Verifico se sono state selezionate le fasce 15-16 e 17-19: uniche fasce multiple con una singola e una doppia
+            for (i = 0; i < arrPren.length; i++) {
+                if(arrPren[i].oraInizio == "17" && arrPren[i].oraFine == "19")
+                {
+                    var btn = document.getElementById("18");
+                    
+                    btn.classList.remove("btn-success");
+                    btn.classList.add("btn-danger");
+                    btn.style.cursor = "default";
+                    btn.innerHTML = "OCCUPATA";
+                    btn.disabled = true;
                 }
             }
             
