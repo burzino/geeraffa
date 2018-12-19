@@ -168,23 +168,15 @@ function popolaOrari()
         var j=0;
         
         //Creo label fascia oraria
-        divOrari.innerHTML += "<label> Selezionare orari tra quelli disponibili:</label><br>";
+        divOrari.innerHTML += "<label> Selezionare fasce orarie tra quelle disponibili (anche più di una, di seguito e non):</label><br>";
         
         //Creo label per le fasce orarie
-        for(i=0; i<8; i++)
-        {
-            if(i%2==0)
-            {
-                divOrari.innerHTML += "<div id='aaa' style='width: 12.5%; float:left'>|" + orari[j] + "</div>"
-                j++;
-            }
-            else if(i == 7)
-            {
-                divOrari.innerHTML += "<div style='width: 12.5%; float:left; text-align:right'>" + orari[j] + "|</div>"
-                j++;
-            }
+        for(i=0; i<4; i++)
+        {                
+            if(i == 3)
+                divOrari.innerHTML += "<div style='width: 25%; float:left; text-align:center'>" + orari[i] +":00 - 19:00</div>";
             else
-                divOrari.innerHTML += "<div style='width: 12.5%; height:20px; float:left'><div/>"
+                divOrari.innerHTML += "<div style='width: 25%; float:left; text-align:center'>" + orari[i] + ":00 - " + orari[i+1] + ":00</div>";
         }
 
         
@@ -201,7 +193,8 @@ function popolaOrari()
         j = 0;
         if(arrPren[0].oraInizio != "none")
         {
-            //MEtto occupate le fasce orarie già prenotate
+            var contOccupate = 0;
+            //Metto occupate le fasce orarie già prenotate
             for(i=0; i<4; i++)
             {
                 var btn = document.getElementById(orari[i]);
@@ -215,30 +208,32 @@ function popolaOrari()
                     document.getElementById(orari[i]).innerHTML = "OCCUPATA";
                     document.getElementById(orari[i]).disabled = true;
                     j++;
+                    contOccupate++;
                 }
             }
             
-            j=0;
-            //Controllo se c'è una fascia oraria di più di un'ora (es. 15-17) per
-            //segnare occupate le fasce orarie comprese tra le due ore di inizio e fine
-            for(i=0; i<4; i++)
-            {
-                var btn = document.getElementById(orari[i]);
-                if(j < arrPren.length && 
-                        (btn.id > arrPren[j].oraInizio && btn.id < arrPren[j].oraFine))
-                {  
-                    btn.classList.remove("btn-success");
-                    btn.classList.add("btn-danger");
-                    btn.style.cursor = "default";doppie
-                    btn.innerHTML = "OCCUPATA";
-                    btn.disabled = true;
-                    j++;
+            //Segno occupate le fasce orarie comprese tra le ore di inizio e fine di una ripe di due o più ore
+            for (var j = 0; j < arrPren.length; j++) {
+                for(i=0; i<4; i++)
+                {
+                    var btn = document.getElementById(orari[i]);
+                    if(btn.id > arrPren[j].oraInizio && btn.id < arrPren[j].oraFine)
+                    {  
+                        btn.classList.remove("btn-success");
+                        btn.classList.add("btn-danger");
+                        btn.style.cursor = "default";
+                        btn.innerHTML = "OCCUPATA";
+                        btn.disabled = true;
+                        contOccupate++;
+                    }
                 }
             }
+            
             
             //Verifico se sono state selezionate le fasce 15-16 e 17-19: uniche fasce multiple con una singola e una doppia
             for (i = 0; i < arrPren.length; i++) {
-                if(arrPren[i].oraInizio == "17" && arrPren[i].oraFine == "19")
+                if(arrPren[i].oraInizio == "17" && arrPren[i].oraFine == "19" 
+                        && document.getElementById("18").className == "btn btn-success")
                 {
                     var btn = document.getElementById("18");
                     
@@ -247,8 +242,13 @@ function popolaOrari()
                     btn.style.cursor = "default";
                     btn.innerHTML = "OCCUPATA";
                     btn.disabled = true;
+                    contOccupate++;
                 }
             }
+            
+            //Tutte la giornata è occupata da ripetizioni già prenotate
+            if(contOccupate == 4)
+                alert("Nessuna fascia oraria disponibile il " + document.getElementById("dataPren").value);
             
         }
     }   
