@@ -78,6 +78,8 @@ function aggiorna()
             {
                 if(arrDati[i].stato == "ATTIVA")
                 {
+                    var corsoSel = document.getElementById("selCorso").value;
+                    
                     table.innerHTML += 
                         "<tr>"
                         +   "<td>" + arrDati[i].data + "</td>"                        
@@ -86,22 +88,22 @@ function aggiorna()
                         +   "<td>" + arrDati[i].docente + "</td>"
                         +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
                         +   "<td><input style='width:100px' type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
-                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "')\" />"
+                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "&corso=" + corsoSel + "')\" />"
                         +   "</td>"
                         +"</tr>";
-            }
-            else
-            {
-                table.innerHTML += 
-                        "<tr>"
-                        +   "<td>" + arrDati[i].data + "</td>"                        
-                        +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
-                        +   "<td>" + arrDati[i].corso + "</td>"
-                        +   "<td>" + arrDati[i].docente + "</td>"
-                        +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
-                        +   "<td><input style='width:100px' disabled type='button' class='btn btn-danger' value='No action' /> </td>"
-                        +"</tr>";
-            }
+                }
+                else
+                {
+                    table.innerHTML += 
+                            "<tr>"
+                            +   "<td>" + arrDati[i].data + "</td>"                        
+                            +   "<td>" + arrDati[i].oraInizio + " - " + arrDati[i].oraFine + "</td>"
+                            +   "<td>" + arrDati[i].corso + "</td>"
+                            +   "<td>" + arrDati[i].docente + "</td>"
+                            +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
+                            +   "<td><input style='width:100px' disabled type='button' class='btn btn-danger' value='No action' /> </td>"
+                            +"</tr>";
+                }
             }
         }
     }
