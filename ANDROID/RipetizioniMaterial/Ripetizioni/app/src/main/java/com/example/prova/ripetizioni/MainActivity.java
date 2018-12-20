@@ -12,11 +12,14 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bNV;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+    JSonLogin JLogin;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +70,21 @@ public class MainActivity extends AppCompatActivity {
                         setActionbarTitle("Login");
                         selectedFragment = LoginFragment.newInstance();
 
+
                         break;
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, selectedFragment);
                 transaction.commit();
+                if (logged==null) {
+                    try {
+                        checkLogin();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 return true;
             }
         });
@@ -79,23 +94,14 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.frame_layout, CorsiFragment.newInstance());
         transaction.commit();
 
-        if(logged==null)
-        {
-            bNV.getMenu().findItem(R.id.account).setVisible(false);
-            bNV.getMenu().findItem(R.id.prenotazioni).setVisible(false);
-            bNV.getMenu().findItem(R.id.nuovaPrenotazione).setVisible(false);
+        try {
+            checkLogin();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        else {
-            bNV.getMenu().findItem(R.id.account).setVisible(true);
-            bNV.getMenu().findItem(R.id.prenotazioni).setVisible(true);
-            bNV.getMenu().findItem(R.id.nuovaPrenotazione).setVisible(true);
-            //se non si è loggati ma ci sono user e pwd salvati sul dispositivo, avvia il login automaticamente
-            if (userPref != null && pwdPref != null && userPref != "" && pwdPref != "") {
 
-                primoLog = false;
-
-            }
-        }
 
     }
 
@@ -109,8 +115,37 @@ public class MainActivity extends AppCompatActivity {
         textView.setTypeface(null, Typeface.BOLD);
         textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(getResources().getColor(R.color.yellow1));
+        textView.setTextColor(getResources().getColor(R.color.colorSecondary));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(textView);
     }
+
+    public void checkLogin() throws ExecutionException, InterruptedException {
+        pref = getApplicationContext().getSharedPreferences("LoginPref", 0);
+        editor = pref.edit();
+        userPref =pref.getString("user", null); // getting String
+        pwdPref=pref.getString("pwd", null); // getting String
+        if (userPref != null && pwdPref != null && userPref != "" && pwdPref != ""&&logged==null) {
+            JLogin = new JSonLogin();
+            String[] login = JLogin.doit(userPref,pwdPref);
+            logged=login[0];
+            primoLog = false;
+
+        }
+        if(logged==null)
+        {
+            bNV.getMenu().findItem(R.id.account).setVisible(false);
+            bNV.getMenu().findItem(R.id.prenotazioni).setVisible(false);
+            bNV.getMenu().findItem(R.id.nuovaPrenotazione).setVisible(false);
+        }
+        else{
+            bNV.getMenu().findItem(R.id.account).setVisible(true);
+            bNV.getMenu().findItem(R.id.prenotazioni).setVisible(true);
+            bNV.getMenu().findItem(R.id.nuovaPrenotazione).setVisible(true);
+            bNV.getMenu().findItem(R.id.login).setVisible(false);
+            //se non si è loggati ma ci sono user e pwd salvati sul dispositivo, avvia il login automaticamente
+
+        }
+    }
+
 }

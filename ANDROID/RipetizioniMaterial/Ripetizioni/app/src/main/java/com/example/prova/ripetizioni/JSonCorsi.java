@@ -58,7 +58,7 @@ public class JSonCorsi {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://192.168.1.37:8080/Ripetizioni/Controller?toDo=elencoCorsi&mobile=y";
+                        "http://192.168.1.39:8080/Ripetizioni/Controller?toDo=elencoCorsi&mobile=y";
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
                 URL url = new URL(builtUri.toString());
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());

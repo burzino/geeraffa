@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
     tools:context=".LoginFragment">
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/field_user_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="56dp"
+        android:layout_marginTop="100dp"
+        android:hint="@string/hint_username"
+        android:theme="@style/AppTheme1">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profile_field_user"
+            style="@style/AppTheme1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginRight="50dp"
-            android:hint="@string/hint_username"
-            android:inputType="text" />
+
+            android:backgroundTint="@color/colorSecondary"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:inputType="text"
+
+            app:hintEnabled="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/field_pwd_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="56dp"
+        android:hint="@string/hint_password"
+        android:theme="@style/AppTheme1">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profile_field_password"
+            style="@style/AppTheme1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="50dp"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword" />
+
+
+            android:backgroundTint="@color/colorSecondary"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:inputType="textPassword"
+            app:hintEnabled="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,11 +65,20 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="50dp"
         android:clickable="true"
-        android:paddingLeft="75dp"
+        android:elevation="12dp"
+        android:focusable="true"
+        android:paddingStart="25dp"
         android:paddingTop="5dp"
-        android:paddingRight="75dp"
+        android:paddingEnd="25dp"
         android:paddingBottom="5dp"
-        android:text="@string/button_login_enabled" />
+        android:text="@string/button_login_enabled"
+        android:textColor="@color/colorSecondary"
+        android:textColorLink="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/colorPrimary"
+        app:icon="@drawable/ic_login"
+        app:iconTint="@color/colorSecondary" />
 
 
 </LinearLayout>
