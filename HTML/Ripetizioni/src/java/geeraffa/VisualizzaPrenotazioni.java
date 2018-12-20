@@ -47,11 +47,11 @@ public class VisualizzaPrenotazioni extends HttpServlet {
         HttpSession ses = request.getSession();
         String email = request.getParameter("email");
         String sql = "Select Prenotazione.Corso,Docente.Nome,Docente.Cognome,Prenotazione.DTInizio,Prenotazione.DTFine"
-                + " From Prenotazione,Docente,Utente"
-                + "Where Utente.ID_Utente=Prenotazione.Studente and"
-                + "Docente.ID_Docente=Prenotazione.Docente and"
-                + "Utente.Email='"+email+"' and"
-                + "Prenotazione.DTFine>NOW()";
+                + " From Prenotazione,Docente,Utente "
+                + "Where Utente.ID_Utente=Prenotazione.Studente and "
+                + "Docente.ID_Docente=Prenotazione.Docente and "
+                + "Utente.Email='"+email+"' and "
+                + "Prenotazione.DTFine>NOW();";
         ResultSet rs=Model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
