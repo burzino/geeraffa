@@ -27,8 +27,8 @@ import org.json.JSONObject;
  *
  * @author masiu
  */
-@WebServlet(name = "VisualizzaPrenotazioni", urlPatterns = {"/VisualizzaPrenotazioni"})
-public class VisualizzaPrenotazioni extends HttpServlet {
+@WebServlet(name = "VisualizzaStorico", urlPatterns = {"/VisualizzaStorico"})
+public class VisualizzaStorico extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,6 @@ public class VisualizzaPrenotazioni extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, JSONException {
         response.setContentType("text/html;charset=UTF-8");
-        
         ServletContext ctx = getServletContext();
         HttpSession ses = request.getSession();
         String id = request.getParameter("userId");
@@ -51,8 +50,7 @@ public class VisualizzaPrenotazioni extends HttpServlet {
                 + "Where Utente.ID_Utente=Prenotazione.Studente and "
                 + "Docente.ID_Docente=Prenotazione.Docente and "
                 + "Prenotazione.Studente='"+id+"' and "
-                + "Prenotazione.DTFine>NOW() and "
-                + "Disdetta=0;";
+                + "Prenotazione.DTFine<NOW()";
         ResultSet rs=Model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
@@ -94,9 +92,9 @@ public class VisualizzaPrenotazioni extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaStorico.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
-            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaStorico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,9 +112,9 @@ public class VisualizzaPrenotazioni extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaStorico.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
-            Logger.getLogger(VisualizzaPrenotazioni.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizzaStorico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
