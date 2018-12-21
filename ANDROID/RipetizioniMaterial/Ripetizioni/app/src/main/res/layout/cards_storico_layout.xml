@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvStorico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txtCorso3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:text="@string/corso"
+                android:textSize="25sp" />
+
+
+
+            <TextView
+                android:id="@+id/lblDocente"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/txtCorso3"
+                android:text="Docente:"
+                />
+            <TextView
+                android:id="@+id/txtDocente"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/lblDocente"
+                android:text="Docente:"
+                />
+            <TextView
+                android:id="@+id/txtData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCorso3"
+                android:layout_toRightOf="@+id/lblDocente"
+
+                android:text="Data:" />
+
+            <TextView
+                android:id="@+id/txtOra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtData"
+                android:layout_toRightOf="@+id/lblDocente"
+                android:text="Ora:"
+                />
+
+
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

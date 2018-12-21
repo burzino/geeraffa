@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Base.Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:actionBarStyle">@color/colorPrimary</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorButtonNormal">@color/colorSecondary</item>
+        <item name="android:colorAccent">@color/colorPrimaryDark</item>
+
+
+    </style>
+    <!-- Obbligato ad usarlo per i bottoni, per ora-->
+    <style name="AppTheme1" parent="@style/Base.Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:actionBarStyle">@color/colorPrimary</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorButtonNormal">@color/colorSecondary</item>
+
+
+    </style>
+
+
+</resources>
