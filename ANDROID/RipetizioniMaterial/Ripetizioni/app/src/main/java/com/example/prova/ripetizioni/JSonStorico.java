@@ -20,12 +20,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-public class JSonPrenotazioni {
+public class JSonStorico {
+    private final String LOG_TAG = JSonStorico.class.getSimpleName();
+    private class StoricoTask extends AsyncTask<String, Void, String[]> {
 
-    private final String LOG_TAG = JSonPrenotazioni.class.getSimpleName();
-    private class PrenotazioniTask extends AsyncTask<String, Void, String[]> {
-
-        private String[] getPrenotazioniDataFromJson(String forecastJsonStr)
+        private String[] getStoricoDataFromJson(String forecastJsonStr)
                 throws JSONException, ParseException {
 
             // These is a name of the JSON objects that need to be extracted.
@@ -85,7 +84,7 @@ public class JSonPrenotazioni {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://192.168.1.39:8080/Ripetizioni/Controller?toDo=elencoPrenotazioni&mobile=y";
+                        "http://192.168.1.39:8080/Ripetizioni/Controller?toDo=elencoStorico&mobile=y";
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter("userId", params[0])
                         .build();
@@ -142,7 +141,7 @@ public class JSonPrenotazioni {
 
             try {
 
-                return getPrenotazioniDataFromJson(forecastJsonStr);
+                return getStoricoDataFromJson(forecastJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
@@ -154,9 +153,9 @@ public class JSonPrenotazioni {
             return null;
         }
     }
-    public String[] doit(String email) throws ExecutionException, InterruptedException {
-        JSonPrenotazioni.PrenotazioniTask prenotazioniTask = new JSonPrenotazioni.PrenotazioniTask();
-        String[] prenotazioni = prenotazioniTask.execute(email).get();
+    public String[] doit(String id) throws ExecutionException, InterruptedException {
+        JSonStorico.StoricoTask prenotazioniTask = new JSonStorico.StoricoTask();
+        String[] prenotazioni = prenotazioniTask.execute(id).get();
         return prenotazioni;
 
     }

@@ -26,13 +26,14 @@ public class JSonLogin {
 
             // These is a name of the JSON objects that need to be extracted.
             final String OWM_LOGGED = "logged";
+            final String OWM_ID= "id";
             final String OWM_NOME = "nome";
             final String OWM_COGNOME = "cognome";
             final String OWM_EMAIL = "email";
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
 
-            return forecastJson.getString(OWM_LOGGED)+ "-" +forecastJson.getString(OWM_NOME)+ "-"+forecastJson.getString(OWM_COGNOME)+ "-"+forecastJson.getString(OWM_EMAIL);
+            return forecastJson.getString(OWM_LOGGED)+ "-" +forecastJson.getString(OWM_NOME)+ "-"+forecastJson.getString(OWM_COGNOME)+ "-"+forecastJson.getString(OWM_EMAIL)+ "-"+forecastJson.getString(OWM_ID);
 
 
         }

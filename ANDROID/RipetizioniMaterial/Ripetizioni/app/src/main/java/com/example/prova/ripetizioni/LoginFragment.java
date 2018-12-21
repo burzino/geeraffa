@@ -81,7 +81,8 @@ public class LoginFragment extends Fragment  implements View.OnClickListener {
                         editor.putString("pwd", pwd);
                         editor.putString("nome", logged[1]);
                         editor.putString("cognome", logged[2]);
-                        editor.putString("email", logged[3]); // Storing string
+                        editor.putString("email", logged[3]);
+                        editor.putString("userId", logged[4]);// Storing string
                         editor.commit();
                         ((MainActivity)getActivity()).checkLogin();
 

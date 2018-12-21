@@ -62,6 +62,15 @@
                 android:layout_toRightOf="@+id/txtDocente"
                 android:paddingStart="20dp"
                 android:text="Ora:" />
+            <TextView
+                android:id="@+id/txtCodice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtData"
+                android:layout_toRightOf="@+id/txtDocente"
+                android:paddingStart="20dp"
+                android:text="Ora:"
+                android:visibility="invisible"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDisdici"

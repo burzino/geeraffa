@@ -28,7 +28,7 @@
 
 
             <TextView
-                android:id="@+id/lblDocente"
+                android:id="@+id/lblDocente2"
                 android:layout_width="71dp"
                 android:layout_height="wrap_content"
 
@@ -36,30 +36,40 @@
                 android:text="Docente:"
                 />
             <TextView
-                android:id="@+id/txtDocente"
+                android:id="@+id/txtDocente2"
                 android:layout_width="71dp"
                 android:layout_height="wrap_content"
 
-                android:layout_below="@+id/lblDocente"
+                android:layout_below="@+id/lblDocente2"
                 android:text="Docente:"
                 />
             <TextView
-                android:id="@+id/txtData"
+                android:id="@+id/txtData2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtCorso3"
-                android:layout_toRightOf="@+id/lblDocente"
+                android:layout_toRightOf="@+id/lblDocente2"
 
                 android:text="Data:" />
 
             <TextView
-                android:id="@+id/txtOra"
+                android:id="@+id/txtOra2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtData"
-                android:layout_toRightOf="@+id/lblDocente"
-                android:text="Ora:"
+                android:layout_below="@+id/txtData2"
+                android:layout_toRightOf="@+id/lblDocente2"
+
                 />
+
+            <TextView
+                android:id="@+id/txtDisdetta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtOra2"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:text="Disdetta:" />
 
 
 

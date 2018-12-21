@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             bNV.getMenu().findItem(R.id.prenotazioni).setVisible(true);
             bNV.getMenu().findItem(R.id.nuovaPrenotazione).setVisible(true);
             bNV.getMenu().findItem(R.id.login).setVisible(false);
+            bNV.setSelectedItemId(R.id.corsi);
             //se non si è loggati ma ci sono user e pwd salvati sul dispositivo, avvia il login automaticamente
 
         }

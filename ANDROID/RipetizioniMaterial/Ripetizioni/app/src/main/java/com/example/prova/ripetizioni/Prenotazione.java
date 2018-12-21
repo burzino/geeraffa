@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutionException;
 public class Prenotazione {
     String docente, titCorso,dataCorso,oraIni,oraFin,id, disdetta;
     private List<Prenotazione> prenotazioni;
-    String email;
+    String userId;
 
     public Prenotazione(String id,String titCorso,String docente,  String dataCorso, String oraIni, String oraFin,String disdetta) {
         this.docente = docente;
@@ -18,9 +18,13 @@ public class Prenotazione {
         this.id=id;
         this.disdetta=disdetta;
     }
-    public Prenotazione(String email){
-        this.email=email;
-        initializeData();
+    public Prenotazione(String userId,String operazione){
+        this.userId=userId;
+        if (operazione=="prenotazioni")
+            initializeData();
+        else if (operazione=="storico")
+            storico();
+
     }
 
     public List<Prenotazione> getPrenotazioni() {
@@ -71,7 +75,27 @@ public class Prenotazione {
         prenotazioni=new ArrayList<Prenotazione>();
         JSonPrenotazioni JPrenotazioni=new JSonPrenotazioni();
         try {
-            String[] corsiJson = JPrenotazioni.doit(email);
+            String[] corsiJson = JPrenotazioni.doit(userId);
+            if (corsiJson!=null) {
+                for (int i = 0; i < corsiJson.length; i++) {
+                    String[] splitPrenotazione = corsiJson[i].split("-");
+                    prenotazioni.add(new Prenotazione(splitPrenotazione[0], splitPrenotazione[1], splitPrenotazione[2], splitPrenotazione[3], splitPrenotazione[4], splitPrenotazione[5], splitPrenotazione[6]));
+                }
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void storico()
+    {
+        prenotazioni=new ArrayList<Prenotazione>();
+        JSonStorico JStorico=new JSonStorico();
+        try {
+            String[] corsiJson = JStorico.doit(userId);
             if (corsiJson!=null) {
                 for (int i = 0; i < corsiJson.length; i++) {
                     String[] splitPrenotazione = corsiJson[i].split("-");

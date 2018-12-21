@@ -19,7 +19,7 @@ public class PrenotazioniFragment extends Fragment {
     View rootView;
 
 
-    String  email;
+    String  id;
 
     public static PrenotazioniFragment newInstance() {
         PrenotazioniFragment fragment = new PrenotazioniFragment();
@@ -37,8 +37,8 @@ public class PrenotazioniFragment extends Fragment {
         rootView=inflater.inflate(R.layout.fragment_visualizza_prenotazioni,container,false);
         SharedPreferences pref =getActivity().getSharedPreferences("LoginPref", 0);
         SharedPreferences.Editor editor = pref.edit();
-        email =pref.getString("email", null); // getting String
-        Prenotazione prenotazione=new Prenotazione(email);
+        id =pref.getString("userId", null); // getting String
+        Prenotazione prenotazione=new Prenotazione(id,"prenotazioni");
         List<Prenotazione>prenotazioni=new ArrayList<Prenotazione>();
         prenotazioni=prenotazione.getPrenotazioni();
         RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.rvPrenotazioni);
