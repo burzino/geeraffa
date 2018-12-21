@@ -46,12 +46,13 @@ public class VisualizzaPrenotazioni extends HttpServlet {
         ServletContext ctx = getServletContext();
         HttpSession ses = request.getSession();
         String email = request.getParameter("email");
-        String sql = "Select Prenotazione.Corso,Docente.Nome,Docente.Cognome,Prenotazione.DTInizio,Prenotazione.DTFine"
+        String sql = "Select Prenotazione.ID_Prenotazione,Prenotazione.Corso,Docente.Nome,Docente.Cognome,Prenotazione.DTInizio,Prenotazione.DTFine,Prenotazione.Disdetta"
                 + " From Prenotazione,Docente,Utente "
                 + "Where Utente.ID_Utente=Prenotazione.Studente and "
                 + "Docente.ID_Docente=Prenotazione.Docente and "
                 + "Utente.Email='"+email+"' and "
-                + "Prenotazione.DTFine>NOW();";
+                + "Prenotazione.DTFine>NOW() and "
+                + "Disdetta=0;";
         ResultSet rs=Model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
@@ -60,11 +61,15 @@ public class VisualizzaPrenotazioni extends HttpServlet {
             String docente=rs.getString("Cognome")+" "+rs.getString("Nome");
             String dataIni=rs.getString("DTInizio");
             String dataFin=rs.getString("DTFine");
+            String id=rs.getString("ID_Prenotazione");
+            String disdetta=rs.getString("Disdetta");
             JSONObject jsonObject= new JSONObject();
             jsonObject.put("corso", corso);
             jsonObject.put("docente", docente);
             jsonObject.put("dataIni", dataIni);
             jsonObject.put("dataFin", dataFin);
+            jsonObject.put("id", id);
+            jsonObject.put("disdetta", disdetta);
             jsonArray.put(jsonObject);
         }
         JSONObject mainJsonObject=new JSONObject();
