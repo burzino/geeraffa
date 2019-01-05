@@ -82,8 +82,11 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/VisualizzaCorsi");
                 break;
             case "elencoPrenotazioni":
-            rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
-            break;
+                 rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
+                 break;
+            case "elencoDocenti":
+                 rd = ctx.getRequestDispatcher("/VisualizzaDocenti");
+                 break;
             case "elencoStorico":
             rd = ctx.getRequestDispatcher("/VisualizzaStorico");
             break;
