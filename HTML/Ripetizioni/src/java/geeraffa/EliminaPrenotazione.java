@@ -41,8 +41,8 @@ public class EliminaPrenotazione extends HttpServlet {
         HttpSession ses = request.getSession();
         String codice = request.getParameter("codPren");
         String sql = "UPDATE Prenotazione"
-                   + "SET Disdetta = 1"
-                   + "WHERE ID_Prenotazione = '"+codice+"';";
+                   + " SET Disdetta = 1"
+                   + " WHERE ID_Prenotazione = "+codice+";";
         System.out.println("DISDETTA DELLA PRENOTAZIONE "+codice);
         Model.eseguiNonQuery(sql);
         System.out.println("PRENOTAZIONE DISDETTA CORRETTAMENTE");
