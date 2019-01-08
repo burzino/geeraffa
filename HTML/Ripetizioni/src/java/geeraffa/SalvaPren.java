@@ -60,6 +60,7 @@ public class SalvaPren extends HttpServlet {
         /*String oraInizio = request.getParameter("oraInizio");
         String oraFine = request.getParameter("oraFine");*/
         
+        
         //Registrazione da pagina web
         if(mobile == null)
         {
@@ -161,7 +162,17 @@ public class SalvaPren extends HttpServlet {
         //Registrazione da APP
         else
         {
-            
+            String studente = request.getParameter("studente");
+            String dataI=request.getParameter("inizio");
+            String dataF=request.getParameter("fine");
+            String sql =      "INSERT INTO Prenotazione "
+                                + "(Studente, Docente, Corso, DTInizio, DTFine) "
+                                + "VALUES("
+                                + studente+ ", " + docente + ", "
+                                + "'" + corso + "', '" + dataI + "' ,"
+                                + "'" + dataF + "')";                    
+                Model.eseguiNonQuery(sql);
+                System.out.println("Prenotazione SALVATA!"); 
         }
     }
 
