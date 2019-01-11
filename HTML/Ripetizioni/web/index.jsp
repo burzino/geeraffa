@@ -73,7 +73,7 @@
                   <!--<li class=""><a href="#testimonial">Testimonial</a></li>-->
                   <li class=""><a href="#contact">Contact Us</a></li>
                   <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
-                  <li class=""><a href="<%= request.getContextPath()%>/admin.jsp">
+                  <li class=""><a href="<%= request.getContextPath()%>/tab_docenti.jsp">
                           GESTISCI</a></li>
                   <% } %>
                   
