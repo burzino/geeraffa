@@ -41,7 +41,7 @@
                     <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller" class="signup-form">
                         <input type="hidden" name="toDo" value="registration"/>
                         <h2 class="form-title">Crea il tuo account</h2>
-                        <div class="form-group">
+                        <div class="form-group">mi  
                             <input type="text" class="form-input form-control" name="nome" id="nome" placeholder="Nome"/>
                         </div>
                         <div class="form-group">

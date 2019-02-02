@@ -101,9 +101,14 @@
           <div class="container">
             <div class="row" >
               <div class="banner-info text-center wow fadeIn delay-05s">
-                  <h1 class="bnr-title">Semplifica la gestione delle tue prenotazioni con <span class="logo-dec">GE</span>E<span class="logo-dec">RA</span>F<span class="logo-dec">FA</span></h1>
+                  <h1 class="bnr-title">Semplifica la gestione delle tue prenotazioni con 
+                      <span class="logo-dec">GE</span>E
+                      <span class="logo-dec">RA</span>F
+                      <span class="logo-dec">FA</span>
+                      Prenota ripetizioni dei corsi disponibili, tutto in pochi click!
+                  </h1>
                 <h2 class="bnr-sub-title"></h2>
-                <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>se sei già registrato effettua il login    </p>
+                <p class="bnr-para">Effettua la registrazione facile e veloce per poter subito usufruire del nostro servizio.<br>Se sei già registrato effettua il login    </p>
                 <div class="brn-btn">
                   <a href="<%= request.getContextPath()%>/login.jsp" class="btn btn-download">LOG IN!</a>
                   <a href="<%= request.getContextPath()%>/registration.jsp" class="btn btn-more">Registrati</a>
