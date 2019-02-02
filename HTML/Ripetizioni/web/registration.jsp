@@ -42,23 +42,23 @@
                         <input type="hidden" name="toDo" value="registration"/>
                         <h2 class="form-title">Crea il tuo account</h2>
                         <div class="form-group">
-                            <input required type="text" class="form-input form-control" name="nome" id="nome" placeholder="Nome"/>
+                            <input type="text" class="form-input form-control" name="nome" id="nome" placeholder="Nome"/>
                         </div>
                         <div class="form-group">
-                            <input required type="text" class="form-input form-control" name="cognome" id="cognome" placeholder="Cognome"/>
+                            <input type="text" class="form-input form-control" name="cognome" id="cognome" placeholder="Cognome"/>
                         </div>
                         <div class="form-group">
-                            <input required type="email" class="form-input  form-control" name="email" id="email" placeholder="Email"/>
+                            <input type="email" class="form-input  form-control" name="email" id="email" placeholder="Email"/>
                         </div>
                         <!--<div class="form-group">
                             <input required type="text" class="form-input" name="password" id="password" placeholder="Password"/>
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>-->
                         <div class="form-group">
-                            <input required type="text" class="form-input form-control" name="username" id="username" placeholder="Username"/>
+                            <input type="text" class="form-input form-control" name="username" id="username" placeholder="Username"/>
                         </div>
                         <div class="form-group">
-                            <input required type="password" class="form-input form-control" name="password" id="password" placeholder="Password"/>
+                            <input type="password" class="form-input form-control" name="password" id="password" placeholder="Password"/>
                         </div>
                        <!-- <div class="form-group">
                             <input type="checkbox" name="agree" id="agree" class="agree" />
