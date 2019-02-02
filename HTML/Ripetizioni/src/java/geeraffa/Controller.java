@@ -51,6 +51,8 @@ public class Controller extends HttpServlet {
         
         HttpSession ses = request.getSession();
         
+        Model model = new Model();
+        
         switch(action){
             case "login":
                 rd = ctx.getRequestDispatcher("/Login");
@@ -75,23 +77,14 @@ public class Controller extends HttpServlet {
                 break;
             case "disdici":
                 String sql = "UPDATE Prenotazione set Disdetta=1 where ID_Prenotazione="+request.getParameter("id");
-                Model.eseguiNonQuery(sql);
+                model.eseguiNonQuery(sql);
                 rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni");
                 break;
             case "elencoCorsi":
                 rd = ctx.getRequestDispatcher("/VisualizzaCorsi");
                 break;
             case "elencoPrenotazioni":
-                 rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
-                 break;
-            case "elencoDocenti":
-                 rd = ctx.getRequestDispatcher("/VisualizzaDocenti");
-                 break;
-            case "elencoOreDocente":
-                    rd = ctx.getRequestDispatcher("/ElencoOreDocenti");
-                 break;
-            case "elencoStorico":
-            rd = ctx.getRequestDispatcher("/VisualizzaStorico");
+            rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
             break;
             case "registration":
                 rd = ctx.getRequestDispatcher("/Registration");
@@ -103,9 +96,6 @@ public class Controller extends HttpServlet {
             case "tab_corsi":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
                 rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
-                break;
-            case "disdiciPrenotazione":
-                rd =ctx.getRequestDispatcher("/EliminaPrenotazione");
                 break;
             case "tab_prenotazioni":
                 System.out.println("ARRIVO DALL'ADMIN!!!");

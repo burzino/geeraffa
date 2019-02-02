@@ -54,7 +54,8 @@ public class VisualizzaDocenti extends HttpServlet {
                 + " CorsoDocente.Corso='"+corso+"' and "
                 + " Docente.Attivo = 1 and"
                 + " CorsoDocente.Attivo = 1 ";
-        ResultSet rs=Model.eseguiQuery(sql);
+        Model model = new Model();
+        ResultSet rs=model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
         while (rs.next()) {     

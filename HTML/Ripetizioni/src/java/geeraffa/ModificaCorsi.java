@@ -53,7 +53,7 @@ public class ModificaCorsi extends HttpServlet {
         String aggiungi = request.getParameter("aggiungi");
         String path = request.getParameter("txtPath");
         
-        Model.registerDriver();
+        Model model = new Model();
         
         System.out.println("Funziona:" + titolo +" - " + descrizione);
         String sql;
@@ -61,9 +61,9 @@ public class ModificaCorsi extends HttpServlet {
         if (elimina != null) {
             System.out.println("STO ELIMINANDO IL CORSO");
             sql = "UPDATE corsodocente SET Attivo = 0 WHERE Corso = '" + titolo + "'";
-            Model.eseguiNonQuery(sql);
+            model.eseguiNonQuery(sql);
             sql = "UPDATE Corso SET Attivo = 0 WHERE Titolo = '" + titolo + "'";
-            Model.eseguiNonQuery(sql);
+            model.eseguiNonQuery(sql);
             System.out.println("CORSO ELIMINATO CORRETTAMENTE");
         }
         else if(salva != null){ 
@@ -72,25 +72,25 @@ public class ModificaCorsi extends HttpServlet {
                     + " Descrizione = '" + descrizione + "',"
                     + " Path = 'img/corsi/" + path +"'"
                     + " WHERE Titolo = '" + titolo + "'";
-            Model.eseguiNonQuery(sql);
+            model.eseguiNonQuery(sql);
             System.out.println("CORSO MODIFICATO CORRETTAMENTE");
         }
         else if(aggiungi != null){
             System.out.println("STO AGGIUNGENDO UN NUOVO CORSO");
             
             sql = "SELECT * FROM Corso WHERE Titolo ='" + titolo + "'";
-            rs = Model.eseguiQuery(sql);
+            rs = model.eseguiQuery(sql);
             if (rs.next()) {
                 sql = "UPDATE Corso SET "
                         + "Attivo = 1, "
                         + "Descrizione = '" + descrizione + "' "
                         + "Path = 'img/corsi/" + path +"'"
                         + "WHERE titolo = '" + titolo + "'";
-                Model.eseguiNonQuery(sql);
+                model.eseguiNonQuery(sql);
             }
             else{
                 sql = "INSERT INTO Corso(titolo, descrizione, path) VALUES(" + "'" + titolo + "', '" + descrizione + "', 'img/corsi/" + path + "')";
-                Model.eseguiNonQuery(sql);
+                model.eseguiNonQuery(sql);
             }
             System.out.println("CORSO INSERITO CORRETTAMENTE");
         }

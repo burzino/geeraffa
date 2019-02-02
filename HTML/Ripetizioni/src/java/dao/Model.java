@@ -19,14 +19,18 @@ import dao.*;
  * @author GEERAFFA
  */
 public class Model {
-    private static final String URL = "jdbc:mysql://localhost:3308/ripetizione"; // url del DB
-    private static final String USER = "root"; // login utente da usare per connettersi
-    private static final String PWD = ""; // password utente
+    private  final String URL = "jdbc:mysql://localhost:3308/ripetizione"; // url del DB
+    private  final String USER = "root"; // login utente da usare per connettersi
+    private  final String PWD = ""; // password utente
 
+    public Model()
+    {
+        //registerDriver();
+    }
 
     // metodo per registrare il Driver JDBC da usare durante le operazioni
     // di interazione con il DB.
-    public static void registerDriver() {
+    public  void registerDriver() {
         try { 
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             System.out.println("Driver registrato correttamente");
@@ -36,27 +40,32 @@ public class Model {
         }
     }
     
-    public static ResultSet eseguiQuery(String sql){
+    public ResultSet eseguiQuery(String sql) throws SQLException{
         ResultSet rs = null;
+        Statement st = null;
+        Connection conn = null;
         try {
-            registerDriver();
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
+            ////registerDriver();
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
             System.out.println(sql);
             st.executeQuery(sql);
             rs = st.getResultSet();
         }
         catch (SQLException e) {
             System.err.println("ESEGUIQUERY ERROR: " + e.getMessage());
-        };
+        }
+        
         return rs;
     }
     
-    public static void eseguiNonQuery(String sql){
+    public  void eseguiNonQuery(String sql) throws SQLException{
+        Statement st = null;
+        Connection conn = null;
         try {
-            registerDriver();
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
+            //registerDriver();
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
@@ -65,17 +74,24 @@ public class Model {
         catch (Exception e) {
             System.out.println("ESEGUINONQUERYERROR: " + e.getMessage());
         }
+        finally { 
+            st.close();
+            conn.close();
+        }
     }
     
     //Select QUERY
-    public static List<Studente> getUtenti()
+    public  List<Studente> getUtenti() throws SQLException
     {
         List<Studente> lst = new ArrayList<Studente>();
         
         ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
             st.executeQuery("SELECT * FROM Utente");
             rs = st.getResultSet();
             
@@ -89,26 +105,34 @@ public class Model {
         }
         catch (SQLException e) {
             System.err.println("Login ERROR: " + e.getMessage());
-        };
+        }
+        finally { 
+            rs.close();
+            st.close();
+            conn.close();
+        }
         
         return lst;
     }
     
-    public static List<Prenotazione> listPrenotazioni(String corso, int ID_Studente)
+    public  List<Prenotazione> listPrenotazioni(String corso, int ID_Studente) throws SQLException
     {
         List<Prenotazione> lst = new ArrayList<Prenotazione>();
         
         ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
             if(corso.equals("tutti") || corso.equals("TUTTI"))
                 st.executeQuery("SELECT * FROM Prenotazione where Studente=" 
-                        + ID_Studente + " ORDER BY DTInizio");
+                        + ID_Studente + " ORDER BY DTInizio DESC");
             else
                 st.executeQuery("SELECT * FROM Prenotazione where Corso='" + corso 
                         + "' and Studente=" + ID_Studente
-                        + " ORDER BY DTInizio");
+                        + " ORDER BY DTInizio DESC");
             rs = st.getResultSet();
             
             while(rs.next())
@@ -121,43 +145,60 @@ public class Model {
         }
         catch (SQLException e) {
             System.err.println("listPrenotazioni ERROR: " + e.getMessage());
-        };
+        }
+        finally { 
+            rs.close();
+            st.close();
+            conn.close();
+        }
         
         return lst;
     }
     
-    public static List<Corso> listCorsi()
+    public List<Corso> listCorsi() throws SQLException
     {
         List<Corso> lst = new ArrayList<Corso>();
         
         ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
             st.executeQuery("SELECT * FROM Corso where Attivo=1");
             
             rs = st.getResultSet();
             while(rs.next())
             {
-                Corso corso = new Corso(rs.getString("Titolo"), rs.getString("Descrizione"));
+                Corso corso = new Corso(rs.getString("Titolo"), 
+                        rs.getString("Descrizione"), rs.getString("path"));
                 lst.add(corso);
             }
         }
         catch (SQLException e) {
             System.err.println("listCorsi ERROR: " + e.getMessage());
-        };
+        }
+        finally { 
+            rs.close();
+            st.close();
+            conn.close();
+        }
         
         return lst;
     }
     
-    public static List<Docente> listDocenti()
+    public  List<Docente> listDocenti() throws SQLException
     {
         List<Docente> lst = new ArrayList<Docente>();
         
         ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PWD);
-            Statement st = conn.createStatement();
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
             st.executeQuery("SELECT * FROM Docente where Attivo=1");
             
             rs = st.getResultSet();
@@ -171,12 +212,17 @@ public class Model {
         }
         catch (SQLException e) {
             System.err.println("listDocenti ERROR: " + e.getMessage());
-        };
+        }
+        finally { 
+            rs.close();
+            st.close();
+            conn.close();
+        }
         
         return lst;
     }
  /*   
-    public static ResultSet login(String user, String pwd)
+    public  ResultSet login(String user, String pwd)
     {
         ResultSet rs = null;
         try {
@@ -194,7 +240,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getCorsi()
+    public  ResultSet getCorsi()
     {
         ResultSet rs = null;
         try {
@@ -211,7 +257,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getRuoli_NoAdmin()
+    public  ResultSet getRuoli_NoAdmin()
     {
         ResultSet rs = null;
         try {
@@ -228,7 +274,7 @@ public class Model {
         return rs;
     }
     
-    public static int getLastID_Utente()
+    public  int getLastID_Utente()
     {
         int id = 0;
         try {
@@ -247,7 +293,7 @@ public class Model {
         };
         return id;
     }
-    public static int getLastID_Docente()
+    public  int getLastID_Docente()
     {
         int id = 0;
         try {
@@ -267,7 +313,7 @@ public class Model {
         return id;
     }
     
-    public static ResultSet getDocenti()
+    public  ResultSet getDocenti()
     {
         ResultSet rs = null;
         try {
@@ -283,7 +329,7 @@ public class Model {
         
         return rs;
     }
-    public static ResultSet getIDDocenti(String email)
+    public  ResultSet getIDDocenti(String email)
     {
         ResultSet rs = null;
         try {
@@ -300,7 +346,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getCorsoDocente(String corso)
+    public  ResultSet getCorsoDocente(String corso)
     {
         ResultSet rs = null;
         try {
@@ -317,7 +363,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getPrenotazioniPersonali(int ID_Utente)
+    public  ResultSet getPrenotazioniPersonali(int ID_Utente)
     {
         ResultSet rs = null;
         try {
@@ -334,7 +380,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getPrenotazioniCorso(String corso, int ID_Utente)
+    public  ResultSet getPrenotazioniCorso(String corso, int ID_Utente)
     {
         ResultSet rs = null;
         try {
@@ -351,7 +397,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getPrenotazioniCorsoDocente(String corso, int ID_Docente, int ID_Utente)
+    public  ResultSet getPrenotazioniCorsoDocente(String corso, int ID_Docente, int ID_Utente)
     {
         ResultSet rs = null;
         try {
@@ -369,7 +415,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getDocentiPrenotazione(int ID_Docente)
+    public  ResultSet getDocentiPrenotazione(int ID_Docente)
     {
         ResultSet rs = null;
         try {
@@ -386,7 +432,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getCorsoPrenotazione(String titolo)
+    public  ResultSet getCorsoPrenotazione(String titolo)
     {
         ResultSet rs = null;
         try {
@@ -403,7 +449,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getDocentiCorso(String corso)
+    public  ResultSet getDocentiCorso(String corso)
     {
         ResultSet rs = null;
         try {
@@ -420,7 +466,7 @@ public class Model {
         return rs;
     }
     
-    public static ResultSet getDocentiCorsoTabDocenti(int docente)
+    public  ResultSet getDocentiCorsoTabDocenti(int docente)
     {
         ResultSet rs = null;
         try {
@@ -436,7 +482,7 @@ public class Model {
         
         return rs;
     }
-    public static ResultSet getCorsiDocente(int idDocente)
+    public  ResultSet getCorsiDocente(int idDocente)
     {
         ResultSet rs = null;
         try {
@@ -455,7 +501,7 @@ public class Model {
     
     
     
-    public static ResultSet getNomeDocente(int idDocente)
+    public  ResultSet getNomeDocente(int idDocente)
     {
         ResultSet rs = null;
         try {
@@ -474,7 +520,7 @@ public class Model {
 */
 /*
     //Update QUERY
-    public static void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
+    public  void insUtente(String username, String pwd, String nome, String cognome, String email, String ruolo) {
         Studente stud = new Studente(getLastID_Utente(), username, pwd, nome, cognome, email, ruolo);
         String sql = "";
         try {
@@ -493,7 +539,7 @@ public class Model {
         }
         
     }
-    public static void updateCorso(String titolo, String descrizione) {
+    public  void updateCorso(String titolo, String descrizione) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -511,7 +557,7 @@ public class Model {
         
     }
     
-    public static void deleteCorso(String titolo) {
+    public  void deleteCorso(String titolo) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -527,7 +573,7 @@ public class Model {
         }
         
     }
-    public static void addCorso(String titolo, String descrizione) {
+    public  void addCorso(String titolo, String descrizione) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -545,7 +591,7 @@ public class Model {
         
     }
     
-    public static void insDocente(String nome, String cognome, String email, String[] corsi) {
+    public  void insDocente(String nome, String cognome, String email, String[] corsi) {
         String sql = "";
         ResultSet rs = null;
         int id_docente = 21;
@@ -580,7 +626,7 @@ public class Model {
         }
         
     }
-    public static void insDocenteCorso(String sql) {
+    public  void insDocenteCorso(String sql) {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
@@ -594,7 +640,7 @@ public class Model {
         }
         
     }
-    public static void disdiciPren(int ID_Pren) {
+    public  void disdiciPren(int ID_Pren) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -611,7 +657,7 @@ public class Model {
         
     }
     
-    public static void updateDocente(String id_docente, String nome, String cognome, String email, String[] corsi) {
+    public  void updateDocente(String id_docente, String nome, String cognome, String email, String[] corsi) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -635,7 +681,7 @@ public class Model {
         
     }
     
-    public static void deleteDocente(String id_docente) {
+    public  void deleteDocente(String id_docente) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -653,7 +699,7 @@ public class Model {
         
     }    
     
-    public static void deleteCorsoDocente(String id_docente) {
+    public  void deleteCorsoDocente(String id_docente) {
         String sql = "";
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PWD);

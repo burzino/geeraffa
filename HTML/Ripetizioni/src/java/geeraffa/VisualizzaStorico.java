@@ -51,7 +51,9 @@ public class VisualizzaStorico extends HttpServlet {
                 + "Docente.ID_Docente=Prenotazione.Docente and "
                 + "Prenotazione.Studente='"+id+"' and "
                 + "Prenotazione.DTFine<NOW()";
-        ResultSet rs=Model.eseguiQuery(sql);
+        
+        Model model = new Model();
+        ResultSet rs= model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
         while (rs.next()) {            

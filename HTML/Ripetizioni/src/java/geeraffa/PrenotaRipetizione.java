@@ -54,6 +54,8 @@ public class PrenotaRipetizione extends HttpServlet {
             RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
 
             HttpSession ses = request.getSession();
+            
+            Model model = new Model();                    
 
             String mobile = request.getParameter("mobile");
             String corso = request.getParameter("corso");
@@ -71,7 +73,7 @@ public class PrenotaRipetizione extends HttpServlet {
                     sql =     "SELECT * FROM Docente "
                             + "INNER JOIN CorsoDocente ON ID_Docente = Docente "
                             + "WHERE Corso='" + corso + "'";
-                    ResultSet rs = Model.eseguiQuery(sql);
+                    ResultSet rs = model.eseguiQuery(sql);
                     JSONArray arrDocenti = new JSONArray();
                     
                     //Ciclo sui risultati della query
@@ -119,7 +121,7 @@ public class PrenotaRipetizione extends HttpServlet {
                             + "and datediff(DTInizio, '" + dataOK + "') = 0 "
                             + "and Disdetta=0 "
                             + "and Docente=" + doc;
-                    ResultSet rs = Model.eseguiQuery(sql);
+                    ResultSet rs = model.eseguiQuery(sql);
                     
                     //Creo JSONArray da inviare come risposta
                     JSONArray arrPren = new JSONArray();

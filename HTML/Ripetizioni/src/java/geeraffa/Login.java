@@ -58,7 +58,10 @@ public class Login extends HttpServlet {
         
         String sql = "SELECT * FROM Utente where ((username='"
                     + username + "' or Email='" + username + "')  and Pwd='" + pwd + "')";
-        ResultSet rs = Model.eseguiQuery(sql);
+        
+        Model model = new Model();
+        
+        ResultSet rs = model.eseguiQuery(sql);
             
         //Login da pagina web
         if(mobile == null)
@@ -72,7 +75,7 @@ public class Login extends HttpServlet {
                 ses.setAttribute("ruolo", rs.getString("Ruolo"));
                 
                 if(rs.getString("Ruolo").equals("Admin"))
-                    rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
+                    rd = ctx.getRequestDispatcher("/admin.jsp");
                     
                 ses.setAttribute("logged", "Y");
             }

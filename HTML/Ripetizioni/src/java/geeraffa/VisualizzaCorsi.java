@@ -47,8 +47,10 @@ public class VisualizzaCorsi extends HttpServlet {
         ServletContext ctx = getServletContext();
         HttpSession ses = request.getSession();
         
+        Model model = new Model();
+        
         String sql = "Select * from Corso";
-        ResultSet rs=Model.eseguiQuery(sql);
+        ResultSet rs=model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
         while (rs.next()) {            

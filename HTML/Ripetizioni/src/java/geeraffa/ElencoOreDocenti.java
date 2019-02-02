@@ -53,7 +53,9 @@ public class ElencoOreDocenti extends HttpServlet {
                 + " Prenotazione.DTInizio>'"+giorno+" 00:00:00' and "
                 + " Prenotazione.Disdetta=0";
         
-        ResultSet rs=Model.eseguiQuery(sql);
+        Model model = new Model();
+        
+        ResultSet rs=model.eseguiQuery(sql);
         JSONArray jsonArray= new JSONArray();
         
         while (rs.next()) {            

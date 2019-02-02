@@ -12,10 +12,20 @@ package dao;
 public class Corso {
     public String Titolo;
     public String Descrizione;
+    public String path;
 
-    public Corso(String Titolo, String Descrizione) {
+    public Corso(String Titolo, String Descrizione, String path) {
         this.Titolo = Titolo;
         this.Descrizione = Descrizione;
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getTitolo() {

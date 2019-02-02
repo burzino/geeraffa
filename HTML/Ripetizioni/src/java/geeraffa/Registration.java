@@ -50,6 +50,8 @@ public class Registration extends HttpServlet {
         
         HttpSession ses = request.getSession();
         
+        Model model = new Model();
+        
         String mobile = request.getParameter("mobile");
         
         String username = request.getParameter("username");
@@ -66,13 +68,13 @@ public class Registration extends HttpServlet {
             String sql =    "INSERT INTO Utente(Username, Pwd ,Nome, Cognome, Email, Ruolo) VALUES("
                             + "'" + username + "', '" + pwd + "','" + nome 
                             + "', '" + cognome + "', '" + email + "','" + ruolo + "')";
-            Model.eseguiNonQuery(sql);
+            model.eseguiNonQuery(sql);
             System.out.println("Utente INSERITO!");
 
             ses.setAttribute("logged", "Y");
             ses.setAttribute("name", nome + " " + cognome);
             sql = "SELECT MAX(ID_Utente) as ID from Utente";
-            ResultSet rs = Model.eseguiQuery(sql);
+            ResultSet rs = model.eseguiQuery(sql);
             if(rs.next())
                 ses.setAttribute("id", rs.getInt("ID"));
             ses.setAttribute("ruolo", ruolo);

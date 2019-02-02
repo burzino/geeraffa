@@ -8,6 +8,9 @@ package geeraffa;
 import dao.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +36,7 @@ public class EliminaPrenotazione extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
        
          //Context
@@ -44,7 +47,8 @@ public class EliminaPrenotazione extends HttpServlet {
                    + " SET Disdetta = 1"
                    + " WHERE ID_Prenotazione = "+codice+";";
         System.out.println("DISDETTA DELLA PRENOTAZIONE "+codice);
-        Model.eseguiNonQuery(sql);
+        Model model = new Model();
+        model.eseguiNonQuery(sql);
         System.out.println("PRENOTAZIONE DISDETTA CORRETTAMENTE");
         
     }
@@ -61,7 +65,11 @@ public class EliminaPrenotazione extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(EliminaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -75,7 +83,11 @@ public class EliminaPrenotazione extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(EliminaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -49,8 +49,10 @@ public class SalvaPren extends HttpServlet {
         
         //Where to move
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
-        
+               
         HttpSession ses = request.getSession();
+        
+        Model model = new Model();
         
         String mobile = request.getParameter("mobile");
         
@@ -59,7 +61,6 @@ public class SalvaPren extends HttpServlet {
         String dataPren = request.getParameter("data");
         /*String oraInizio = request.getParameter("oraInizio");
         String oraFine = request.getParameter("oraFine");*/
-        
         
         //Registrazione da pagina web
         if(mobile == null)
@@ -101,7 +102,7 @@ public class SalvaPren extends HttpServlet {
                                     + ses.getAttribute("id") + ", " + docente + ", "
                                     + "'" + corso + "', '" + dataInizio + "' ,"
                                     + "'" + dataFine + "')";                    
-                    Model.eseguiNonQuery(sql);
+                    model.eseguiNonQuery(sql);
                     System.out.println("Prenotazione SALVATA! (1/2)");
                     
                     //Secondo inserimento
@@ -115,7 +116,7 @@ public class SalvaPren extends HttpServlet {
                                     + ses.getAttribute("id") + ", " + docente + ", "
                                     + "'" + corso + "', '" + dataInizio + "' ,"
                                     + "'" + dataFine + "')";                    
-                    Model.eseguiNonQuery(sql);
+                    model.eseguiNonQuery(sql);
                     System.out.println("Prenotazione SALVATA! (2/2)");
                 }
                 //Fascia con più di un'ora
@@ -131,10 +132,8 @@ public class SalvaPren extends HttpServlet {
                                     + ses.getAttribute("id") + ", " + docente + ", "
                                     + "'" + corso + "', '" + dataInizio + "' ,"
                                     + "'" + dataFine + "')";                    
-                    Model.eseguiNonQuery(sql);
-                    System.out.println("Prenotazione SALVATA!");
-                    
-                    
+                    model.eseguiNonQuery(sql);
+                    System.out.println("Prenotazione SALVATA!");                                       
                 }
             }
             //Unica fascia oraria selezionata
@@ -150,7 +149,7 @@ public class SalvaPren extends HttpServlet {
                                 + ses.getAttribute("id") + ", " + docente + ", "
                                 + "'" + corso + "', '" + dataInizio + "' ,"
                                 + "'" + dataFine + "')";                    
-                Model.eseguiNonQuery(sql);
+                model.eseguiNonQuery(sql);
                 System.out.println("Prenotazione SALVATA!");                
             }
             
@@ -162,17 +161,7 @@ public class SalvaPren extends HttpServlet {
         //Registrazione da APP
         else
         {
-            String studente = request.getParameter("studente");
-            String dataI=request.getParameter("inizio");
-            String dataF=request.getParameter("fine");
-            String sql =      "INSERT INTO Prenotazione "
-                                + "(Studente, Docente, Corso, DTInizio, DTFine) "
-                                + "VALUES("
-                                + studente+ ", " + docente + ", "
-                                + "'" + corso + "', '" + dataI + "' ,"
-                                + "'" + dataF + "')";                    
-                Model.eseguiNonQuery(sql);
-                System.out.println("Prenotazione SALVATA!"); 
+            
         }
     }
 

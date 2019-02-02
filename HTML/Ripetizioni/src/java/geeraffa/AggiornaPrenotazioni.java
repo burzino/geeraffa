@@ -51,8 +51,10 @@ public class AggiornaPrenotazioni extends HttpServlet {
             
             List<Prenotazione> lstPren;
             response.setContentType("text/plain");
-            Model.registerDriver();
-            lstPren = Model.listPrenotazioni(request.getParameter("corso"), 
+            
+            Model model = new Model();
+            
+            lstPren = model.listPrenotazioni(request.getParameter("corso"), 
                     Integer.parseInt(ses.getAttribute("id").toString()));
             
             //Creo JSONArray da inviare come risposta con tutte le prenotazioni richieste!
@@ -66,7 +68,7 @@ public class AggiornaPrenotazioni extends HttpServlet {
                 
                 //Ricavo il DOCENTE corrente dal suo ID
                 String sql = "Select * from Docente where ID_Docente="+lstPren.get(i).getDocente();
-                ResultSet rsDoc = Model.eseguiQuery(sql);
+                ResultSet rsDoc = model.eseguiQuery(sql);
                 
                 //Creazione array JSON da passare alla chiamata AJAX
                 JSONObject ripetizione = new JSONObject();
@@ -76,7 +78,7 @@ public class AggiornaPrenotazioni extends HttpServlet {
                     ripetizione.put("oraInizio", oraInizio);
                     ripetizione.put("oraFine", oraFine);
                     ripetizione.put("docente", rsDoc.getString("Cognome") +  " " + rsDoc.getString("Nome"));
-                    ripetizione.put("stato", getStatoPren(lstPren, i));
+                    ripetizione.put("stato", getStatoPren(lstPren, i, model));
                     ripetizione.put("idPren", lstPren.get(i).getID_Prenotazione());
                 }
                 
@@ -90,8 +92,8 @@ public class AggiornaPrenotazioni extends HttpServlet {
         }
     }
     
-    private String getStatoPren(List<Prenotazione> lstPren, int i) throws SQLException, ParseException
-    {
+    private String getStatoPren(List<Prenotazione> lstPren, int i, Model model) throws SQLException, ParseException
+    {     
         String sql;
         sql = "SELECT Docente.nome AS nDocente, "
                 + "Docente.cognome AS cDocente, "
@@ -105,8 +107,8 @@ public class AggiornaPrenotazioni extends HttpServlet {
                 + "JOIN Docente ON Docente.ID_Docente = Prenotazione.docente "
                 + "JOIN Utente ON Utente.ID_Utente = Prenotazione.studente "
                 + "WHERE Prenotazione.ID_Prenotazione=" + lstPren.get(i).getID_Prenotazione();
-                    
-        ResultSet rs = Model.eseguiQuery(sql);
+        
+        ResultSet rs = model.eseguiQuery(sql);
         String stato = "";
         
         while(rs.next()){                   
