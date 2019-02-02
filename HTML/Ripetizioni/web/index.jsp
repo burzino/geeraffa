@@ -104,7 +104,7 @@
                   <h1 class="bnr-title">Semplifica la gestione delle tue prenotazioni con 
                       <span class="logo-dec">GE</span>E
                       <span class="logo-dec">RA</span>F
-                      <span class="logo-dec">FA</span>
+                      <span class="logo-dec">FA</span><br>
                       Prenota ripetizioni dei corsi disponibili, tutto in pochi click!
                   </h1>
                 <h2 class="bnr-sub-title"></h2>
