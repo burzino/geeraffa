@@ -12,12 +12,13 @@
 <!DOCTYPE html>
 <html lang="it">
     <%
-    HttpSession ses = request.getSession();
-    Model.registerDriver();
-    List<Studente> lstStud = Model.getUtenti();
-    for (int i = 0; i < lstStud.size(); i++) {
-            //System.out.println(lstStud.get(i).getUsername());
-        }
+        Model model = new Model();
+        HttpSession ses = request.getSession();
+        model.registerDriver();
+        List<Studente> lstStud = model.getUtenti();
+        for (int i = 0; i < lstStud.size(); i++) {
+                //System.out.println(lstStud.get(i).getUsername());
+            }
     %>
 <head>
   <meta charset="utf-8">
@@ -73,7 +74,7 @@
                   <!--<li class=""><a href="#testimonial">Testimonial</a></li>-->
                   <li class=""><a href="#contact">Contact Us</a></li>
                   <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
-                  <li class=""><a href="<%= request.getContextPath()%>/tab_docenti.jsp">
+                  <li class=""><a href="<%= request.getContextPath()%>/admin.jsp">
                           GESTISCI</a></li>
                   <% } %>
                   
@@ -215,20 +216,21 @@
             <hr class="bottom-line">
           </div>
         <%
-            ResultSet rs = Model.eseguiQuery("Select * from Corso where Attivo=1");
-            while(rs.next())
+            List<Corso> corsi = model.listCorsi();
+            
+            for(Corso c : corsi)
             {
         %>
           <div class="col-md-4 col-sm-6 col-xs-12 portfolio-item padding-right-zero mr-btn-15">
             <figure>
-                <img src="<%= rs.getString("path")%>" class="img-responsive">
+                <img src="<%= c.getPath() %>" class="img-responsive">
               <figcaption>
-                <h2><%= rs.getString("Titolo")%></h2>
-                <p><%= rs.getString("Descrizione")%></p>
+                <h2><%= c.getTitolo() %></h2>
+                <p><%= c.getDescrizione() %></p>
                 <% if(ses.getAttribute("logged") == "Y") { %>
                 <form action="<%=request.getContextPath()%>/Controller" method="post">
                     <input type="hidden" name="toDo" value="prenotaIndex"/>
-                    <input type="hidden" name="corso" value="<%= rs.getString("Titolo")%>" />
+                    <input type="hidden" name="corso" value="<%= c.getTitolo() %>" />
                     <br/>
                     <input type="submit" style="border:2px solid #444F64; color: white" class="btn-submit" value="PRENOTA"/>
                 </form>

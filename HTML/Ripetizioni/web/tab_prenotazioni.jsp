@@ -50,8 +50,9 @@
     </head>
     <body style="background-color: #abc;">
         <%
-        HttpSession ses = request.getSession();
-        if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
+            Model model = new Model();
+            HttpSession ses = request.getSession();
+            if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
                 <input type="hidden" name="toDo" value="noAdmin"/>
                 <h1 style="color: red; text-align: center;">ACCESSO NEGATO</h1>
@@ -102,7 +103,7 @@
                             + "JOIN Docente ON Docente.ID_Docente = Prenotazione.docente "
                             + "JOIN Utente ON Utente.ID_Utente = Prenotazione.studente";
                     
-                ResultSet rs = Model.eseguiQuery(sql);
+                ResultSet rs = model.eseguiQuery(sql);
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
                     <div class="row">

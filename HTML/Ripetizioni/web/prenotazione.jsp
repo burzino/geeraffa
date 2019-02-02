@@ -16,6 +16,7 @@
 <!DOCTYPE html>
 <html>
     <%
+        Model model = new Model();
         HttpSession ses = request.getSession();
         String corso = request.getParameter("corso");
         String utente = ses.getAttribute("id").toString();
@@ -53,7 +54,7 @@
                             onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
                             >
                     <% 
-                        List<Corso> corsi = Model.listCorsi();
+                        List<Corso> corsi = model.listCorsi();
                         for (int i = 0; i < corsi.size(); i++) {
                     %>
                     <option <% if(corsi.get(i).getTitolo().equals(corso)){%>

@@ -51,8 +51,9 @@
     <body style="padding-right: 0; padding-left:0; width: 100%; background-color: #abc;">
         <!-- se l'utente non è un admin oppure se non c'è nessun utente loggato segnalo l'errore e metto bottone per tornare alla home-->
         <%
-        HttpSession ses = request.getSession();
-        if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
+            Model model = new Model();
+            HttpSession ses = request.getSession();
+            if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
                 <input type="hidden" name="toDo" value="noAdmin"/>
                 <h1 style="color: red; text-align: center;">ACCESSO NEGATO</h1>
@@ -97,9 +98,8 @@
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
-                Model.registerDriver();
                 String sql = "SELECT * FROM Docente WHERE Attivo = 1 ORDER BY Docente.Cognome";
-                ResultSet rs = Model.eseguiQuery(sql);
+                ResultSet rs = model.eseguiQuery(sql);
                 ResultSet rsCorsi = null;
                 %>
                 <div class="animated fadeIn" style=" padding-top: 50px">
@@ -119,7 +119,7 @@
                                     String corsi;
                                     while(rs.next()){
                                         sql = "SELECT * FROM CorsoDocente WHERE attivo = 1 AND Docente = " + rs.getInt("ID_Docente");
-                                        rsCorsi = Model.eseguiQuery(sql);
+                                        rsCorsi = model.eseguiQuery(sql);
                                         corsi = "";
                                         while(rsCorsi.next()){
                                            corsi+=rsCorsi.getString("Corso") +";";
@@ -177,7 +177,7 @@
                                         <table>
                                         <% 
                                             sql = "SELECT * FROM Corso ORDER BY Attivo DESC, Titolo";
-                                            rs = Model.eseguiQuery(sql);
+                                            rs = model.eseguiQuery(sql);
                                             int i = 0;
                                             while(rs.next()){
                                             %>
