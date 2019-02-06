@@ -1,11 +1,7 @@
 var xhrObj = setXMLHttpRequest();
 var url_;
 
-$(document).ready( function() {
-    orderselect(document.getElementById("selCorso"));
-});
-
-function orderselect(selElem)
+function orderselect(selElem, corso)
 {
     var tmpAry = new Array();
     for (var i=0;i<selElem.options.length;i++) {
@@ -17,15 +13,21 @@ function orderselect(selElem)
     while (selElem.options.length > 0) {
         selElem.options[0] = null;
     }
-    var sel = 0;
+    var sel = -1;
+    var selTutti = -1;
     for (var i=0;i<tmpAry.length;i++) {
         var op = new Option(tmpAry[i][0], tmpAry[i][1]);
         selElem.options[i] = op;        
-        if(selElem.options[i].value == "tutti")
+        if(selElem.options[i].value === "tutti")
+            selTutti = i;
+        else if(selElem.options[i].value === corso)
             sel = i;
     }
     
-    selElem.selectedIndex = sel;
+    if(sel != -1)
+        selElem.selectedIndex = sel;
+    else
+        selElem.selectedIndex = selTutti;
 }
 
 function setXMLHttpRequest() {
