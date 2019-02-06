@@ -95,7 +95,7 @@
         </span>
         <form>
             <input type="hidden" name="toDo" value="modificaDocenti"/>
-            <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaDocenti" onclick="btnVisible(this)" style="display: block; margin: 0 auto;"/>
+            <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaDocenti" onclick="addDocente(this)" style="display: block; margin: 0 auto;"/>
         </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
@@ -132,7 +132,7 @@
                                     <td><%= rs.getString("Cognome")%></td>
                                     <td><%= rs.getString("Email")%></td>
                                     <td><%=corsi%></td>
-                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="getId(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=corsi%>')" ></td>
+                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="modificaDocente(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=corsi%>')" ></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -232,7 +232,7 @@
 
     <script type="text/javascript">
       //funzioni che servono a popolare e gestire i campi del modal infatti se devo modificare un docente i campi vengono popolati con le informazioni già salvate 
-      function getId(btn, idDocente, nome, cognome, email, corso){
+      function modificaDocente(btn, idDocente, nome, cognome, email, corso){
           //alert(btn.id);
           document.getElementById("idDocente").value = idDocente;
           document.getElementById("nome").value = nome;
@@ -244,7 +244,7 @@
           document.getElementById("elimina").style.display = "block";
           document.getElementById("salva").style.display = "block";
           document.getElementById("modificaDocentiTitle").style.display = "block";
-          var corsi = corso.split(";");
+          var corsi = corso.split(" ");
           //$('.corsi').attr('checked', false);
           $(".corsi").prop("checked", false);
           for (var i = 0; i < corsi.length-1; i++) {
@@ -252,7 +252,7 @@
           }
           //alert(corsi);
       }
-      function btnVisible(btn){
+      function addDocente(btn){
           //alert("ci sono");
           document.getElementById("idDocente").value = "";
           document.getElementById("nome").value = "";
