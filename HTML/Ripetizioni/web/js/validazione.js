@@ -20,11 +20,7 @@ $().ready(function() {
             username : {
               // Definiamo il campo username come obbligatorio
               required : true
-            },
-            "agree" : {
-              // Definiamo il campo login come obbligatorio
-              required : true
-            },
+            },            
             password : {
                 required : true,
                 // Settiamo la lunghezza minima e massima per il campo password

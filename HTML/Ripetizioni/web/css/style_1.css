@@ -138,15 +138,14 @@ body {
   font-weight: 400;
   font-family: 'Montserrat';
   /*background-image: url("../img/bg-regs.png");*/
-  background: #444F64;
+  background: #475369;
   background-repeat: no-repeat;
   background-size: cover;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;
   -ms-background-size: cover;
-  background-position: center center;
-  padding: 14px 0; }
+  background-position: center center; }
 
 .container {
   width: 600px;
