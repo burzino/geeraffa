@@ -282,13 +282,13 @@ iframe {
 #divSelCorso
 {
     margin: 10px auto;
-    width: 180px;
+    width: 50%;
 }
 
 #container-select
 {
     margin:5px auto;
-    width: 30%;
+    width: 50%;
 }
 
 #divAggiorna
