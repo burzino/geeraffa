@@ -72,7 +72,8 @@ public class PrenotaRipetizione extends HttpServlet {
                 {
                     sql =     "SELECT * FROM Docente "
                             + "INNER JOIN CorsoDocente ON ID_Docente = Docente "
-                            + "WHERE Corso='" + corso + "'";
+                            + "WHERE Corso='" + corso + "'"
+                            + "AND Corsodocente.attivo = 1;";
                     ResultSet rs = model.eseguiQuery(sql);
                     JSONArray arrDocenti = new JSONArray();
                     
