@@ -20,7 +20,7 @@
         .error {color:red;} <!--Imposto messaggi di errore della validazione di colore rosso-->
     </style>
         <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/main_1.js"></script>
     
     
