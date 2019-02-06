@@ -41,6 +41,8 @@ function setXMLHttpRequest() {
 
 function aggiornaTabella(corso, url)
 {
+    //document.getElementById('url').value = url;
+    //document.getElementById('corso').value = corso;
     url_ = url;
     xhrObj.open("GET", url+"&corso="+corso, true);
     
@@ -52,11 +54,6 @@ function aggiornaTabella(corso, url)
 }
 function popolaModal(corso, url){
     
-    document.getElementById('url').value = url;
-    document.getElementById('corso').value = corso;
-}
-function getCorsoUrl(){
-    aggiornaTabella(document.getElementById('corso').value, document.getElementById('url').value);
 }
 function aggiorna()
 {
