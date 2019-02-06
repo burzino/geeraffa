@@ -75,7 +75,7 @@ public class Login extends HttpServlet {
                 ses.setAttribute("ruolo", rs.getString("Ruolo"));
                 
                 if(rs.getString("Ruolo").equals("Admin"))
-                    rd = ctx.getRequestDispatcher("/admin.jsp");
+                    rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
                     
                 ses.setAttribute("logged", "Y");
             }
