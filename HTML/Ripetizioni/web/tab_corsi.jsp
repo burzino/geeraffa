@@ -81,7 +81,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="">Visualizza Prenotazioni</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=prenota_a" target="">Nuova Prenotazione</a>
+                    </li>
                 </ul>
             </div>
         </nav>
