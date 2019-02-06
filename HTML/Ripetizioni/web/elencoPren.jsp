@@ -35,7 +35,8 @@
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
     </head>
     
-    <body style="background-color: #abc" onload="aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=aggiornaPren')">
+    <body style="background-color: #abc" onload="aggiornaTabella('<%=corso%>','/Ripetizioni/Controller?toDo=aggiornaPren'); 
+          orderSelect(document.getElementById('selCorso'), corso)">
     <jsp:include page="header.jsp"></jsp:include>    
             <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
                 ELENCO DELLE TUE RIPETIZIONI PRENOTATE
@@ -46,21 +47,21 @@
                 <label for="selCorso"> Corso </label>
                 <select style="background-color: #abc" id="selCorso" name="corso" class="form-control form-control-lg" 
                         onchange="aggiornaTabella(this.value, '<%= request.getContextPath()%>/Controller?toDo=aggiornaPren')" >
-                    <option <% if(corso.equals("tutti")) {%>
+                    <option <% if(corso.equals("tutti")) { %>
                                 selected="selected"
                             <% } %>
                         value="tutti">TUTTI</option>
                     <% 
                         List<Corso> corsi = model.listCorsi();
 
-                        for (int i = 0; i < corsi.size(); i++) 
+                        for (Corso c : corsi) 
                         {
                     %>
-                    <option <% if(corso.equals(corsi.get(i).getTitolo())) {%> 
+                    <option <% if(corso.equals(c.getTitolo())) { System.out.println("param --> " + corso + " -- " + c.getTitolo());  %> 
                             selected="selected"
                         <% } %>
-                        value="<%= corsi.get(i).getTitolo()%>">
-                            <%= corsi.get(i).getTitolo()%>
+                        value="<%= c.getTitolo()%>">
+                            <%= c.getTitolo()%>
                     </option>
                     <% } %>
                 </select>
