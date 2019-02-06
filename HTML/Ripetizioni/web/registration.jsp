@@ -14,9 +14,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registrazione - GEERAFFA</title>
 
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-
     <!-- Main css -->
     <link rel="stylesheet" href="css/style_1.css">
     <style>
@@ -26,11 +23,14 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="js/main_1.js"></script>
     
+    
+    
     <!-- Validazione JQUERY -->
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/validazione.js"></script>
 </head>
 <body>
+    <%--<jsp:include page="header.jsp"></jsp:include>--%>
 
     <div class="main">
 
@@ -41,7 +41,7 @@
                     <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller" class="signup-form">
                         <input type="hidden" name="toDo" value="registration"/>
                         <h2 class="form-title">Crea il tuo account</h2>
-                        <div class="form-group">mi  
+                        <div class="form-group">
                             <input type="text" class="form-input form-control" name="nome" id="nome" placeholder="Nome"/>
                         </div>
                         <div class="form-group">
@@ -70,6 +70,7 @@
                     </form>
                     <p class="loginhere">
                         Hai già un account ? <a href="<%= request.getContextPath()%>/login.jsp" class="loginhere-link">Esegui l'accesso</a>
+                        <br/>Vuoi tornare nella homepage? <a href="<%= request.getContextPath()%>/index.jsp" class="loginhere-link">HOMEPAGE</a>
                     </p>
                 </div>
             </div>
