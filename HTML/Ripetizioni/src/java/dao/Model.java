@@ -107,6 +107,77 @@ public class Model {
             System.err.println("Login ERROR: " + e.getMessage());
         }
         finally { 
+            
+        }
+        
+        return lst;
+    }
+    
+     public  List<Prenotazione> listPrenotazioni() throws SQLException
+    {
+        List<Prenotazione> lst = new ArrayList<Prenotazione>();
+        
+        ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
+        try {
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();            
+            
+            st.executeQuery("SELECT * FROM Prenotazione "
+                + " ORDER BY DTInizio DESC");
+            rs = st.getResultSet();
+            
+            while(rs.next())
+            {
+                Prenotazione stud = new Prenotazione(rs.getInt("ID_Prenotazione"), rs.getInt("Studente"),
+                        rs.getInt("Docente"), rs.getString("Corso"), rs.getString("DTInizio"),
+                        rs.getString("DTFine"), rs.getInt("Disdetta"));
+                lst.add(stud);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("listPrenotazioni ERROR: " + e.getMessage());
+        }
+        finally { 
+            rs.close();
+            st.close();
+            conn.close();
+        }
+        
+        return lst;
+    }
+    
+    public  List<Prenotazione> listPrenotazioni(int ID_Studente) throws SQLException
+    {
+        List<Prenotazione> lst = new ArrayList<Prenotazione>();
+        
+        ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
+        try {
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();            
+            
+            st.executeQuery("SELECT * FROM Prenotazione where " 
+                + "Studente=" + ID_Studente
+                + " ORDER BY DTInizio DESC");
+            rs = st.getResultSet();
+            
+            while(rs.next())
+            {
+                Prenotazione stud = new Prenotazione(rs.getInt("ID_Prenotazione"), rs.getInt("Studente"),
+                        rs.getInt("Docente"), rs.getString("Corso"), rs.getString("DTInizio"),
+                        rs.getString("DTFine"), rs.getInt("Disdetta"));
+                lst.add(stud);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("listPrenotazioni ERROR: " + e.getMessage());
+        }
+        finally { 
             rs.close();
             st.close();
             conn.close();
@@ -166,7 +237,7 @@ public class Model {
         try {
             conn = DriverManager.getConnection(URL, USER, PWD);
             st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Corso where Attivo=1");
+            st.executeQuery("SELECT * FROM Corso where Attivo=1 order by Titolo");
             
             rs = st.getResultSet();
             while(rs.next())
