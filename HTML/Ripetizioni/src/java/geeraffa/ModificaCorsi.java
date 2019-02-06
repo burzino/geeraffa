@@ -83,7 +83,7 @@ public class ModificaCorsi extends HttpServlet {
             if (rs.next()) {
                 sql = "UPDATE Corso SET "
                         + "Attivo = 1, "
-                        + "Descrizione = '" + descrizione + "' "
+                        + "Descrizione = '" + descrizione + "', "
                         + "Path = 'img/corsi/" + path +"'"
                         + "WHERE titolo = '" + titolo + "'";
                 model.eseguiNonQuery(sql);
