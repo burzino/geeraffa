@@ -21,6 +21,9 @@
         String corso = request.getParameter("corso");
         String utente = ses.getAttribute("id").toString();
         int ID_Utente = Integer.parseInt(utente);
+        List<Corso> corsi = model.listCorsi();
+        if(corso == null)
+            corso = corsi.get(0).getTitolo();
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,14 +39,19 @@
         <link rel="stylesheet" type="text/css" href="css/prenotazione.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">       
-        
+        <%if(corso != null){%>
         <title>Prenotazione per <%= corso %></title>
+        <%}else{%>
+        <title>Prenotazione</title>
+        <%}%>
     </head>
     <body onload="salvaDati('<%= corso %>', document.getElementById('selDocente'), 
                 '<%= request.getContextPath()%>/Controller?toDo=prenota')">
         <jsp:include page="header.jsp"></jsp:include>
         <span id="titolo" class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
+  
                 PRENOTA LA TUA RIPETIZIONE DI <%= corso.toUpperCase() %>
+           
         </span>
         <form action="<%=request.getContextPath()%>/Controller" method="post">
             <input type="hidden" name="toDo" value="salvaPren" />
@@ -54,7 +62,6 @@
                             onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
                             >
                     <% 
-                        List<Corso> corsi = model.listCorsi();
                         for (int i = 0; i < corsi.size(); i++) {
                     %>
                     <option <% if(corsi.get(i).getTitolo().equals(corso)){%>
