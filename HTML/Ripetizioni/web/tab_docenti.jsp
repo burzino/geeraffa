@@ -122,7 +122,7 @@
                                         rsCorsi = model.eseguiQuery(sql);
                                         corsi = "";
                                         while(rsCorsi.next()){
-                                           corsi+=rsCorsi.getString("Corso") +";";
+                                           corsi+=rsCorsi.getString("Corso") +" ";
                                         }
                                         %>
                                 <tr>
