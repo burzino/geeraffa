@@ -76,7 +76,7 @@
                         <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="">VISUALIZZA DOCENTI</a>
                     </li>
                     <li class="nav-item">
-                        <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni" target="">VISUALIZZA PRENOTAZIONI</a>
+                        <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni&stud=tutti&corso=tutti" target="">VISUALIZZA PRENOTAZIONI</a>
                     </li>
                     <li class="nav-item">
                         <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=prenota_a" target="">NUOVA PRENOTAZIONE</a>

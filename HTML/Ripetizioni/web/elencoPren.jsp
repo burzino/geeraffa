@@ -27,10 +27,10 @@
         <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">    
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
-        <link rel="stylesheet" type="text/css" href="css/elenncoPren.css">
+        <link rel="stylesheet" type="text/css" href="css/elencoPren.css">
         
         <script type="text/javascript" src="js/jquery.min.js"></script>
-        <script type="text/javascript" src="js/elencoPren.js"></script>
+    <script type="text/javascript" src="js/elencoPren.js"></script>
         
         <title>Prenotazione - <%= ses.getAttribute("name") %></title>
     </head>
