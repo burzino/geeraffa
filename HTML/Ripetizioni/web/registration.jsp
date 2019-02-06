@@ -37,9 +37,11 @@
         <section class="signup">
             <!--<img src="img/signup-bg.jpg" alt=""> -->
             <div class="container">
-                <div class="signup-content">
+                <div class="signup-content" style="padding-top:3px;">
                     <form method="POST" id="signup-form" action="<%= request.getContextPath()%>/Controller" class="signup-form">
                         <input type="hidden" name="toDo" value="registration"/>
+                        <p class="loginhere">Vuoi tornare nella homepage? <a href="<%= request.getContextPath()%>/index.jsp" class="loginhere-link">HOMEPAGE</a></p>
+                        <br>
                         <h2 class="form-title">Crea il tuo account</h2>
                         <div class="form-group">
                             <input type="text" class="form-input form-control" name="nome" id="nome" placeholder="Nome"/>
@@ -65,12 +67,11 @@
                             <label for="agree"  class="label-agree form-control"><span><span></span></span>Accetto tutti i <a href="#" class="term-service">Termini di Servizio</a></label>
                         </div>-->
                         <div class="form-group">
-                            <input type="submit"  name="submit" id="submit" class="form-submit form-control" value="Registrati"/>
+                            <input type="submit" name="submit" id="submit" class="form-submit form-control" value="Registrati"/>
                         </div>
                     </form>
                     <p class="loginhere">
-                        Hai già un account ? <a href="<%= request.getContextPath()%>/login.jsp" class="loginhere-link">Esegui l'accesso</a>
-                        <br/>Vuoi tornare nella homepage? <a href="<%= request.getContextPath()%>/index.jsp" class="loginhere-link">HOMEPAGE</a>
+                        Hai già un account ? <a href="<%= request.getContextPath()%>/login.jsp" class="loginhere-link">Esegui l'accesso</a></p>
                     </p>
                 </div>
             </div>
