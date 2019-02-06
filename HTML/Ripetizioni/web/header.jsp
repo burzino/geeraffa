@@ -13,7 +13,7 @@
 
     <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
         <li class="nav-item">
-            <a class="nav-link" href="<%= request.getContextPath()%>/admin.jsp">GESTISCI</a>
+            <a class="nav-link" href="<%= request.getContextPath()%>/tab_docenti.jsp">GESTISCI</a>
         </li>
     <% } %>
        
@@ -22,7 +22,7 @@
             <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a>
         </li>
     <% } %>
-      
+        
     <!--  <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown
