@@ -92,7 +92,7 @@ public class Model {
         try {
             conn = DriverManager.getConnection(URL, USER, PWD);
             st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Utente");
+            st.executeQuery("SELECT * FROM Utente order by Cognome, Nome");
             rs = st.getResultSet();
             
             while(rs.next())
