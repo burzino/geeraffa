@@ -57,7 +57,7 @@
                         for (Corso c : corsi) 
                         {
                     %>
-                    <option <% if(corso.equals(c.getTitolo())) { System.out.println("param --> " + corso + " -- " + c.getTitolo());  %> 
+                    <option <% if(corso.equals(c.getTitolo())) { %> 
                             selected="selected"
                         <% } %>
                         value="<%= c.getTitolo()%>">
