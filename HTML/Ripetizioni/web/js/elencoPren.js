@@ -41,6 +41,8 @@ function setXMLHttpRequest() {
 
 function aggiornaTabella(corso, url)
 {
+    //document.getElementById('url').value = url;
+    //document.getElementById('corso').value = corso;
     url_ = url;
     xhrObj.open("GET", url+"&corso="+corso, true);
     
@@ -50,7 +52,9 @@ function aggiornaTabella(corso, url)
 
     xhrObj.send(null);
 }
-
+function popolaModal(corso, url){
+    
+}
 function aggiorna()
 {
     if (xhrObj.readyState == 4) {           // 4: server ha completato esecuz. richiesta
@@ -89,8 +93,8 @@ function aggiorna()
                         +   "<td>" + arrDati[i].corso + "</td>"
                         +   "<td>" + arrDati[i].docente + "</td>"
                         +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
-                        +   "<td><input style='width:100px' type='button' class='btn btn-danger' data-toggle='modal' value='Disdici'"
-                        +   " onclick=\"aggiornaTabella('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "&corso=" + corsoSel + "')\" />"
+                        +   "<td><input style='width:100px' type='button' class='btn btn-danger' data-toggle='modal' data-target='#modalDisdici' value='Disdici'"
+                        +   " onclick=\"popolaModal('tutti','/Ripetizioni/Controller?toDo=disdici&id=" + arrDati[i].idPren + "&corso=" + corsoSel + "')\" />"
                         +   "</td>"
                         +"</tr>";
                 }
@@ -103,7 +107,7 @@ function aggiorna()
                             +   "<td>" + arrDati[i].corso + "</td>"
                             +   "<td>" + arrDati[i].docente + "</td>"
                             +   "<td class='"+ arrDati[i].stato +"'>" + arrDati[i].stato + "</td>"
-                            +   "<td><input style='width:100px' disabled type='button' class='btn btn-danger' value='No action' /> </td>"
+                            +   "<td><input style='width:100px' disabled type='button' class='btn btn-danger' value='' /> </td>"
                             +"</tr>";
                 }
             }
