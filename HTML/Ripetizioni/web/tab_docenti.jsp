@@ -85,6 +85,9 @@
                         <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=prenota_a" target="">NUOVA PRENOTAZIONE</a>
                     </li>
                 </ul>
+                <li class="nav-item">
+                    <a style="color:#be9e21; float: right;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a>
+               </li>
             </div>
         </nav>
         <span class="login100-form-title" style="margin: auto; padding-top: 2%;">

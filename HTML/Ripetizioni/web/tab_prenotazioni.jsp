@@ -70,22 +70,24 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div style="background-color: #475369" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div style="background-color:#475369; color:#be9e21;" class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="<%= request.getContextPath()%>/index.jsp">Home <span class="sr-only">(current)</span></a>
+                        <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/index.jsp">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="">Visualizza Docenti</a>
+                        <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti" target="">VISUALIZZA DOCENTI</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="">VISUALIZZA PRENOTAZIONI</a>
+                        <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_corsi" target="">VISUALIZZA CORSI</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_prenotazioni&stud=tutti&corso=tutti" target="">Visualizza Prenotazioni</a>
+                        <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=prenota_a" target="">NUOVA PRENOTAZIONE</a>
                     </li>
-
                 </ul>
+                <li class="nav-item">
+                    <a style="color:#be9e21; float: right;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a>
+                </li>
             </div>
         </nav>
         <% } %>
