@@ -34,7 +34,7 @@ function verifica(url)
 {
     url_ = url
     var user = document.getElementById("username").value;
-    var pwd = document.getElementById("password").value;
+    var pwd = document.getElementById("pwd").value;
     
     xhrObj.open("GET", url+"?toDo=login&username="+user+"&pwd="+pwd, true);
     
