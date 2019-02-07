@@ -65,6 +65,7 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/PrenotaRipetizione");
                 break;
             case "prenotaIndex":
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/prenotazione.jsp");
                 break;
             case "logout":
@@ -112,6 +113,7 @@ public class Controller extends HttpServlet {
                 break;
             case "prenota_a":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/prenotazione.jsp");
                 break;
             case "modificaCorsi":
