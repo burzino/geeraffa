@@ -14,11 +14,8 @@
 <!DOCTYPE html>
 <html>
     <%
-        Model model = new Model();
         HttpSession ses = request.getSession();
         String corso = request.getParameter("corso");
-        String utente = ses.getAttribute("id").toString();
-        int ID_Utente = Integer.parseInt(utente);
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -51,24 +48,23 @@
                                 selected="selected"
                             <% } %>
                         value="tutti">TUTTI</option>
+                    
                     <% 
-                        List<Corso> corsi = model.listCorsi();
-
+                        //Ricavo lista corsi messa nella request dal controller
+                        List<Corso> corsi = (List<Corso>)request.getAttribute("lstCorsi");
+                        
                         for (Corso c : corsi) 
                         {
                     %>
-                    <option <% if(corso.equals(c.getTitolo())) { %> 
-                            selected="selected"
-                        <% } %>
-                        value="<%= c.getTitolo()%>">
+                        <option <% if(corso.equals(c.getTitolo())) { %> selected="selected" <% } %>                             
+                                value="<%= c.getTitolo()%>">
                             <%= c.getTitolo()%>
-                    </option>
-                    <% } %>
+                        </option>
+                    
+                    <% } %>          
+                        
                 </select>
             </div>
-            <!--<div class="form-group" id="divAggiorna">
-            <input type="submit" class="login100-form-btn" id="aggiorna-pren" value="CERCA"/>
-            </div>-->
         </div>
           
         <table class="table table-hover" style="width:80%; margin: 20px auto;text-align: center;">
