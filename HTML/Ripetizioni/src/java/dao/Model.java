@@ -242,7 +242,7 @@ public class Model {
             while(rs.next())
             {
                 Corso corso = new Corso(rs.getString("Titolo"), 
-                        rs.getString("Descrizione"), rs.getString("path"));
+                        rs.getString("Descrizione"), rs.getString("path"), rs.getInt("Attivo"));
                 lst.add(corso);
             }
         }
@@ -275,7 +275,7 @@ public class Model {
             while(rs.next())
             {
                 Corso corso = new Corso(rs.getString("Titolo"), 
-                        rs.getString("Descrizione"), rs.getString("path"));
+                        rs.getString("Descrizione"), rs.getString("path"), rs.getInt("Attivo"));
                 lst.add(corso);
             }
         }

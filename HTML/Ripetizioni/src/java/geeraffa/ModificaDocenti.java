@@ -43,7 +43,7 @@ public class ModificaDocenti extends HttpServlet {
         ServletContext ctx = getServletContext();
         
         //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
+        RequestDispatcher rd = ctx.getRequestDispatcher("/Controller?toDo=tab_docenti");
         
         HttpSession ses = request.getSession();
         
@@ -53,6 +53,7 @@ public class ModificaDocenti extends HttpServlet {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
+        
          String[] corsi = null;
         try {
             corsi=request.getParameterValues("corsi");

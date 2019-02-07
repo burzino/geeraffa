@@ -13,11 +13,13 @@ public class Corso {
     public String Titolo;
     public String Descrizione;
     public String path;
+    public int Attivo;
 
-    public Corso(String Titolo, String Descrizione, String path) {
+    public Corso(String Titolo, String Descrizione, String path, int Attivo) {
         this.Titolo = Titolo;
         this.Descrizione = Descrizione;
         this.path = path;
+        this.Attivo = Attivo;
     }
 
     public String getPath() {
@@ -42,6 +44,14 @@ public class Corso {
 
     public void setDescrizione(String Descrizione) {
         this.Descrizione = Descrizione;
+    }
+
+    public int getAttivo() {
+        return Attivo;
+    }
+
+    public void setAttivo(int Attivo) {
+        this.Attivo = Attivo;
     }
     
     

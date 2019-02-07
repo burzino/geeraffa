@@ -101,8 +101,9 @@ public class Controller extends HttpServlet {
                 break;
             case "tab_docenti":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
-                request.setAttribute("lstDocenti", model.listDocenti());
-                System.out.println("AAAAA" + model.listDocenti().get(0).getCognome());
+                request.setAttribute("lstDocenti", model.listDocenti());                
+                request.setAttribute("lstCorsi", model.listCorsi());
+                
                 rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
                 break;
             case "tab_corsi":
@@ -138,10 +139,15 @@ public class Controller extends HttpServlet {
             case "corsi":
                 request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 break;
+            case "getCorsiDoc":
+                String idDoc = request.getParameter("idDoc");
+                rd = ctx.getRequestDispatcher("/getCorsi?idDoc="+ idDoc);
+                rd.include(request, response);
+                break;
 
         }
-        
-        rd.forward(request, response);        
+        if(!action.equals("getCorsiDoc"))
+            rd.forward(request, response);        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

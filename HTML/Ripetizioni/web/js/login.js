@@ -66,7 +66,6 @@ function checkLogged()
                 window.location.href = "http://localhost:8080/Ripetizioni/index.jsp";
             else // vale A --> ADMIN
             {
-                alert("ADMIN");
                 window.location.href = "http://localhost:8080/Ripetizioni/Controller?toDo=tab_docenti";           
             }
         }
