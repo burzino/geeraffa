@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="it">
     <%
-        HttpSession ses = request.getSession();        
+        HttpSession ses = request.getSession();
     %>
 <head>
   <meta charset="utf-8">
@@ -34,12 +34,12 @@
   <link rel="stylesheet" type="text/css" href="css/animate.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   
-  <script src="js/index.js"></script>
   <script src="js/jquery.min.js"></script>
+  <script src="js/index.js"></script>
   
 </head> 
 
-<body onload="getCorsi('<%=request.getContextPath()%>/Controller?toDo=getCorsi')">
+<body onload="getCorsi('<%= request.getContextPath()%>/Controller?toDo=getCorsi')">
 
   <!--<div class="loader"></div>-->
   <div id="myDiv">
@@ -216,7 +216,7 @@
     <!---->
   </div>
 
-  
+  <script src="js/jquery.min.js"></script>
   <script src="js/jquery.easing.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/wow.js"></script>
