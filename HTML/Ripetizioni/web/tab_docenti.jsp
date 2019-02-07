@@ -203,13 +203,12 @@
                                                            id="<%= c.getTitolo()%>" value="<%= c.getTitolo()%>"/>
                                                 </td>
                                                 <td>
-                                                    <p style="
-                                                           <%if(c.getAttivo() == 0){%>
-                                                            color:red;
-                                                           <%}%>
-                                                    ">
+                                                    <%if(c.getAttivo() == 0){%>
+                                                    <del><%= c.getTitolo() %></del>
+                                                    <%}else{%>
+                                                    <p style="color:black">
                                                         <%= c.getTitolo() %>
-                                                   </p>
+                                                   </p><%}%>
                                                 </td>
                                             
                                         <%}%>
@@ -219,7 +218,7 @@
                                 </tr>
                           </table>
                             <br>
-                            <p style="color:red;">I CORSI SCRITTI IN ROSSO SONO ATTUALMENTE DISABILITATI</p>       
+                            <p style="color:red;">I CORSI BARRATI SONO ATTUALMENTE DISABILITATI</p>       
                       </div>
                       <!-- bottoni del modal che vengono disattivati in base a quello che devo fare (modificare o aggiungere un docente)-->
                       <div class="modal-footer">

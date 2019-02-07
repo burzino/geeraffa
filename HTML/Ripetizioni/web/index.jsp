@@ -69,7 +69,7 @@
                                         <%}%>
                                         <li class=""><a href="#contact">Contact Us</a></li>
                                         <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
-                                            <li class=""><a href="<%= request.getContextPath()%>/tab_docenti.jsp">GESTISCI</a></li>
+                                            <li class=""><a href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti">GESTISCI</a></li>
                                         <% } %>
                                         <% if(ses.getAttribute("logged") == "Y") {%>                
                                             <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>               
