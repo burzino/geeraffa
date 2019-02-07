@@ -1,8 +1,3 @@
-<%-- 
-    Document   : registration
-    Created on : Nov 15, 2018, 6:29:31 PM
-    Author     : GEERAFFA
---%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="geeraffa.*"%>
@@ -31,9 +26,7 @@
 </head>
 <body>
     <%--<jsp:include page="header.jsp"></jsp:include>--%>
-
     <div class="main">
-
         <section class="signup">
             <!--<img src="img/signup-bg.jpg" alt=""> -->
             <div class="container">
@@ -68,7 +61,6 @@
                 </div>
             </div>
         </section>
-
     </div>
 </body>
 </html>
