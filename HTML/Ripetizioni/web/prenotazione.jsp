@@ -20,8 +20,8 @@
         HttpSession ses = request.getSession();
         String corso = request.getParameter("corso");
         String utente = ses.getAttribute("id").toString();
-        int ID_Utente = Integer.parseInt(utente);
-        List<Corso> corsi = model.listCorsi();
+        //List<Corso> corsi = model.listCorsi();
+        List<Corso> corsi = (List<Corso>)request.getAttribute("lstCorsi");
         if(corso == null)
             corso = corsi.get(0).getTitolo();
     %>
@@ -67,12 +67,14 @@
                         onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
                             >
                     <% 
-                        for (int i = 0; i < corsi.size(); i++) {
+                        //for (int i = 0; i < corsi.size(); i++) {
+                        for(Corso c: corsi)
+                        {
                     %>
-                    <option <% if(corsi.get(i).getTitolo().equals(corso)){%>
+                    <option <% if(c.getTitolo().equals(corso)){%>
                                 selected="selected"
                             <% } %>>
-                            <%= corsi.get(i).getTitolo() %></option>
+                            <%= c.getTitolo() %></option>
                     <% } %>
                     </select>
                     
