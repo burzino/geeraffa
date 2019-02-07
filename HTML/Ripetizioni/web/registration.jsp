@@ -52,20 +52,12 @@
                         <div class="form-group">
                             <input type="email" class="form-input  form-control" name="email" id="email" placeholder="Email"/>
                         </div>
-                        <!--<div class="form-group">
-                            <input required type="text" class="form-input" name="password" id="password" placeholder="Password"/>
-                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
-                        </div>-->
                         <div class="form-group">
                             <input type="text" class="form-input form-control" name="username" id="username" placeholder="Username"/>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-input form-control" name="password" id="password" placeholder="Password"/>
                         </div>
-                       <!-- <div class="form-group">
-                            <input type="checkbox" name="agree" id="agree" class="agree" />
-                            <label for="agree"  class="label-agree form-control"><span><span></span></span>Accetto tutti i <a href="#" class="term-service">Termini di Servizio</a></label>
-                        </div>-->
                         <div class="form-group">
                             <input type="submit" name="submit" id="submit" class="form-submit form-control" value="Registrati"/>
                         </div>
