@@ -63,32 +63,25 @@
                     - CIAO, <%=ses.getAttribute("name")%>! <%}%>
                 </a>
                  
-                <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
                 <div class="collapse navbar-collapse menutendasmart" id="myNavbar" >
-                <ul class="nav navbar-nav navbar-right">                    
-                    <li class="active"><a href="#main-header">Home</a></li>
-                    
-                  <!----<li class=""><a href="#service">Services</a></li>-->
+                <ul class="nav navbar-nav navbar-right">    
+                    <% if(ses.getAttribute("logged") == null) { %>
+                        <li class="active"><a href="#main-header">Home</a></li>
+                    <% } %>
                   <li class=""><a href="#corsi">Corsi</a></li>
-                  <!--<li class=""><a href="#testimonial">Testimonial</a></li>-->
+                  <% if(ses.getAttribute("logged") == "Y") {%>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=prenota_a">NUOVA PRENOTAZIONE</a></li>
+                  <%}%>
                   <li class=""><a href="#contact">Contact Us</a></li>
                   <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
                   <li class=""><a href="<%= request.getContextPath()%>/tab_docenti.jsp">
                           GESTISCI</a></li>
                   <% } %>
                   
-                  <% if(ses.getAttribute("logged") == "Y") {%>
-                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
-                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>
-                  <!--<form action="<%= request.getContextPath()%>/Controller" id="frmout" method="post">
-                  <li class="">
-                    
-                        <input type="hidden" name="toDo" value="logout"/>
-                      <!--<li>a href="#" onclick="document.getElementById('frmout').submit();">LOGOUT</a><!--</li>-->
-                    
-                  <!--</li>-->
-                  <!--</form>-->
+                  <% if(ses.getAttribute("logged") == "Y") {%>                
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>               
                   <% } %>                                      
                     
                 </ul>
