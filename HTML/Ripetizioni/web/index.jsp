@@ -14,6 +14,11 @@
     <%
         Model model = new Model();
         HttpSession ses = request.getSession();
+        model.registerDriver();
+        List<Studente> lstStud = model.getUtenti();
+        for (int i = 0; i < lstStud.size(); i++) {
+                //System.out.println(lstStud.get(i).getUsername());
+            }
     %>
 <head>
   <meta charset="utf-8">
