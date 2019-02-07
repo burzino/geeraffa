@@ -90,7 +90,7 @@
                </li>
             </div>
         </nav>
-        <span class="login100-form-title" style="margin: auto; padding-top: 2%;">
+        <span class="login100-form-title" style="margin: auto; padding-top: 1%;padding-bottom: 1%;">
             GESTIONE DOCENTI
         </span>
         <form>
@@ -104,7 +104,7 @@
                 ResultSet rs = model.eseguiQuery(sql);
                 ResultSet rsCorsi = null;
                 %>
-                <div class="animated fadeIn" style=" padding-top: 50px">
+                <div class="animated fadeIn" style=" padding-top: 1%">
                     <div class="row">
                         <div class="col-md-12">
                             <!-- stampo la dabella in modo dinamico dopo la lettura dei dati sul db-->

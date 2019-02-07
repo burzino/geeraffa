@@ -38,7 +38,9 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/prenotazione.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrapPren.min.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">       
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
         <%if(corso != null){%>
         <title>Prenotazione per <%= corso %></title>
         <%}else{%>

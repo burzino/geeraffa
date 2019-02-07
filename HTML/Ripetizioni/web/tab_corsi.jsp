@@ -87,7 +87,7 @@
                 </li>
             </div>
         </nav>
-        <span class="login100-form-title" style="margin: auto; padding-top: 2%;">
+        <span class="login100-form-title" style="margin:0 auto; padding-top: 1%; padding-bottom: 1%;">
             GESTIONE CORSI
         </span>
         <form>
@@ -101,10 +101,10 @@
                     sql = "SELECT * FROM Corso WHERE Attivo = 1";
                 ResultSet rs = model.eseguiQuery(sql);
                 %>
-                <div class="animated fadeIn" style=" padding-top: 50px">
+                <div class="animated fadeIn" style=" padding-top: 1%">
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="bootstrap-data-table" class="table table-hover" style="text-align:left; padding-left: 2%; padding-right: 2%; width: 90%; margin: auto;">
+                            <table id="bootstrap-data-table" class="table table-hover" style="text-align:left; padding-left: 2%; padding-right: 2%; width: 90%; margin:0 auto;">
                                 <thead>
                                     <th>Titolo</th>
                                     <th>Descrizione</th>
