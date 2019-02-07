@@ -67,6 +67,7 @@ public class Controller extends HttpServlet {
                 ses.invalidate();
                 break;
             case "elencoPren":
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/elencoPren.jsp");
                 break;
             case "aggiornaPren":
@@ -76,6 +77,7 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni_Admin");
                 break;
             case "salvaPren":
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/SalvaPren");
                 break;
             case "disdici":
@@ -87,8 +89,8 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/VisualizzaCorsi");
                 break;
             case "elencoPrenotazioni":
-            rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
-            break;
+                rd = ctx.getRequestDispatcher("/VisualizzaPrenotazioni");
+                break;
             case "registration":
                 rd = ctx.getRequestDispatcher("/Registration");
                 break;
@@ -119,6 +121,10 @@ public class Controller extends HttpServlet {
             case "noAdmin":
                 System.out.println("ACCESSO AREA ADMIN NEGATO");
                 rd = ctx.getRequestDispatcher("/index.jsp");
+                break;
+            //Casistiche in cui si richiama direttamente il MODEL
+            case "corsi":
+                request.setAttribute("lstCorsi", model.listCorsi());
                 break;
 
         }
