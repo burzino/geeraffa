@@ -54,7 +54,11 @@ public class Controller extends HttpServlet {
         Model model = new Model();
         
         switch(action){
+            case "getCorsi":
+                ses.setAttribute("lstCorsi", model.listCorsi());
+                break;
             case "login":
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/Login");
                 break;
             case "prenota":

@@ -12,13 +12,7 @@
 <!DOCTYPE html>
 <html lang="it">
     <%
-        Model model = new Model();
-        HttpSession ses = request.getSession();
-        model.registerDriver();
-        List<Studente> lstStud = model.getUtenti();
-        for (int i = 0; i < lstStud.size(); i++) {
-                //System.out.println(lstStud.get(i).getUsername());
-            }
+        HttpSession ses = request.getSession();        
     %>
 <head>
   <meta charset="utf-8">
@@ -39,10 +33,13 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/animate.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
+  
+  <script src="js/index.js"></script>
+  <script src="js/jquery.min.js"></script>
+  
 </head> 
 
-<body>
+<body onload="getCorsi('<%=request.getContextPath()%>/Controller?toDo=getCorsi')">
 
   <!--<div class="loader"></div>-->
   <div id="myDiv">
@@ -125,8 +122,7 @@
             <hr class="bottom-line">
           </div>
         <%
-            List<Corso> corsi = model.listCorsi();
-            
+            List<Corso> corsi = (List<Corso>)ses.getAttribute("lstCorsi");
             for(Corso c : corsi)
             {
         %>
@@ -220,7 +216,7 @@
     <!---->
   </div>
 
-  <script src="js/jquery.min.js"></script>
+  
   <script src="js/jquery.easing.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/wow.js"></script>

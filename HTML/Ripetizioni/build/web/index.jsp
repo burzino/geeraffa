@@ -12,13 +12,7 @@
 <!DOCTYPE html>
 <html lang="it">
     <%
-        Model model = new Model();
-        HttpSession ses = request.getSession();
-        model.registerDriver();
-        List<Studente> lstStud = model.getUtenti();
-        for (int i = 0; i < lstStud.size(); i++) {
-                //System.out.println(lstStud.get(i).getUsername());
-            }
+        HttpSession ses = request.getSession();        
     %>
 <head>
   <meta charset="utf-8">
@@ -39,10 +33,13 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/animate.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
+  
+  <script src="js/index.js"></script>
+  <script src="js/jquery.min.js"></script>
+  
 </head> 
 
-<body>
+<body onload="getCorsi('<%=request.getContextPath()%>/Controller?toDo=getCorsi')">
 
   <!--<div class="loader"></div>-->
   <div id="myDiv">
@@ -63,32 +60,25 @@
                     - CIAO, <%=ses.getAttribute("name")%>! <%}%>
                 </a>
                  
-                <!--<img src="img/Logo_Round.jpg"/>-->
               </div>
                 <div class="collapse navbar-collapse menutendasmart" id="myNavbar" >
-                <ul class="nav navbar-nav navbar-right">                    
-                    <li class="active"><a href="#main-header">Home</a></li>
-                    
-                  <!----<li class=""><a href="#service">Services</a></li>-->
+                <ul class="nav navbar-nav navbar-right">    
+                    <% if(ses.getAttribute("logged") == null) { %>
+                        <li class="active"><a href="#main-header">Home</a></li>
+                    <% } %>
                   <li class=""><a href="#corsi">Corsi</a></li>
-                  <!--<li class=""><a href="#testimonial">Testimonial</a></li>-->
+                  <% if(ses.getAttribute("logged") == "Y") {%>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=prenota_a">NUOVA PRENOTAZIONE</a></li>
+                  <%}%>
                   <li class=""><a href="#contact">Contact Us</a></li>
                   <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
                   <li class=""><a href="<%= request.getContextPath()%>/tab_docenti.jsp">
                           GESTISCI</a></li>
                   <% } %>
                   
-                  <% if(ses.getAttribute("logged") == "Y") {%>
-                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
-                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>
-                  <!--<form action="<%= request.getContextPath()%>/Controller" id="frmout" method="post">
-                  <li class="">
-                    
-                        <input type="hidden" name="toDo" value="logout"/>
-                      <!--<li>a href="#" onclick="document.getElementById('frmout').submit();">LOGOUT</a><!--</li>-->
-                    
-                  <!--</li>-->
-                  <!--</form>-->
+                  <% if(ses.getAttribute("logged") == "Y") {%>                
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=logout">LOGOUT</a></li>               
                   <% } %>                                      
                     
                 </ul>
@@ -123,17 +113,16 @@
       </div>
     </div>
     <% } %>
-    <section id="corsi" class="section-padding wow fadeInUp delay-05s">
+    <section id="corsi" class="section-padding wow fadeInUp delay-05s" style="background-color: rgb(73, 84, 105);">
     <div class="container">
         <div class="row" style="padding-top: 50px">
           <div class="col-md-12 text-center">
-            <h2 class="service-title pad-bt15" <% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
-            <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
+            <h2 class="service-title pad-bt15" style="color:white">Corsi</h2>
+            <p class="sub-title pad-bt15"style="color:white;">Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
             <hr class="bottom-line">
           </div>
         <%
-            List<Corso> corsi = model.listCorsi();
-            
+            List<Corso> corsi = (List<Corso>)ses.getAttribute("lstCorsi");
             for(Corso c : corsi)
             {
         %>
@@ -172,7 +161,7 @@
             <div class="loction-info white">
               <p><i class="fa fa-map-marker fa-fw pull-left fa-2x"></i>Via sballapiero<br>Torino (TO) 10149 ITALY</p>
               <p><i class="fa fa-envelope-o fa-fw pull-left fa-2x"></i>info@geeraffa.com</p>
-              <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>num telefono</p>
+              <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>3334455566</p>
             </div>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -227,7 +216,7 @@
     <!---->
   </div>
 
-  <script src="js/jquery.min.js"></script>
+  
   <script src="js/jquery.easing.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/wow.js"></script>
