@@ -42,20 +42,20 @@
                         <h5 style="visibility: hidden"> SPAZIO </h5>
                         <h2 class="form-title">Effettua il login</h2>
                         <div class="form-group">
-                            <input type="text" 
+                            <input type="text" tabindex="1"
                                    class="form-input form-control" 
                                    name="username" id="username" 
                                    placeholder="Username o Email"/>
                         </div>
                         <div class="form-group">
-                            <input type="password" 
+                            <input type="password" tabindex="2"
                                    class="form-input form-control" 
                                    name="pwd" id="password" 
                                    placeholder="Password"/>
                         </div>
 
                         <div class="form-group">
-                            <input type="button" 
+                            <input type="button" tabindex="3"
                                    disabled
                                    onclick="verifica('<%= request.getContextPath()%>/Controller')" 
                                    id="submit" class="login100-form-btn" 
