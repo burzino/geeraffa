@@ -97,7 +97,7 @@ public class ModificaCorsi extends HttpServlet {
         else
             System.out.println("ERROR IN MODIFICACORSI");
         
-        request.setAttribute("lstCorsi", model.listCorsi());
+        request.setAttribute("lstCorsi", model.listCorsiAttivi());
         rd.forward(request, response);
     }
 

@@ -127,7 +127,7 @@
             <hr class="bottom-line">
           </div>
         <%
-            List<Corso> corsi = model.listCorsi();
+            List<Corso> corsi = model.listCorsiAttivi();
             
             for(Corso c : corsi)
             {

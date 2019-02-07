@@ -226,7 +226,7 @@ public class Model {
         return lst;
     }
     
-    public List<Corso> listCorsi() throws SQLException
+    public List<Corso> listCorsiAttivi() throws SQLException
     {
         List<Corso> lst = new ArrayList<Corso>();
         
@@ -238,6 +238,39 @@ public class Model {
             conn = DriverManager.getConnection(URL, USER, PWD);
             st = conn.createStatement();
             st.executeQuery("SELECT * FROM Corso where Attivo=1 order by Titolo");
+            
+            rs = st.getResultSet();
+            while(rs.next())
+            {
+                Corso corso = new Corso(rs.getString("Titolo"), 
+                        rs.getString("Descrizione"), rs.getString("path"));
+                lst.add(corso);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("listCorsi ERROR: " + e.getMessage());
+        }
+        finally { 
+            rs.close();
+            st.close();
+            conn.close();
+        }
+        
+        return lst;
+    }
+    
+    public List<Corso> listCorsi() throws SQLException
+    {
+        List<Corso> lst = new ArrayList<Corso>();
+        
+        ResultSet rs = null;
+        Connection conn = null;
+        Statement st = null;
+        
+        try {
+            conn = DriverManager.getConnection(URL, USER, PWD);
+            st = conn.createStatement();
+            st.executeQuery("SELECT * FROM Corso order by Titolo");
             
             rs = st.getResultSet();
             while(rs.next())

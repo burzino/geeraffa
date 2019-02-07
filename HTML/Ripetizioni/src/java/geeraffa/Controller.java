@@ -55,17 +55,17 @@ public class Controller extends HttpServlet {
         
         switch(action){
             case "getCorsi":
-                ses.setAttribute("lstCorsi", model.listCorsi());
+                ses.setAttribute("lstCorsi", model.listCorsiAttivi());
                 break;
             case "login":
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 rd = ctx.getRequestDispatcher("/Login");
                 break;
             case "prenota":
                 rd = ctx.getRequestDispatcher("/PrenotaRipetizione");
                 break;
             case "prenotaIndex":
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 rd = ctx.getRequestDispatcher("/prenotazione.jsp");
                 break;
             case "logout":
@@ -82,7 +82,7 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/AggiornaPrenotazioni_Admin");
                 break;
             case "salvaPren":
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 rd = ctx.getRequestDispatcher("/SalvaPren");
                 break;
             case "disdici":
@@ -105,7 +105,7 @@ public class Controller extends HttpServlet {
                 break;
             case "tab_corsi":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
                 break;
             case "tab_prenotazioni":
@@ -114,12 +114,12 @@ public class Controller extends HttpServlet {
                 break;
             case "prenota_a":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 rd = ctx.getRequestDispatcher("/prenotazione.jsp");
                 break;
             case "modificaCorsi":
                 System.out.println("ARRIVO DA TAB CORSI!!!");
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 rd = ctx.getRequestDispatcher("/ModificaCorsi");
                 break; 
             case "modificaDocenti":
@@ -132,7 +132,7 @@ public class Controller extends HttpServlet {
                 break;
             //Casistiche in cui si richiama direttamente il MODEL
             case "corsi":
-                request.setAttribute("lstCorsi", model.listCorsi());
+                request.setAttribute("lstCorsi", model.listCorsiAttivi());
                 break;
 
         }
