@@ -53,7 +53,7 @@ public class ModificaCorsi extends HttpServlet {
         String aggiungi = request.getParameter("aggiungi");
         String path = request.getParameter("txtPath");
         
-        Model model = new Model();
+        Model model = new Model();               
         
         System.out.println("Funziona:" + titolo +" - " + descrizione);
         String sql;
@@ -96,6 +96,8 @@ public class ModificaCorsi extends HttpServlet {
         }
         else
             System.out.println("ERROR IN MODIFICACORSI");
+        
+        request.setAttribute("lstCorsi", model.listCorsi());
         rd.forward(request, response);
     }
 

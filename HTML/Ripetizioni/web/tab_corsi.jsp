@@ -20,15 +20,7 @@
 
         <link rel="shortcut icon" href="img/Logo_Round.jpg">
 
-        <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/style.css">-->
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="img/icons/favicon.ico"/>
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
         <!--===============================================================================================-->
@@ -48,10 +40,11 @@
     </head>
     <body style="width: 100%; background-color: #abc;">
         <%
-            Model model = new Model();
             HttpSession ses = request.getSession();
+          
             if(!("Admin".equals(ses.getAttribute("ruolo"))) || ses.getAttribute("logged") == "N") { %>
-        <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%;">
+        
+            <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%;">
                 <input type="hidden" name="toDo" value="noAdmin"/>
                 <h1 style="color: red; text-align: center;">ACCESSO NEGATO</h1>
                 <br><br>
@@ -95,12 +88,7 @@
             <input type="button" class="btn btn-primary" value="Aggiungi nuovo corso" data-toggle="modal" data-target="#modificaCorsi" onclick="btnVisible(this)" style="display: block; margin: 0 auto;"/>
         </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 98%">
-            <input type="hidden" name="toDo" value="tab_corsi"/>
-                <%
-                    String sql;
-                    sql = "SELECT * FROM Corso WHERE Attivo = 1";
-                ResultSet rs = model.eseguiQuery(sql);
-                %>
+            <input type="hidden" name="toDo" value="tab_corsi"/>               
                 <div class="animated fadeIn" style=" padding-top: 1%">
                     <div class="row">
                         <div class="col-md-12">
@@ -111,12 +99,21 @@
                                     <th>Gestione</th>
                                 </thead>
                                 <tbody>
-                                <%while(rs.next()){ %>
+                                <%
+                                    List<Corso> corsi = (List<Corso>)request.getAttribute("lstCorsi");
+                                    for(Corso c: corsi)
+                                    {
+                                %>                                
                                 <tr>
-                                    <td><%= rs.getString("Titolo")%></td>
-                                    <td><%= rs.getString("Descrizione")%></td>
+                                    <td><%= c.getTitolo()%></td>
+                                    <td><%= c.getDescrizione()%></td>
                                     <td>
-                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#modificaCorsi" id="<%=rs.getString("Titolo")%>" onClick="getId(this,'<%=rs.getString("Descrizione")%>')" value="Gestisci"/>
+                                        <input type="button" class="btn btn-warning" 
+                                               data-toggle="modal" 
+                                               data-target="#modificaCorsi" 
+                                               id="<%=c.getTitolo()%>" 
+                                               onClick="getId(this,'<%=c.getDescrizione()%>')" 
+                                               value="Gestisci"/>
                                     </td>
                                 </tr>
                                 <% } %>

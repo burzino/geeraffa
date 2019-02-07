@@ -105,6 +105,7 @@ public class Controller extends HttpServlet {
                 break;
             case "tab_corsi":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/tab_corsi.jsp");
                 break;
             case "tab_prenotazioni":
@@ -118,6 +119,7 @@ public class Controller extends HttpServlet {
                 break;
             case "modificaCorsi":
                 System.out.println("ARRIVO DA TAB CORSI!!!");
+                request.setAttribute("lstCorsi", model.listCorsi());
                 rd = ctx.getRequestDispatcher("/ModificaCorsi");
                 break; 
             case "modificaDocenti":
