@@ -172,7 +172,7 @@
             <div class="loction-info white">
               <p><i class="fa fa-map-marker fa-fw pull-left fa-2x"></i>Via sballapiero<br>Torino (TO) 10149 ITALY</p>
               <p><i class="fa fa-envelope-o fa-fw pull-left fa-2x"></i>info@geeraffa.com</p>
-              <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>num telefono</p>
+              <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>3334455566</p>
             </div>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12">
