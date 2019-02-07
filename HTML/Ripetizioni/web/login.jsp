@@ -25,10 +25,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/main_1.js"></script>
     <script src="js/login.js"></script>
-    <script>
-        
-    </script>
-    
 </head>
 
 <body>
@@ -48,9 +44,11 @@
                                    placeholder="Username o Email"/>
                         </div>
                         <div class="form-group">
-                            <input type="password" tabindex="2"
+                            <input type="password"
+                                   id="pwd"
+                                   tabindex="2"
                                    class="form-input form-control" 
-                                   name="pwd" id="password" 
+                                   name="pwd"
                                    placeholder="Password"/>
                         </div>
 
