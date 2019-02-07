@@ -47,7 +47,8 @@
         <title>Prenotazione</title>
         <%}%>
     </head>
-    <body onload="salvaDati('<%= corso %>', document.getElementById('selDocente'), 
+    <body style="background-color: #abc;" 
+        onload="salvaDati('<%= corso %>', document.getElementById('selDocente'), 
                 '<%= request.getContextPath()%>/Controller?toDo=prenota')">
         <jsp:include page="header.jsp"></jsp:include>
         <span id="titolo" class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
@@ -60,8 +61,10 @@
             <div id="container-select" style="width: 60%">
                 <div class="form-group">
                     <label for="selCorso"> Corso: </label>
-                    <select id="selCorso" name="corso" class="form-control"
-                            onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
+                    <select
+                        style="background-color: #abc;" 
+                        id="selCorso" name="corso" class="form-control"
+                        onchange="popolaCmbDocenti(this.value, document.getElementById('selDocente'))"
                             >
                     <% 
                         for (int i = 0; i < corsi.size(); i++) {
@@ -77,7 +80,10 @@
                     
                 <div class="form-group">
                     <label for="selDocente"> Docente: </label>
-                    <select id="selDocente" name="docente" onchange="cambioDocente()" class="form-control" disabled>
+                    <select 
+                        style="background-color: #abc;" 
+                        id="selDocente" 
+                        name="docente" onchange="cambioDocente()" class="form-control" disabled>
                     </select>
                 </div>
                 <div class="form-group">
