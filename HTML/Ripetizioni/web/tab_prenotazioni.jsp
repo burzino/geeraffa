@@ -43,7 +43,6 @@
         <link rel="stylesheet" href="css/newcss.css">
     </head>
     <%
-            Model model = new Model();
             HttpSession ses = request.getSession();
             String stud = request.getParameter("stud");
             String corso = request.getParameter("corso");
@@ -105,7 +104,7 @@
                         <% } %>
                     value="tutti">TUTTI</option>
             <%
-                List<Studente> studenti = model.getUtenti();
+                List<Studente> studenti =  (List<Studente>)request.getAttribute("lstUtenti");
                 for(Studente s : studenti)
                 {
             %>
@@ -118,7 +117,7 @@
             </select>
             </div>
             <div class="form-group" id="divSelCorso">
-            <label for="selStudente"> Studente </label>
+            <label for="selStudente"> Corso </label>
             <select style="background-color: #abc" id="selCorso" class="form-control form-control-lg"
                     onchange="aggiornaTabella(document.getElementById('selStudente').value,this.value, '<%= request.getContextPath()%>/Controller?toDo=aggiornaPren_admin&page=tab_pren')"
                     >
@@ -127,7 +126,7 @@
                         <% } %>
                     value="tutti">TUTTI</option>
             <%
-                List<Corso> corsi = model.listCorsi();
+                List<Corso> corsi = (List<Corso>)request.getAttribute("lstCorsi");
                 for(Corso c : corsi)
                 {
             %>
