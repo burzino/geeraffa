@@ -46,9 +46,7 @@ public class Login extends HttpServlet {
         
         //Context
         ServletContext ctx = getServletContext();
-        
-        //Where to move
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
+                
         
         HttpSession ses = request.getSession();
                 
@@ -61,31 +59,55 @@ public class Login extends HttpServlet {
         
         Model model = new Model();
         
-        ResultSet rs = model.eseguiQuery(sql);
-            
+        ResultSet rs = model.eseguiQuery(sql);               
+        
         //Login da pagina web
         if(mobile == null)
-        {            
-            if(rs.next())   //Username e password validi!
-            {
-                ses.setAttribute("logged", "Y");
-                ses.setAttribute("username", username);
-                ses.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
-                ses.setAttribute("id", rs.getString("ID_Utente"));
-                ses.setAttribute("ruolo", rs.getString("Ruolo"));
+        {        
+            try (PrintWriter outSITO = response.getWriter()) {
+                JSONObject logged = new JSONObject();
                 
-                if(rs.getString("Ruolo").equals("Admin"))
-                    rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
+                
+                if(rs.next())   //Username e password validi!
+                {
+                    //Where to move
+                    RequestDispatcher rd = ctx.getRequestDispatcher("/index.jsp");
                     
-                ses.setAttribute("logged", "Y");
-            }
-            else
-            {
-                rd = ctx.getRequestDispatcher("/login.jsp");
-                request.setAttribute("logged", "N");
-            }
+                    ses.setAttribute("logged", "Y");
+                    ses.setAttribute("username", username);
+                    ses.setAttribute("name", rs.getString("Nome") + " " + rs.getString("Cognome"));
+                    ses.setAttribute("id", rs.getString("ID_Utente"));
+                    ses.setAttribute("ruolo", rs.getString("Ruolo"));
 
-            rd.forward(request, response);
+                    if(rs.getString("Ruolo").equals("Admin"))
+                        logged.put("val", "A");
+                    else
+                        logged.put("val", "Y");
+
+                    //Setto variabile di sessione
+                    ses.setAttribute("logged", "Y");
+                    
+                    //Invio il valore di logged per la chiamata AJAX                    
+                    outSITO.println(logged);
+                    outSITO.flush();
+                    
+                    //Mi sposto nell'index
+                    rd.forward(request, response);
+                }
+                else
+                {
+                    ses.setAttribute("logged", "N");
+                    
+                    logged.put("val", "N");
+                    
+                    System.out.println("DAJEEEE " + logged);
+                    
+                    outSITO.println(logged);
+                    outSITO.flush();
+                    
+                }
+            }
+            
         }
         //Login dall'APP
         else
