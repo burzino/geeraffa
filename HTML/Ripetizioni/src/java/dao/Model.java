@@ -302,7 +302,7 @@ public class Model {
         try {
             conn = DriverManager.getConnection(URL, USER, PWD);
             st = conn.createStatement();
-            st.executeQuery("SELECT * FROM Docente where Attivo=1");
+            st.executeQuery("SELECT * FROM Docente where Attivo=1 order by Cognome");
             
             rs = st.getResultSet();
             while(rs.next())

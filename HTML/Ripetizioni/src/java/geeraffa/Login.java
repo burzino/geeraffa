@@ -90,9 +90,6 @@ public class Login extends HttpServlet {
                     //Invio il valore di logged per la chiamata AJAX                    
                     outSITO.println(logged);
                     outSITO.flush();
-                    
-                    //Mi sposto nell'index
-                    rd.forward(request, response);
                 }
                 else
                 {

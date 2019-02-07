@@ -50,7 +50,7 @@ function checkLogged()
     if (xhrObj.readyState == 4) {           // 4: server ha completato esecuz. richiesta
         var risp = xhrObj.responseText; // responseText contiene valore di cap       
         
-        var logged = JSON.parse(risp);                       
+        var logged = JSON.parse(risp);
         
         var errorLogin = document.getElementById("errorLogin");
         
@@ -58,13 +58,17 @@ function checkLogged()
         {
             errorLogin.style.visibility = "visible";
             window.location.hash = '#divLogin';
+            
         }
         else
         {     
             if(logged.val === "Y")
                 window.location.href = "http://localhost:8080/Ripetizioni/index.jsp";
             else // vale A --> ADMIN
-                window.location.href = "http://localhost:8080/Ripetizioni/tab_docenti.jsp";           
+            {
+                alert("ADMIN");
+                window.location.href = "http://localhost:8080/Ripetizioni/Controller?toDo=tab_docenti";           
+            }
         }
     }
 }

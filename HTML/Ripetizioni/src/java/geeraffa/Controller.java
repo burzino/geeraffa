@@ -101,6 +101,8 @@ public class Controller extends HttpServlet {
                 break;
             case "tab_docenti":
                 System.out.println("ARRIVO DALL'ADMIN!!!");
+                request.setAttribute("lstDocenti", model.listDocenti());
+                System.out.println("AAAAA" + model.listDocenti().get(0).getCognome());
                 rd = ctx.getRequestDispatcher("/tab_docenti.jsp");
                 break;
             case "tab_corsi":
