@@ -161,7 +161,16 @@ public class SalvaPren extends HttpServlet {
         //Registrazione da APP
         else
         {
-            
+            String studente = request.getParameter("studente");
+            String dataI = request.getParameter("inizio");
+            String dataF = request.getParameter("fine");
+            String sql=  "INSERT INTO Prenotazione "
+                    + "(Studente, Docente, Corso, DTInizio, DTFine) "
+                    + "Values("
+                    + studente+", "+docente+", "
+                    + "'"+corso+"', '"+dataI+"', '" +dataF+"')";
+            model.eseguiNonQuery(sql);
+            System.out.println("Prenotazione SALVATA!");  
         }
     }
 
