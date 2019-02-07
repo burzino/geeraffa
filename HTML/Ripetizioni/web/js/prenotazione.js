@@ -259,8 +259,8 @@ function popolaOrari()
     }   
     var logged = document.getElementById("session").value;
    //alert(logged);
-   if(logged == 'N'){
-       document.getElementById("15").disabled = true;
+   if(logged == 'N' || logged == "null"){
+       document.getElementById(orari[i]).disabled = true;
        document.getElementById("16").disabled = true;
        document.getElementById("17").disabled = true;
        document.getElementById("18").disabled = true;
