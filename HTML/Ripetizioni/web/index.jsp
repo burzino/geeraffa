@@ -13,7 +13,7 @@
 <html lang="it">
     <%
         Model model = new Model();
-        HttpSession ses = request.getSession();        
+        HttpSession ses = request.getSession();
     %>
 <head>
   <meta charset="utf-8">
