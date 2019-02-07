@@ -116,12 +116,12 @@
       </div>
     </div>
     <% } %>
-    <section id="corsi" class="section-padding wow fadeInUp delay-05s">
+    <section id="corsi" class="section-padding wow fadeInUp delay-05s" style="background-color: rgb(73, 84, 105);">
     <div class="container">
         <div class="row" style="padding-top: 50px">
           <div class="col-md-12 text-center">
-            <h2 class="service-title pad-bt15" <% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Corsi</h2>
-            <p class="sub-title pad-bt15"<% if(ses.getAttribute("logged") == "Y"){ %> style="color:white"<%}%>>Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
+            <h2 class="service-title pad-bt15" style="color:white">Corsi</h2>
+            <p class="sub-title pad-bt15"style="color:white;">Di seguito i principali corsi di cui puoi prentoare le ripetizioni </p>
             <hr class="bottom-line">
           </div>
         <%
