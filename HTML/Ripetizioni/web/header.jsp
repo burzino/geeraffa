@@ -1,11 +1,11 @@
 <% HttpSession ses = request.getSession(); %>
-<nav style="background-color: #475369" class="navbar navbar-expand-lg navbar-light">
+<nav style="background-color: #444F64" class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="<%= request.getContextPath()%>/index.jsp">GEERAFFA</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div style="background-color: #475369; " class="collapse navbar-collapse" id="navbarSupportedContent" >
-      <ul class="navbar-nav mr-auto" style="width:100%">
+    <div style="background-color: #444F64; " class="collapse navbar-collapse" id="navbarSupportedContent" >
+      <ul class="navbar-nav mr-auto" style="width:100%; background-color: #444F64">
         <li class="nav-item active">
             <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/index.jsp">Home <span class="sr-only">(current)</span></a>
         </li>
