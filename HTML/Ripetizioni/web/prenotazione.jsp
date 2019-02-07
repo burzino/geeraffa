@@ -97,9 +97,10 @@
                 <input type="hidden" name="orario" />
                 <input type="hidden" name="data" value="ANO"/>
                 <div class="container-login100-form-btn">
-                        <input type="submit" onclick="setFasciaOraria()" id="btnPren" class="login100-form-btn" disabled value="PRENOTA"/>
+                        <input type="submit" style="display: none;" onclick="setFasciaOraria()" id="btnPren" class="login100-form-btn" disabled value="PRENOTA"/>
                 </div>
             </div>
     </form>
+    <input type="text" name="session" id="session" style="display:none;" value="<%=ses.getAttribute("logged")%>">
     </body>
 </html>

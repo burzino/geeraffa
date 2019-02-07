@@ -73,6 +73,8 @@
                   <% if(ses.getAttribute("logged") == "Y") {%>
                   <li><a href="<%= request.getContextPath()%>/Controller?toDo=elencoPren&corso=tutti">LE MIE PRENOTAZIONI</a></li>
                   <li><a href="<%= request.getContextPath()%>/Controller?toDo=prenota_a">NUOVA PRENOTAZIONE</a></li>
+                  <%}else{%>
+                  <li><a href="<%= request.getContextPath()%>/Controller?toDo=prenota_a">VISUALIZZA PRENOTAZIONI DISPONIBILI</a></li>
                   <%}%>
                   <li class=""><a href="#contact">Contact Us</a></li>
                   <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>

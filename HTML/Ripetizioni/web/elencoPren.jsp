@@ -79,7 +79,7 @@
             <tbody id="tablePren">
             </tbody>
         </table>
-                
+      
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
                  <!-- Modal che viene popolato dinamicamente dopo aver fatto una lettura sul db (modificato anche con funzione javascript-->
                 <input type="hidden" name="toDo" value="disdici"/>
@@ -99,10 +99,10 @@
                   </div>
                 </div>
         </form>
+    
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/elencoPren.js"></script>
     </body>
-
 </html>

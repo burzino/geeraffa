@@ -68,7 +68,8 @@ function popolaCmbDocenti(corso, cmbDocenti)
     document.getElementById("selDocente").innerHTML = "";
     document.getElementById("dataPren").value = "";
     document.getElementById("divOrari").innerHTML = "";
-    
+    document.getElementById("btnPren").disabled = true;
+
     xhrObj.open("GET", url_+"&corso="+corso+"&cmb=true", true);
     
     xhrObj.onreadystatechange = popolaDocenti;
@@ -89,6 +90,7 @@ function popolaCmbOrario(oraInizio)
             selAlle.innerHTML += "<option>" + orari[i] + "</option>";
     }
     selAlle.disabled = false;
+
 }
 
 //Onchange del docente
@@ -96,6 +98,7 @@ function cambioDocente()
 {
     document.getElementById("divOrari").innerHTML = "";
     document.getElementById("dataPren").value = "";
+    document.getElementById("btnPren").disabled = true;
 }
 
 //Ricevo risposta dal SERVER per popolare cmb dei Docenti - onchange selCorso
@@ -144,6 +147,8 @@ function cambioData(docenteSel){
     
     docente = docenteSel;
     ricercaRipetizioni();
+    document.getElementById("btnPren").disabled = true;
+    
 }
 
 //Richiamo SERVLET per capire le fasce orarie disponibili - onchange dataPren
@@ -252,6 +257,14 @@ function popolaOrari()
             
         }
     }   
+    var logged = document.getElementById("session").value;
+   //alert(logged);
+   if(logged == 'N'){
+       document.getElementById("15").disabled = true;
+       document.getElementById("16").disabled = true;
+       document.getElementById("17").disabled = true;
+       document.getElementById("18").disabled = true;
+   }
 }
 
 //Onclick orari
@@ -264,7 +277,22 @@ function selezionaOrario(btn)
         btn.classList.add("btn-primary");
         btn.innerHTML = "";
         btn.innerHTML += "SELEZIONATA";
-        document.getElementById("btnPren").disabled = false;
+        var logged = document.getElementById("session").value;
+       
+        //alert(logged);
+        if(logged == 'Y'){
+            document.getElementById("btnPren").disabled = false;
+            document.getElementById("btnPren").style.display="block";
+        }
+        else{
+            document.getElementById("btnPren").disabled = true;
+            document.getElementById("15").disabled = true;
+            document.getElementById("16").disabled = true;
+            document.getElementById("17").disabled = true;
+            document.getElementById("18").disabled = true;
+            document.getElementById("btnPren").style.display="none";
+        }
+        
     }
     //Se era selezionata --> torna libera
     else
