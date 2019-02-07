@@ -77,8 +77,11 @@ function checkLogged()
             window.location.hash = '#divLogin';
         }
         else
-        {            
-            window.location.href = "http://localhost:8080/Ripetizioni/index.jsp";
+        {     
+            if(logged.val === "Y")
+                window.location.href = "http://localhost:8080/Ripetizioni/index.jsp";
+            else // vale A --> ADMIN
+                window.location.href = "http://localhost:8080/Ripetizioni/tab_docenti.jsp";           
         }
     }
 }
