@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="geeraffa.*"%>
 <%@ page import="dao.*"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -95,14 +96,18 @@
         </span>
         <form>
             <input type="hidden" name="toDo" value="modificaDocenti"/>
-            <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" data-target="#modificaDocenti" onclick="addDocente(this)" style="display: block; margin: 0 auto;"/>
+            <input type="button" class="btn btn-primary" value="Aggiungi nuovo docente" data-toggle="modal" 
+                   data-target="#modificaDocenti" 
+                   onclick="addDocente(this)" 
+                   style="display: block; margin: 0 auto;"/>
         </form>
         <form class="login100-form validate-form" action="<%=request.getContextPath()%>/Controller" method="post" style="width: 100%">
             <input type="hidden" name="toDo" value="tab_docenti"/>
                 <%
                 String sql = "SELECT * FROM Docente WHERE Attivo = 1 ORDER BY Docente.Cognome";
-                ResultSet rs = model.eseguiQuery(sql);
-                ResultSet rsCorsi = null;
+                
+                List<Docente> docenti = (List<Docente>)request.getAttribute("lstDocenti");
+                
                 %>
                 <div class="animated fadeIn" style=" padding-top: 1%">
                     <div class="row">
@@ -116,24 +121,35 @@
                                     <th>Corsi</th>
                                     <th>Gestione</th>
                                 </thead>
+                                
                                 <tbody>
+                                    
+                                
                                 <%
                                     String corsi;
-                                    while(rs.next()){
-                                        sql = "SELECT * FROM CorsoDocente WHERE attivo = 1 AND Docente = " + rs.getInt("ID_Docente");
-                                        rsCorsi = model.eseguiQuery(sql);
-                                        corsi = "";
-                                        while(rsCorsi.next()){
-                                           corsi+=rsCorsi.getString("Corso") +" ";
-                                        }
+                                    for(Docente d : docenti)
+                                    {
+                                    %>
+                                        <jsp:include page="/Controller">
+                                            <jsp:param name="toDo" value="getCorsiDoc"/>
+                                            <jsp:param name="idDoc" value="<%= d.getID_Docente()%>"/>
+                                        </jsp:include>
+                                        <%
+                                            //Ricavo corsi calcolati nella servlet
+                                            corsi = request.getAttribute("corsiParam").toString();
                                         %>
-                                <tr>
-                                    <td><%= rs.getString("Cognome")%></td>
-                                    <td><%= rs.getString("Nome")%></td>
-                                    <td><%= rs.getString("Email")%></td>
+                                        <tr>
+                                    <tr>
+                                    <td><%= d.getCognome() %></td>
+                                    <td><%= d.getNome()%></td>
+                                    <td><%= d.getEmail()%></td>
                                     <td><%=corsi%></td>
-                                    <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="modificaDocente(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=corsi%>')" ></td>
-                                </tr>
+                                    <td><input type="button" class="btn btn-warning" 
+                                               value="gestisci" id="<%=d.getID_Docente() %>" 
+                                               data-toggle="modal" data-target="#modificaDocenti" 
+                                               onClick="modificaDocente(this,'<%=d.getID_Docente()%>',
+                                                        '<%=d.getNome()%>','<%=d.getCognome()%>',
+                                                        '<%=d.getEmail()%>','<%=corsi%>')" ></td></tr>
                                 <%}%>
                                 </tbody>
                             </table>
@@ -178,22 +194,21 @@
                                         <!-- popolo il modal i corsi leggendo su db quali sono quelli attivi-->
                                         <table>
                                         <% 
-                                            sql = "SELECT * FROM Corso ORDER BY Attivo DESC, Titolo";
-                                            rs = model.eseguiQuery(sql);
-                                            int i = 0;
-                                            while(rs.next()){
+                                            List<Corso> lstCorsi = (List<Corso>)request.getAttribute("lstCorsi");
+                                            for(Corso c : lstCorsi){
                                             %>
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" class="corsi" name="corsi" id="<%= rs.getString("titolo")%>" value="<%= rs.getString("titolo")%>"/>
+                                                    <input type="checkbox" class="corsi" name="corsi" 
+                                                           id="<%= c.getTitolo()%>" value="<%= c.getTitolo()%>"/>
                                                 </td>
                                                 <td>
                                                     <p style="
-                                                           <%if(rs.getInt("Attivo") == 0){%>
+                                                           <%if(c.getAttivo() == 0){%>
                                                             color:red;
                                                            <%}%>
                                                     ">
-                                                        <%= rs.getString("titolo")%>
+                                                        <%= c.getTitolo() %>
                                                    </p>
                                                 </td>
                                             
