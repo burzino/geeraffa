@@ -110,8 +110,8 @@
                             <!-- stampo la dabella in modo dinamico dopo la lettura dei dati sul db-->
                             <table id="bootstrap-data-table" class="table table-hover" style="text-align:left; padding-left: 2%; padding-right: 2%; width: 90%; margin: auto;">
                                 <thead>
-                                    <th>Nome</th>
                                     <th>Cognome</th>
+                                    <th>Nome</th>
                                     <th>Email</th>
                                     <th>Corsi</th>
                                     <th>Gestione</th>
@@ -128,8 +128,8 @@
                                         }
                                         %>
                                 <tr>
-                                    <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Cognome")%></td>
+                                    <td><%= rs.getString("Nome")%></td>
                                     <td><%= rs.getString("Email")%></td>
                                     <td><%=corsi%></td>
                                     <td><input type="button" class="btn btn-warning" value="gestisci" id="<%=rs.getInt("ID_Docente")%>" data-toggle="modal" data-target="#modificaDocenti" onClick="modificaDocente(this,'<%=rs.getString("ID_Docente")%>','<%=rs.getString("Nome")%>','<%=rs.getString("Cognome")%>','<%=rs.getString("Email")%>','<%=corsi%>')" ></td>
