@@ -35,9 +35,9 @@
     <body style="background-color: #abc" onload="aggiornaTabella('<%=corso%>','/Ripetizioni/Controller?toDo=aggiornaPren'); 
           orderSelect(document.getElementById('selCorso'), corso)">
     <jsp:include page="header.jsp"></jsp:include>    
-            <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
-                ELENCO DELLE TUE RIPETIZIONI PRENOTATE
-            </span>
+        <span class="login100-form-title" style="margin-top: 15px; padding-bottom: 20px;">
+            ELENCO DELLE TUE RIPETIZIONI PRENOTATE
+        </span>
         <input type="hidden" name="toDo" value="elencoPren"/>
             <div id="container-select">
             <div class="form-group" id="divSelCorso">
