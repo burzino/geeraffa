@@ -144,6 +144,16 @@ public class Controller extends HttpServlet {
                 rd = ctx.getRequestDispatcher("/getCorsi?idDoc="+ idDoc);
                 rd.include(request, response);
                 break;
+            case "elencoOreDocente":
+                rd = ctx.getRequestDispatcher("/ElencoOreDocenti");
+                break;
+            case "elencoDocenti":
+                rd = ctx.getRequestDispatcher("/VisualizzaDocenti");
+                break;
+            
+            case "elencoStorico":
+                rd = ctx.getRequestDispatcher("/VisualizzaStorico");
+                break;
 
         }
         if(!action.equals("getCorsiDoc"))
