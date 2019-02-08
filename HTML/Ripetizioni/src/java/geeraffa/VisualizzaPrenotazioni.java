@@ -48,12 +48,12 @@ public class VisualizzaPrenotazioni extends HttpServlet {
         
         Model model = new Model();
         
-        String email = request.getParameter("email");
+        String idS = request.getParameter("id");
         String sql = "Select Prenotazione.ID_Prenotazione,Prenotazione.Corso,Docente.Nome,Docente.Cognome,Prenotazione.DTInizio,Prenotazione.DTFine,Prenotazione.Disdetta"
                 + " From Prenotazione,Docente,Utente "
                 + "Where Utente.ID_Utente=Prenotazione.Studente and "
                 + "Docente.ID_Docente=Prenotazione.Docente and "
-                + "Utente.Email='"+email+"' and "
+                + "Utente.ID_Utente='"+idS+"' and "
                 + "Prenotazione.DTFine>NOW() and "
                 + "Disdetta=0 order by Prenotazione.DTInizio DESC";
         ResultSet rs=model.eseguiQuery(sql);
