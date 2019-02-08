@@ -1,6 +1,11 @@
 package com.example.prova.ripetizioni;
 
+import android.text.format.DateFormat;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -8,6 +13,8 @@ public class Prenotazione {
     String docente, titCorso,dataCorso,oraIni,oraFin,id, disdetta;
     private List<Prenotazione> prenotazioni;
     String userId;
+    String docenteScelto,giorno;
+    String[] oreJson;
 
     public Prenotazione(String id,String titCorso,String docente,  String dataCorso, String oraIni, String oraFin,String disdetta) {
         this.docente = docente;
@@ -17,14 +24,28 @@ public class Prenotazione {
         this.oraFin = oraFin;
         this.id=id;
         this.disdetta=disdetta;
-    }
-    public Prenotazione(String userId,String operazione){
-        this.userId=userId;
-        if (operazione=="prenotazioni")
-            initializeData();
-        else if (operazione=="storico")
-            storico();
 
+    }
+    public Prenotazione(String userId,String operazione) throws ParseException {
+
+        if (operazione=="prenotazioni") {
+            this.userId=userId;
+            initializeData();
+        }
+        else if (operazione=="storico") {
+            this.userId=userId;
+            storico();
+        }else{
+            //userId=docente, operazione=giorno
+            this.docenteScelto=userId;
+            this.giorno=operazione;
+            prenotazioniDocenteGiornaliere();
+        }
+
+    }
+
+    public String[] getOreJson() {
+        return oreJson;
     }
 
     public List<Prenotazione> getPrenotazioni() {
@@ -90,6 +111,25 @@ public class Prenotazione {
         }
     }
 
+    private void prenotazioniDocenteGiornaliere() throws ParseException {
+        prenotazioni=new ArrayList<Prenotazione>();
+        JSonOreDocenteGiornaliere JOre= new JSonOreDocenteGiornaliere();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date date=format.parse(giorno);
+        String day          = (String) DateFormat.format("dd",   date);
+        String monthNumber  = (String) DateFormat.format("MM",   date);
+        String year         = (String) DateFormat.format("yyyy", date);
+        giorno=year+"/"+monthNumber+"/"+day;
+
+        try {
+            this.oreJson=JOre.doit(docenteScelto,giorno);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void storico()
     {
         prenotazioni=new ArrayList<Prenotazione>();
@@ -115,7 +155,7 @@ public class Prenotazione {
         String eliminato=null;
         JSonEliminaPrenotazione JElimina= new JSonEliminaPrenotazione();
         try{
-            eliminato = JElimina.doit(codice);
+             JElimina.doit(codice);
 
 
 

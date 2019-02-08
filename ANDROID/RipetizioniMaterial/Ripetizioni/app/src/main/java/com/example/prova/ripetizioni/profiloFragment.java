@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,9 +22,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class profiloFragment extends Fragment {
+public class profiloFragment extends Fragment implements View.OnClickListener  {
     TextView txtUtente;
     TextView txtEmail;
+    Button btnLogOut;
     View rootView;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -44,6 +49,8 @@ public class profiloFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnLogOut=(Button)rootView.findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(this);
         txtUtente=(TextView)rootView.findViewById(R.id.txtUtente);
         txtEmail=(TextView)rootView.findViewById(R.id.txtEmail);
         pref = getActivity().getSharedPreferences("LoginPref", 0);
@@ -53,7 +60,12 @@ public class profiloFragment extends Fragment {
         txtEmail.setText(pref.getString("email", null));
 
 
-        Prenotazione storico=new Prenotazione(id,"storico");
+        Prenotazione storico= null;
+        try {
+            storico = new Prenotazione(id,"storico");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         List<Prenotazione> prenotazioni=new ArrayList<Prenotazione>();
         prenotazioni=storico.getPrenotazioni();
         RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.rvStorico);
@@ -62,5 +74,32 @@ public class profiloFragment extends Fragment {
         StoricoAdapter adapter= new StoricoAdapter(prenotazioni);
         rv.setAdapter(adapter);
 
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnLogOut:
+
+
+                SharedPreferences pref = getActivity().getSharedPreferences("LoginPref", 0);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.remove("user");
+                editor.remove("pwd");
+
+                editor.commit();
+
+                int duration = Toast.LENGTH_LONG;
+                Toast.makeText(getActivity(), "Logout effettuato",duration).show();
+                try {
+                    ((MainActivity)getActivity()).checkLogin();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 }

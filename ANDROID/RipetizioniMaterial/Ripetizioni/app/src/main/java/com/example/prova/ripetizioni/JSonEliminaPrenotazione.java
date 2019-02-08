@@ -57,9 +57,9 @@ public class JSonEliminaPrenotazione {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://192.168.1.39:8080/Ripetizioni/Controller?toDo=eliminaPrenotazione&mobile=y";
+                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=disdici&mobile=y";
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                        .appendQueryParameter("codPren", strings[0])
+                        .appendQueryParameter("id", strings[0])
                         .build();
 
                 URL url = new URL(builtUri.toString());
@@ -125,9 +125,9 @@ public class JSonEliminaPrenotazione {
             return null;
         }
     }
-    public  String doit(String s1) throws ExecutionException, InterruptedException {
+    public  void doit(String s1) throws ExecutionException, InterruptedException {
         JSonEliminaPrenotazione.EliminaPrenTask loginTask = new JSonEliminaPrenotazione.EliminaPrenTask();
         String logged = loginTask.execute(s1).get();
-        return logged;
+
     }
 }

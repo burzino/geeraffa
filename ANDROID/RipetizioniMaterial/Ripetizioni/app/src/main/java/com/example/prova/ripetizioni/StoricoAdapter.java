@@ -58,7 +58,7 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.CardView
         if (a.contains("1"))
             holder.disdetta.setText("prenotazione disdetta");
         else
-            holder.disdetta.setText("no");
+            holder.disdetta.setText("Appuntamento sostenuto");
         holder.ora.setText("Dalle: "+prenotazioni.get(position).oraIni+" alle: "+ prenotazioni.get(position).oraFin);
 
 

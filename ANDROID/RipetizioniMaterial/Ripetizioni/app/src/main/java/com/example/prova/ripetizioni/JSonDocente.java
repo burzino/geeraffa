@@ -16,28 +16,32 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
-public class JSonCorsi {
-    private final String LOG_TAG = JSonCorsi.class.getSimpleName();
-    private class CorsiTask extends AsyncTask<String, Void, String[]> {
+public class JSonDocente {
+    private final String LOG_TAG = JSonDocente.class.getSimpleName();
+    private class DocentiTask extends AsyncTask<String, Void, String[]> {
 
-        private String[] getCorsiDataFromJson(String forecastJsonStr)
+        private String[] getDocentiDataFromJson(String forecastJsonStr)
                 throws JSONException {
 
             // These is a name of the JSON objects that need to be extracted.
+            final String OWM_ID = "id";
+            final String OWM_DOCENTI = "docenti";
+            final String OWM_NOME = "nome";
+            final String OWM_COGNOME = "cognome";
+            final String OWM_EMAIL="email";
 
-            final String OWM_TITOLO = "titolo";
-            final String OWM_DESCRIZIONE = "descrizione";
-            final String OWM_CORSI="corsi";
+
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            JSONArray corsiArray = forecastJson.getJSONArray(OWM_CORSI);
-            String[] resultStrs = new String[corsiArray.length()];
-            for (int i =0;i<corsiArray.length();i++){
-                String titolo, descrizione;
-                JSONObject corsiForecast=corsiArray.getJSONObject(i);
-                titolo=corsiForecast.getString(OWM_TITOLO);
-
-                descrizione=corsiForecast.getString(OWM_DESCRIZIONE);
-                resultStrs[i]=titolo+"-"+descrizione;
+            JSONArray docentiArray = forecastJson.getJSONArray(OWM_DOCENTI);
+            String[] resultStrs = new String[docentiArray.length()];
+            for (int i =0;i<docentiArray.length();i++){
+                String id,nome, cognome, email;
+                JSONObject corsiForecast=docentiArray.getJSONObject(i);
+                nome=corsiForecast.getString(OWM_NOME);
+                id=corsiForecast.getString(OWM_ID);
+                cognome=corsiForecast.getString(OWM_COGNOME);
+                email=corsiForecast.getString(OWM_EMAIL);
+                resultStrs[i]=id+"-"+cognome+"-"+nome+"-"+email;
             }
             return resultStrs;
         }
@@ -51,6 +55,9 @@ public class JSonCorsi {
         @Override
         protected String[] doInBackground(String... params) {
 
+            if (params.length == 0) {
+                return null;
+            }
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             // Will contain the raw JSON response as a string.
@@ -60,8 +67,10 @@ public class JSonCorsi {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoCorsi&mobile=y";
-                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
+                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoDocenti&mobile=y";
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                        .appendQueryParameter("corso", params[0])
+                        .build();
                 URL url = new URL(builtUri.toString());
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
@@ -115,7 +124,7 @@ public class JSonCorsi {
 
             try {
 
-                return getCorsiDataFromJson(forecastJsonStr);
+                return getDocentiDataFromJson(forecastJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
@@ -125,9 +134,9 @@ public class JSonCorsi {
             return null;
         }
     }
-    public String[] doit() throws ExecutionException, InterruptedException {
-        JSonCorsi.CorsiTask corsiTask = new JSonCorsi.CorsiTask();
-        String[] corsi = corsiTask.execute().get();
+    public String[] doit(String corso) throws ExecutionException, InterruptedException {
+        JSonDocente.DocentiTask docentiTask = new JSonDocente.DocentiTask ();
+        String[] corsi = docentiTask.execute(corso).get();
         return corsi;
 
     }

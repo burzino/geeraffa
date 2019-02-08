@@ -85,9 +85,9 @@ public class JSonPrenotazioni {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://192.168.1.39:8080/Ripetizioni/Controller?toDo=elencoPrenotazioni&mobile=y";
+                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoPrenotazioni&mobile=y";
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                        .appendQueryParameter("userId", params[0])
+                        .appendQueryParameter("id", params[0])
                         .build();
                 URL url = new URL(builtUri.toString());
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());

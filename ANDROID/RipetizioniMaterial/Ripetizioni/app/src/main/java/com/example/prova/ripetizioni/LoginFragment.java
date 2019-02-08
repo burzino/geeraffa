@@ -44,10 +44,8 @@ public class LoginFragment extends Fragment  implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         RootView = inflater.inflate(R.layout.fragment_login, container, false);
-
         btnLogin = (Button) RootView.findViewById(R.id.material_button);
         btnLogin.setOnClickListener(this);
-
         return RootView;
     }
 

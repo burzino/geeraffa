@@ -84,7 +84,7 @@ public class JSonStorico {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://192.168.1.39:8080/Ripetizioni/Controller?toDo=elencoStorico&mobile=y";
+                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoStorico&mobile=y";
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter("userId", params[0])
                         .build();

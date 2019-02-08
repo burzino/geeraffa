@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -64,7 +65,10 @@ public class PrenotazioneAdapter  extends RecyclerView.Adapter<PrenotazioneAdapt
             public void onClick(View v) {
                 JSonEliminaPrenotazione JElimina = new JSonEliminaPrenotazione();
                 try {
-                    String a= JElimina.doit(holder.codice.getText().toString());
+                    JElimina.doit(holder.codice.getText().toString());
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast.makeText(v.getContext(), "disdetta effettuata",duration).show();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

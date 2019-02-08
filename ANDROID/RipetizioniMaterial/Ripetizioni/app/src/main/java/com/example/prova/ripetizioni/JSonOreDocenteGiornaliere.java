@@ -2,6 +2,7 @@ package com.example.prova.ripetizioni;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -14,30 +15,44 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-public class JSonCorsi {
-    private final String LOG_TAG = JSonCorsi.class.getSimpleName();
-    private class CorsiTask extends AsyncTask<String, Void, String[]> {
+public class JSonOreDocenteGiornaliere {
+    private final String LOG_TAG = JSonOreDocenteGiornaliere.class.getSimpleName();
+    private class OreDocenteTask extends AsyncTask<String, Void, String[]> {
 
-        private String[] getCorsiDataFromJson(String forecastJsonStr)
-                throws JSONException {
+        private String[] getOreDocenteDataFromJson(String forecastJsonStr)
+                throws JSONException, ParseException {
 
             // These is a name of the JSON objects that need to be extracted.
+            final String OWN_PRENOTAZIONI = "prenotazioni";
 
-            final String OWM_TITOLO = "titolo";
-            final String OWM_DESCRIZIONE = "descrizione";
-            final String OWM_CORSI="corsi";
+
+            final String OWM_DATAINI="dataIni";
+            final String OWM_DATAFIN="dataFin";
+
+
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            JSONArray corsiArray = forecastJson.getJSONArray(OWM_CORSI);
-            String[] resultStrs = new String[corsiArray.length()];
-            for (int i =0;i<corsiArray.length();i++){
-                String titolo, descrizione;
-                JSONObject corsiForecast=corsiArray.getJSONObject(i);
-                titolo=corsiForecast.getString(OWM_TITOLO);
+            JSONArray prenotazioinArray = forecastJson.getJSONArray(OWN_PRENOTAZIONI);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String[] resultStrs = new String[prenotazioinArray.length()];
+            for (int i =0;i<prenotazioinArray.length();i++){
+                String oraInizio,oraFine;
+                JSONObject prenotazioniForecast=prenotazioinArray.getJSONObject(i);
 
-                descrizione=corsiForecast.getString(OWM_DESCRIZIONE);
-                resultStrs[i]=titolo+"-"+descrizione;
+
+
+                Date date=format.parse(prenotazioniForecast.getString(OWM_DATAINI));
+                oraInizio = (String) DateFormat.format("HH",date);
+                date=format.parse(prenotazioniForecast.getString(OWM_DATAFIN));
+                oraFine = (String) DateFormat.format("HH",date);
+
+
+
+                resultStrs[i]=oraInizio+"-"+oraFine;
             }
             return resultStrs;
         }
@@ -51,6 +66,9 @@ public class JSonCorsi {
         @Override
         protected String[] doInBackground(String... params) {
 
+            if (params.length == 0) {
+                return null;
+            }
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             // Will contain the raw JSON response as a string.
@@ -60,8 +78,11 @@ public class JSonCorsi {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoCorsi&mobile=y";
-                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
+                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoOreDocente&mobile=y";
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                        .appendQueryParameter("docente", params[0])
+                        .appendQueryParameter("giorno", params[1])
+                        .build();
                 URL url = new URL(builtUri.toString());
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
@@ -115,9 +136,11 @@ public class JSonCorsi {
 
             try {
 
-                return getCorsiDataFromJson(forecastJsonStr);
+                return getOreDocenteDataFromJson(forecastJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
 
@@ -125,10 +148,10 @@ public class JSonCorsi {
             return null;
         }
     }
-    public String[] doit() throws ExecutionException, InterruptedException {
-        JSonCorsi.CorsiTask corsiTask = new JSonCorsi.CorsiTask();
-        String[] corsi = corsiTask.execute().get();
-        return corsi;
+    public String[] doit(String docente,String giorno) throws ExecutionException, InterruptedException {
+        JSonOreDocenteGiornaliere.OreDocenteTask oreDocenteTask = new JSonOreDocenteGiornaliere.OreDocenteTask();
+        String[] oreDocenteGiorno = oreDocenteTask.execute(docente,giorno).get();
+        return oreDocenteGiorno;
 
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,12 @@ public class PrenotazioniFragment extends Fragment {
         SharedPreferences pref =getActivity().getSharedPreferences("LoginPref", 0);
         SharedPreferences.Editor editor = pref.edit();
         id =pref.getString("userId", null); // getting String
-        Prenotazione prenotazione=new Prenotazione(id,"prenotazioni");
+        Prenotazione prenotazione= null;
+        try {
+            prenotazione = new Prenotazione(id,"prenotazioni");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         List<Prenotazione>prenotazioni=new ArrayList<Prenotazione>();
         prenotazioni=prenotazione.getPrenotazioni();
         RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.rvPrenotazioni);

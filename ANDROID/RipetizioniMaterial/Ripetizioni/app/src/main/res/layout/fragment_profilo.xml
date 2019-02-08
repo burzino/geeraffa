@@ -4,6 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".profiloFragment">
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv"
         android:layout_width="match_parent"
@@ -37,6 +38,28 @@
                 android:layout_alignParentTop="true"
                 android:paddingTop="60dp"
                 android:text="Email" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogOut"
+                style="@style/AppTheme1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_below="@+id/txtEmail"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="1dp"
+                android:clickable="true"
+                android:elevation="12dp"
+                android:focusable="true"
+                android:text="Logout"
+                android:textColor="@color/colorSecondary"
+                android:textColorLink="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>

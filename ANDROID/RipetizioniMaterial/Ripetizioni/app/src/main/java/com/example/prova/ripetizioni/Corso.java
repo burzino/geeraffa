@@ -4,15 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.NonNull;
+
 public class Corso {
 
     String titolo;
     String descrizione;
     private List<Corso> corsi;
+
     public Corso(String tit, String desc){
         this.descrizione=desc;
         this.titolo=tit;
+
     }
+
+
+
     public Corso(){
         initializeData();
     }
@@ -56,5 +63,11 @@ public class Corso {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return titolo;
     }
 }

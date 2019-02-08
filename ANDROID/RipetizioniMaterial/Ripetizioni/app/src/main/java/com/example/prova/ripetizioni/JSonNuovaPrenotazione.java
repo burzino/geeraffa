@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,41 +15,40 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
-public class JSonCorsi {
-    private final String LOG_TAG = JSonCorsi.class.getSimpleName();
-    private class CorsiTask extends AsyncTask<String, Void, String[]> {
+public class JSonNuovaPrenotazione {
 
-        private String[] getCorsiDataFromJson(String forecastJsonStr)
+    private final String LOG_TAG = JSonNuovaPrenotazione.class.getSimpleName();
+    public class NuovaPrenTask extends AsyncTask<String, String, String> {
+
+
+
+        private String insertDataFromJson(String forecastJsonStr)
                 throws JSONException {
 
             // These is a name of the JSON objects that need to be extracted.
+            final String OWM_LOGGED = "inserito";
 
-            final String OWM_TITOLO = "titolo";
-            final String OWM_DESCRIZIONE = "descrizione";
-            final String OWM_CORSI="corsi";
+
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            JSONArray corsiArray = forecastJson.getJSONArray(OWM_CORSI);
-            String[] resultStrs = new String[corsiArray.length()];
-            for (int i =0;i<corsiArray.length();i++){
-                String titolo, descrizione;
-                JSONObject corsiForecast=corsiArray.getJSONObject(i);
-                titolo=corsiForecast.getString(OWM_TITOLO);
 
-                descrizione=corsiForecast.getString(OWM_DESCRIZIONE);
-                resultStrs[i]=titolo+"-"+descrizione;
-            }
-            return resultStrs;
+            return forecastJson.getString(OWM_LOGGED);
+
+
         }
-
         @Override
-        protected void onPostExecute(String[] s) {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
         }
-
-
         @Override
-        protected String[] doInBackground(String... params) {
+        protected String doInBackground(String... strings) {
 
+            // If there's no zip code, there's nothing to look up.  Verify size of params.
+            if (strings.length == 0) {
+                return null;
+            }
+
+            // These two need to be declared outside the try/catch
+            // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             // Will contain the raw JSON response as a string.
@@ -60,14 +58,21 @@ public class JSonCorsi {
             try {
 
                 final String FORECAST_BASE_URL =
-                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=elencoCorsi&mobile=y";
-                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
+                        "http://dfgghome.ddns.net:8080/Ripetizioni/Controller?toDo=salvaPren&mobile=y";
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                        .appendQueryParameter("studente", strings[0])
+                        .appendQueryParameter("docente", strings[1])
+                        .appendQueryParameter("corso", strings[2])
+                        .appendQueryParameter("inizio", strings[3])
+                        .appendQueryParameter("fine", strings[4])
+                        .build();
+
                 URL url = new URL(builtUri.toString());
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
-                // Create the request to controller, and open the connection
+                // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestMethod("POST");
                 urlConnection.connect();
 
                 // Read the input stream into a String
@@ -115,7 +120,7 @@ public class JSonCorsi {
 
             try {
 
-                return getCorsiDataFromJson(forecastJsonStr);
+                return insertDataFromJson(forecastJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
@@ -125,10 +130,9 @@ public class JSonCorsi {
             return null;
         }
     }
-    public String[] doit() throws ExecutionException, InterruptedException {
-        JSonCorsi.CorsiTask corsiTask = new JSonCorsi.CorsiTask();
-        String[] corsi = corsiTask.execute().get();
-        return corsi;
+    public  void doit(String s1,String s2,String s3,String s4,String s5) throws ExecutionException, InterruptedException {
+        JSonNuovaPrenotazione.NuovaPrenTask insertTask= new JSonNuovaPrenotazione.NuovaPrenTask();
+        String logged = insertTask.execute(s1,s2,s3,s4,s5).get();
 
     }
 }

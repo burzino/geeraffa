@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.account:
                         setActionbarTitle("Profilo e storico");
-
                         selectedFragment = profiloFragment.newInstance();
+
                         break;
                     case R.id.login:
                         setActionbarTitle("Login");
@@ -76,15 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, selectedFragment);
                 transaction.commit();
-                if (logged==null) {
-                    try {
-                        checkLogin();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+
+
+
                 return true;
             }
         });
@@ -93,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, CorsiFragment.newInstance());
         transaction.commit();
-
+        if(logged==null)
         try {
             checkLogin();
         } catch (ExecutionException e) {
@@ -104,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     public void setActionbarTitle(String s)
     {
@@ -131,6 +126,18 @@ public class MainActivity extends AppCompatActivity {
             logged=login[0];
             primoLog = false;
 
+        }
+        else {
+            bNV.getMenu().findItem(R.id.account).setVisible(false);
+            bNV.getMenu().findItem(R.id.prenotazioni).setVisible(false);
+            bNV.getMenu().findItem(R.id.nuovaPrenotazione).setVisible(false);
+            bNV.getMenu().findItem(R.id.login).setVisible(true);
+            logged=null;
+            setActionbarTitle("Corsi disponibili");
+            Fragment selectedFragment = CorsiFragment.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, selectedFragment);
+            transaction.commit();
         }
         if(logged==null)
         {

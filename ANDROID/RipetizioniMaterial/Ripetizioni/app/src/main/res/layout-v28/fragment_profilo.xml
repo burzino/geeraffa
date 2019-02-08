@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profiloFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey1"
+        android:outlineAmbientShadowColor="@color/grey1"
+        android:theme="@style/AppTheme1">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp">
+
+            <TextView
+                android:id="@+id/txtUtente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="16dp"
+                android:text="Utente"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCorso"
+                android:layout_alignParentTop="true"
+                android:paddingTop="60dp"
+                android:text="Email" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogOut"
+                style="@style/AppTheme1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_below="@+id/txtEmail"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="1dp"
+                android:clickable="true"
+                android:elevation="12dp"
+                android:focusable="true"
+                android:text="Logout"
+                android:textColor="@color/colorSecondary"
+                android:textColorLink="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/lblTitolo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCorso"
+        android:layout_alignParentTop="true"
+        android:text="Storico"
+        android:textSize="25sp"
+        android:layout_gravity="center"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvStorico">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
