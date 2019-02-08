@@ -329,6 +329,9 @@ public class NuovaPrenotazioneFragment extends Fragment implements View.OnClickL
 
                 Toast.makeText(getActivity(), "prenotazione effettuata",duration).show();
 
+                ((MainActivity)getActivity()).toPrenotazioni();
+
+
 
                 break;
             case R.id.btn1516:

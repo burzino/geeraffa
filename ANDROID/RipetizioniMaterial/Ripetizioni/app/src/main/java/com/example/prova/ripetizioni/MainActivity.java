@@ -115,6 +115,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(textView);
     }
 
+    public void toPrenotazioni(){
+        Fragment  selectedFragment = PrenotazioniFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, PrenotazioniFragment.newInstance());
+        transaction.commit();
+    }
     public void checkLogin() throws ExecutionException, InterruptedException {
         pref = getApplicationContext().getSharedPreferences("LoginPref", 0);
         editor = pref.edit();
