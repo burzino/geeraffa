@@ -11,7 +11,7 @@
             </li>
             <% if("Admin".equals(ses.getAttribute("ruolo")) && ses.getAttribute("logged") == "Y") { %>
                 <li class="nav-item">
-                    <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/tab_docenti.jsp">GESTISCI</a>
+                    <a style="color:#be9e21;" class="nav-link" href="<%= request.getContextPath()%>/Controller?toDo=tab_docenti">GESTISCI</a>
                 </li>
             <% } %>
             <% if(ses.getAttribute("logged") == "Y") {%>
